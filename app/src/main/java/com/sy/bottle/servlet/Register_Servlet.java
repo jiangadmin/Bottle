@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.Main_Activity;
-import com.sy.bottle.activity.start.BindPhone_Activity;
+import com.sy.bottle.activity.start.Register_Activity;
 import com.sy.bottle.activity.start.Login_Activity;
 import com.sy.bottle.activity.start.Welcome_Activity;
 import com.sy.bottle.app.MyApp;
@@ -114,7 +114,7 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                         Main_Activity.start(MyApp.currentActivity());
 
                         MyApp.finishActivity(Login_Activity.class);
-                        MyApp.finishActivity(BindPhone_Activity.class);
+                        MyApp.finishActivity(Register_Activity.class);
                         MyApp.finishActivity(Welcome_Activity.class);
 
                     }

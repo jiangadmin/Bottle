@@ -233,10 +233,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                     adapter.notifyDataSetChanged();
                     listView.setSelection(adapter.getCount() - 1);
                 }
-
             }
         }
-
     }
 
     /**

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.Main_Activity;
-import com.sy.bottle.activity.start.BindPhone_Activity;
+import com.sy.bottle.activity.start.Register_Activity;
 import com.sy.bottle.activity.start.Login_Activity;
 import com.sy.bottle.activity.start.Welcome_Activity;
 import com.sy.bottle.app.MyApp;
@@ -97,7 +97,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                 break;
             //未注册
             case 202:
-                BindPhone_Activity.start(MyApp.currentActivity(), 1);
+                Register_Activity.start(MyApp.currentActivity(), 1);
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

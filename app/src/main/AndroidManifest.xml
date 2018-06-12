@@ -55,7 +55,7 @@
 
         <!--资料完善-->
         <activity
-            android:name=".activity.start.BindPhone_Activity"
+            android:name=".activity.start.Register_Activity"
             android:screenOrientation="portrait" />
 
         <!--主页面-->

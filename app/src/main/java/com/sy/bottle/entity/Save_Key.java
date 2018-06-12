@@ -19,6 +19,10 @@ public class Save_Key {
      */
     public static String S_昵称 = " nickname";
     /**
+     * 签名
+     */
+    public static String S_签名 = " sign";
+    /**
      * 头像
      */
     public static String S_头像 = "figureurl";

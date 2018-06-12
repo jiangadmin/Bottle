@@ -12,31 +12,63 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <com.sy.bottle.view.EditTextWithClearButton
+            android:id="@+id/register_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tls_ui_rounded_rectangle_normal"
+            android:hint="昵称"
+            android:inputType="text"
+            android:paddingLeft="@dimen/margin_la"
+            android:singleLine="true" />
+
+        <com.sy.bottle.view.EditTextWithClearButton
+            android:id="@+id/register_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tls_ui_rounded_rectangle_normal"
+            android:hint="个性签名"
+            android:inputType="text"
+            android:minHeight="@dimen/edit_heigt"
+            android:paddingLeft="@dimen/margin_la" />
+
+        <com.sy.bottle.view.EditTextWithClearButton
+            android:id="@+id/register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tls_ui_rounded_rectangle_normal"
+            android:hint="手机号"
+            android:inputType="number"
+            android:paddingLeft="@dimen/margin_la"
+            android:paddingRight="@dimen/margin_la" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <com.sy.bottle.view.EditTextWithClearButton
-                android:id="@+id/bindphone_phone"
+                android:id="@+id/register_sms_code"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_heigt"
                 android:layout_marginBottom="@dimen/margin_la"
-                android:layout_marginRight="@dimen/margin_la"
+                android:layout_marginRight="20dp"
                 android:layout_weight="2"
                 android:background="@drawable/tls_ui_rounded_rectangle_normal"
-                android:hint="请输入手机号"
+                android:hint="短信验证码"
                 android:inputType="number"
                 android:paddingLeft="@dimen/margin_la"
-                android:paddingRight="@dimen/margin_la"
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/bindphone_getsms"
+                android:id="@+id/register_sms_get"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_heigt"
                 android:layout_weight="1"
@@ -47,21 +79,30 @@
 
         </LinearLayout>
 
-        <com.sy.bottle.view.EditTextWithClearButton
-            android:id="@+id/bindphone_smscode"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_heigt"
-            android:layout_marginBottom="@dimen/margin_la"
-            android:background="@drawable/tls_ui_rounded_rectangle_normal"
-            android:hint="短信验证码"
-            android:inputType="number"
-            android:paddingLeft="@dimen/margin_la"
-            android:singleLine="true" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+
+                android:id="@+id/register_boy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="男生" />
+
+            <RadioButton
+
+                android:id="@+id/register_girl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="女生" />
+
+        </RadioGroup>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>
