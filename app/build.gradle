@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'piaoliupin'
+            keyPassword 'jiangadmin'
+            storeFile file('/Users/jiangyao/Desktop/Bottle/piaoliupin')
+            storePassword 'jiangadmin'
+        }
+    }
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.sy.bottle"
+        minSdkVersion 19
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            debuggable true
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                // 需要将 x86 架构过滤掉
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+            }
+            signingConfig signingConfigs.config
+        }
+        debug {
+            ndk {
+                // 需要将 x86 架构过滤掉
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+            }
+        }
+    }
+}
+
+MobSDK {
+    appKey "25e56ce23ee18"
+    appSecret "567950619dda304f6d29debcbbba418f"
+
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+            SinaWeibo {
+                appKey "568898243"
+                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient false
+            }
+            Wechat {
+                appId "wx987316d1f1e0eac4"
+                appSecret "8203310c1f31d686b6ec4a9e92abcde5"
+            }
+            QQ {
+                appId "1106842163"
+                appKey "ZfC4aO8ieQXb5Fnz"
+            }
+            Facebook {
+                appKey "1412473428822331"
+                appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+                callbackUri "https://mob.com"
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //Loading图
+    implementation 'com.wang.avi:library:2.1.3'
+    //Gson自动解析
+    implementation 'com.google.code.gson:gson:2.8.4'
+    //图片加载库
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    //GIF 图
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okio:okio:1.14.1'
+}

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/mine_info_sr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.sy.bottle.view.CircleImageView
+                    android:id="@+id/mine_info_head"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/head_me" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="点击修改" />
+
+            </LinearLayout>
+
+            <!--昵称-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/edit_heigt"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称"
+                    android:textColor="@color/gray_3"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/mine_info_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center"
+                    android:hint="请输入昵称"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_78" />
+
+            <!--签名-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/edit_heigt"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="签名"
+                    android:textColor="@color/gray_3"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/mine_info_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center"
+                    android:hint="请输入个性签名"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_78" />
+
+            <!--签名-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/edit_heigt"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="城市"
+                    android:textColor="@color/gray_3"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/mine_info_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:background="@color/transparent"
+                    android:gravity="right|center"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_78" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="3dp"
+                    android:layout_height="8dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/style_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="照片墙"
+                    android:textColor="@color/gray_78"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/mine_info_photos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2">
+
+            </GridView>
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

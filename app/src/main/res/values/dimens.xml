@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="edit_heigt">46dp</dimen>
+    <dimen name="margin_la">16dp</dimen>
+
+</resources>

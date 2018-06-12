@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/app_name"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Ver : 0.0.1"
+            android:textSize="14sp" />
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="16dp"
+            android:text="联系我们"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:textColor="@color/gray_9"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"
+            android:text="电话：400-666-7788"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:layout_marginLeft="16dp"
+            android:text="意见反馈与建议"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/gray_9"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"
+            android:text="官方微信：suiyuanbottle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:layout_marginLeft="16dp"
+            android:text="商务合作"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/gray_9"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"
+            android:text="QQ : 88888888"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/gray_9"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"
+            android:text="邮箱 : 88888888@qq.com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="CopyrightⒸ2018 随缘漂流瓶 版权所有\n灌云树然网络科技有限公司"
+        android:gravity="center"
+        android:background="@color/gray_cd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

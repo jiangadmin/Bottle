@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/photos_camera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:background="@color/white"
+            android:text="拍照"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/photos_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"
+            android:text="相册"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/photos_esc"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:text="取消"
+            android:textColor="@color/style_text_color"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

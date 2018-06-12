@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sy.bottle">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <application
+        android:name=".app.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/MyTheme">
+
+        <!--欢迎页-->
+        <activity
+            android:name=".activity.start.Welcome_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StartTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <!--引导页-->
+        <activity
+            android:name=".activity.start.Guide_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StartTheme" />
+
+        <!--登录页-->
+        <activity
+            android:name=".activity.start.Login_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--资料完善-->
+        <activity
+            android:name=".activity.start.BindPhone_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--主页面-->
+        <activity
+            android:name=".activity.mian.Main_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--个人信息-->
+        <activity
+            android:name=".activity.mian.mine.Mine_Info_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--编辑个人信息-->
+        <activity
+            android:name=".activity.mian.mine.Edit_Mine_Info_Activity"
+            android:screenOrientation="portrait" />
+
+
+        <!--图片剪裁-->
+        <activity
+            android:name=".activity.ClipImageActivity"
+            android:screenOrientation="portrait" />
+
+        <!--好友资料-->
+        <activity
+            android:name=".activity.mian.friend.Profile_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--设置-->
+        <activity
+            android:name=".activity.mian.mine.Setting_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--黑名单-->
+        <activity android:name=".activity.mian.mine.Black_Activity"
+            android:screenOrientation="portrait"/>
+
+        <!--道具商城-->
+        <activity android:name=".activity.mian.mine.Gift_Activity"
+            android:screenOrientation="portrait"/>
+
+        <!--关于-->
+        <activity android:name=".activity.mian.mine.About_Activity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.ImageViewActivity"
+            android:screenOrientation="portrait" />
+
+        <!--聊天-->
+        <activity
+            android:name=".activity.mian.chat.ChatActivity"
+            android:screenOrientation="portrait" />
+
+        <!--搜索好友-->
+        <activity
+            android:name=".activity.mian.friend.SearchFriend_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--添加好友-->
+        <activity
+            android:name=".activity.mian.friend.AddFriend_Activity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.Edit_Activity"
+            android:screenOrientation="portrait" />
+
+        <!-- 【必须】消息收发service -->
+        <service
+            android:name="com.tencent.qalsdk.service.QalService"
+            android:exported="true"
+            android:process=":QALSERVICE" />
+        <service
+            android:name="com.tencent.qalsdk.service.QalAssistService"
+            android:exported="false"
+            android:process=":QALSERVICE" />
+
+        <!-- 【必须】 离线消息广播接收器 -->
+        <receiver
+            android:name="com.tencent.qalsdk.QALBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.tencent.qalsdk.broadcast.qal" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+            android:process=":QALSERVICE">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+
+            <!-- ImSDK 3.0.2 后添加 -->
+            <intent-filter>
+                <action android:name="com.tencent.qalsdk.service.TASK_REMOVED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

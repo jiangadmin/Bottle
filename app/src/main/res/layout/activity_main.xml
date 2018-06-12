@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".activity.mian.Main_Activity">
+
+    <FrameLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <Button
+            android:id="@+id/main_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableTop="@drawable/ic_message"
+            android:paddingTop="5dp"
+            android:text="会话"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_bottle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableTop="@drawable/ic_bottle"
+            android:paddingTop="5dp"
+            android:text="瓶子"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_friend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableTop="@drawable/ic_friend"
+            android:paddingTop="5dp"
+            android:text="好友"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/main_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:drawableTop="@drawable/ic_mine"
+            android:paddingTop="5dp"
+            android:text="我的"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

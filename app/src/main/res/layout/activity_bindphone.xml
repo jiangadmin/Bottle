@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal">
+
+            <com.sy.bottle.view.EditTextWithClearButton
+                android:id="@+id/bindphone_phone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_heigt"
+                android:layout_marginBottom="@dimen/margin_la"
+                android:layout_marginRight="@dimen/margin_la"
+                android:layout_weight="2"
+                android:background="@drawable/tls_ui_rounded_rectangle_normal"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                android:paddingLeft="@dimen/margin_la"
+                android:paddingRight="@dimen/margin_la"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bindphone_getsms"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_heigt"
+                android:layout_weight="1"
+                android:background="@drawable/tls_ui_rounded_rectangle_normal"
+                android:text="获取验证码"
+                android:textColor="@color/style_text_color"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <com.sy.bottle.view.EditTextWithClearButton
+            android:id="@+id/bindphone_smscode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginBottom="@dimen/margin_la"
+            android:background="@drawable/tls_ui_rounded_rectangle_normal"
+            android:hint="短信验证码"
+            android:inputType="number"
+            android:paddingLeft="@dimen/margin_la"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

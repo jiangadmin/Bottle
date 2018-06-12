@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp">
+
+        <!--照片墙-->
+        <com.sy.bottle.view.ImageCycleView
+            android:background="@drawable/loading"
+            android:id="@+id/mine_info_photos"
+            android:layout_width="match_parent"
+            android:layout_height="160dp">
+
+        </com.sy.bottle.view.ImageCycleView>
+
+        <!--头像-->
+        <com.sy.bottle.view.CircleImageView
+            android:id="@+id/mine_info_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mine_info_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:id="@+id/mine_info_sign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <com.sy.bottle.view.LineControllerView
+            android:id="@+id/mine_info_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:name="账号" />
+
+        <com.sy.bottle.view.LineControllerView
+            android:id="@+id/mine_info_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:name="手机号" />
+
+        <com.sy.bottle.view.LineControllerView
+            android:id="@+id/mine_info_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:name="性别" />
+
+        <com.sy.bottle.view.LineControllerView
+            android:id="@+id/mine_info_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:name="城市" />
+
+    </LinearLayout>
+
+</LinearLayout>
