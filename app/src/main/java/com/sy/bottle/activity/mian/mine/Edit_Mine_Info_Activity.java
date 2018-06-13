@@ -138,7 +138,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
      */
     public void CallBack_Info(MineInfo_Entity.DataBean dataBean) {
         this.dataBean = dataBean;
-        if (dataBean.getAvatar().contains("http") ) {
+        if (dataBean.getAvatar().contains("http")) {
 
             PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
         } else {
@@ -158,7 +158,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
     public void CallBack_Photos(List<Photos_Entity.DataBean> dataBeans) {
 
         //当没有照片的时候
-        if (dataBeans==null){
+        if (dataBeans == null) {
             dataBeans = new ArrayList<>();
         }
 
@@ -203,6 +203,15 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                 String new_sign = sign.getText().toString();
                 String new_city = city.getText().toString();
 
+                if (TextUtils.isEmpty(new_nickname)) {
+                    TabToast.makeText("昵称不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(new_sign)) {
+                    TabToast.makeText("昵称不能为空");
+                    return;
+                }
+
                 if (new_nickname.equals(dataBean.getNikename())
                         && new_sign.equals(dataBean.getSign())
                         && new_city.equals(dataBean.getProvince() + "-" + dataBean.getCity() + "-" + dataBean.getArea())) {
@@ -211,16 +220,16 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                     return;
 
                 } else {
+
                     Loading.show(this, "修改中");
-                    Update_MineInfo_Servlet.Info info = new Update_MineInfo_Servlet.Info();
-                    info.setNikename(new_nickname);
-                    info.setSign(new_sign);
+
                     if (!TextUtils.isEmpty(new_Area)) {
-                        info.setProvince(new_Province);
-                        info.setCity(new_City);
-                        info.setArea(new_Area);
+                        new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign, new_Province, new_City, new_Area);
+                    } else {
+                        new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign, "", "", "");
+
                     }
-                    new Update_MineInfo_Servlet(this).execute(info);
+
                 }
 
                 break;

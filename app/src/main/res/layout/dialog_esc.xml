@@ -4,34 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <Button
-        android:id="@+id/photos_camera"
+        android:id="@+id/change_user"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_heigt"
         android:background="@color/white"
-        android:text="拍照"
+        android:text="更换账户"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/photos_gallery"
+        android:id="@+id/esc_app"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_heigt"
         android:layout_marginTop="3dp"
         android:background="@color/white"
-        android:text="相册"
+        android:text="退出应用"
         android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/photos_esc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_heigt"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:text="取消"
-        android:textColor="@color/style_text_color"
         android:textSize="18sp" />
 
 </LinearLayout>

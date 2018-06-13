@@ -13,9 +13,6 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.SaveUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author: jiangadmin
  * @date: 2018/5/31
@@ -35,7 +32,7 @@ public class Head_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> {
     @Override
     protected Base_Entity doInBackground(String... strings) {
 
-        String res = HttpUtil.uploadFile(Const.API + "photos/" + SaveUtils.getString(Save_Key.UID), strings[0]);
+        String res = HttpUtil.uploadFile(Const.API + "avatars/" + SaveUtils.getString(Save_Key.UID), strings[0]);
 
         Base_Entity entity;
 
@@ -64,8 +61,8 @@ public class Head_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> {
 
         switch (entity.getStatus()) {
             case 200:
-                if (activity instanceof Edit_Mine_Info_Activity){
-
+                if (activity instanceof Edit_Mine_Info_Activity) {
+                    ((Edit_Mine_Info_Activity) activity).initinfo();
                 }
                 break;
             default:

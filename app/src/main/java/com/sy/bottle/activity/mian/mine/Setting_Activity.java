@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.dialog.Esc_Dialog;
 
 /**
  * @author: jiangyao
@@ -20,11 +21,11 @@ import com.sy.bottle.activity.Base_Activity;
 public class Setting_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "Setting_Servlet";
 
-    Button about;
+    Button about, esc;
 
     public static void start(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context,Setting_Activity.class);
+        intent.setClass(context, Setting_Activity.class);
         context.startActivity(intent);
     }
 
@@ -42,16 +43,20 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
 
     private void initview() {
         about = findViewById(R.id.setting_about);
+        esc = findViewById(R.id.setting_out);
 
         about.setOnClickListener(this);
+        esc.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.setting_about:
                 About_Activity.start(this);
+                break;
+            case R.id.setting_out:
+                new Esc_Dialog(this);
                 break;
         }
     }

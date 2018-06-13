@@ -49,7 +49,7 @@
             android:textColor="@color/gray_9"
             android:textSize="15sp"
             android:layout_marginLeft="16dp"
-            android:text="电话：400-666-7788"
+            android:text="电话：15189040755"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -65,7 +65,7 @@
             android:layout_marginTop="5dp"
             android:textSize="15sp"
             android:layout_marginLeft="16dp"
-            android:text="官方微信：suiyuanbottle"
+            android:text="官方微信：srwlkjyxgs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -81,7 +81,7 @@
             android:layout_marginTop="5dp"
             android:textSize="15sp"
             android:layout_marginLeft="16dp"
-            android:text="QQ : 88888888"
+            android:text="QQ : 1665884305"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -89,7 +89,15 @@
             android:layout_marginTop="5dp"
             android:textSize="15sp"
             android:layout_marginLeft="16dp"
-            android:text="邮箱 : 88888888@qq.com"
+            android:text="邮箱 : 1665884305@qq.com"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/gray_9"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"
+            android:text="官方网址：www.syplp.com"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

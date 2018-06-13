@@ -5,13 +5,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.dialog.Bottle_Set_Dailog;
 import com.sy.bottle.servlet.Bottle_Get_Servlet;
+import com.sy.bottle.servlet.Scores_Get_Servlet;
 
 /**
  * @author: jiangadmin
@@ -23,7 +23,7 @@ import com.sy.bottle.servlet.Bottle_Get_Servlet;
 public class Bottle_Fragment extends Base_Fragment implements View.OnClickListener {
     private static final String TAG = "Mine_Fragment";
 
-    ImageView bottle_set, bottle_get;
+    ImageView bottle_set, bottle_get, bottle_balance;
 
     @Nullable
     @Override
@@ -38,9 +38,11 @@ public class Bottle_Fragment extends Base_Fragment implements View.OnClickListen
 
         bottle_get = view.findViewById(R.id.bottle_get);
         bottle_set = view.findViewById(R.id.bottle_set);
+        bottle_balance = view.findViewById(R.id.bottle_balance);
 
         bottle_get.setOnClickListener(this);
         bottle_set.setOnClickListener(this);
+        bottle_balance.setOnClickListener(this);
 
     }
 
@@ -52,6 +54,9 @@ public class Bottle_Fragment extends Base_Fragment implements View.OnClickListen
                 break;
             case R.id.bottle_set:
                 new Bottle_Set_Dailog(getActivity()).show();
+                break;
+            case R.id.bottle_balance:
+                new Scores_Get_Servlet().execute();
                 break;
         }
     }

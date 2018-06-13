@@ -71,7 +71,8 @@
         <!--编辑个人信息-->
         <activity
             android:name=".activity.mian.mine.Edit_Mine_Info_Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
 
         <!--图片剪裁-->
@@ -90,16 +91,29 @@
             android:screenOrientation="portrait" />
 
         <!--黑名单-->
-        <activity android:name=".activity.mian.mine.Black_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.mine.Black_Activity"
+            android:screenOrientation="portrait" />
 
         <!--道具商城-->
-        <activity android:name=".activity.mian.mine.Gift_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.mine.Gift_Activity"
+            android:screenOrientation="portrait" />
 
         <!--关于-->
-        <activity android:name=".activity.mian.mine.About_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.mine.About_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--我的星星-->
+        <activity
+            android:name=".activity.mian.mine.MyBalance_Activity"
+            android:screenOrientation="portrait" />
+
+        <!--充值-->
+        <activity
+            android:name=".activity.Recharge_Activity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.ImageViewActivity"
@@ -123,6 +137,24 @@
         <activity
             android:name=".activity.Edit_Activity"
             android:screenOrientation="portrait" />
+
+
+        <!-- alipay sdk begin -->
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+
+        <!-- alipay sdk end -->
 
         <!-- 【必须】消息收发service -->
         <service

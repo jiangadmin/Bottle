@@ -16,6 +16,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,7 +87,8 @@ public class ToolUtils {
 //                    if (key.equals("sign")) {
 //                        continue;
 //                    }
-                    String value = entry.getValue().toString();
+                    String value = null;
+                    value = String.valueOf(entry.getValue());
                     jsonObject.put(key, value);
                 }
             }
@@ -429,9 +433,20 @@ public class ToolUtils {
     }
 
 
+    /**
+     * 保留两位小数
+     *
+     * @param v
+     * @return
+     */
+    public static String float2(float v) {
+        DecimalFormat fnum = new DecimalFormat("##0.00");
+        return fnum.format(v);
+    }
 
     /**
      * 验证文件是否存在
+     *
      * @param strFile
      * @return
      */
@@ -447,6 +462,52 @@ public class ToolUtils {
         }
 
         return true;
+    }
+
+
+    /**
+     * 获得String中的数字
+     *
+     * @param s
+     * @return
+     */
+    public static int StringInInt(String s) {
+
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(s);
+        return Integer.parseInt(m.replaceAll("").trim());
+
+    }
+
+
+    /**
+     * 中文转 二进制
+     *
+     * @param s
+     * @return
+     */
+    public static String stringToUnicode(String s) {
+        try {
+            StringBuffer out = new StringBuffer("");
+            //直接获取字符串的unicode二进制
+            byte[] bytes = s.getBytes("unicode");
+            //然后将其byte转换成对应的16进制表示即可
+            for (int i = 0; i < bytes.length - 1; i += 2) {
+                out.append("\\u");
+                String str = Integer.toHexString(bytes[i + 1] & 0xff);
+                for (int j = str.length(); j < 2; j++) {
+                    out.append("0");
+                }
+                String str1 = Integer.toHexString(bytes[i] & 0xff);
+                out.append(str1);
+                out.append(str);
+            }
+            return out.toString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

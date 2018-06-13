@@ -87,9 +87,11 @@ public class HttpUtil {
                 urlConn.setDoInput(true);
                 urlConn.setDoOutput(true);
 
-                urlConn.setRequestProperty("Content-Type", "application/json");
-                urlConn.setRequestProperty("Accept", "application/json");
                 urlConn.setRequestProperty("Charset", "UTF-8");
+                urlConn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                urlConn.setRequestProperty("Accept", "application/json");
+                urlConn.setRequestProperty("Connection", "Keep-Alive");
+                urlConn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             }
 
             //del 请求需要的请求头
@@ -114,17 +116,16 @@ public class HttpUtil {
             if (o instanceof Map) {
 
                 if (type != POST) {
-                    DataOutputStream dos = new DataOutputStream(urlConn.getOutputStream());
-                    //写入请求参数
-                    //这里要注意的是，在构造JSON字符串的时候，实践证明，最好不要使用单引号，而是用“\”进行转义，否则会报错
-                    // 关于这一点在上面给出的参考文章里面有说明
-
                     String write = String.valueOf(ToolUtils.map2Json((Map<String, Object>) o));
 
                     LogUtil.e(TAG, "HTTP内容:" + write);
-                    dos.writeBytes(write);
-                    dos.flush();
-                    dos.close();
+
+                    // 获取URLConnection对象对应的输出流
+                    PrintWriter out = new PrintWriter(urlConn.getOutputStream());
+                    out.print(write);
+                    // flush输出流的缓冲
+                    out.flush();
+
                 } else {
                     StringBuilder paramStr = new StringBuilder();
                     for (Map.Entry<String, String> para : ((Map<String, String>) o).entrySet()) {
@@ -147,7 +148,7 @@ public class HttpUtil {
 
             InputStreamReader input_stream_reader;
             BufferedReader buffered_reader;
-            LogUtil.e(TAG,"HTTP码："+urlConn.getResponseCode());
+            LogUtil.e(TAG, "HTTP码：" + urlConn.getResponseCode());
             if (urlConn.getResponseCode() != 404) {
 
                 input_stream_reader = new InputStreamReader(urlConn.getInputStream(), "utf-8");

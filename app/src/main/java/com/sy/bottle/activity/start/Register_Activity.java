@@ -50,7 +50,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bindphone);
+        setContentView(R.layout.activity_register);
 
         setTitle("新用户");
 

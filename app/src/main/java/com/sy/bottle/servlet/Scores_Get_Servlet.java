@@ -1,6 +1,5 @@
 package com.sy.bottle.servlet;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -11,53 +10,29 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 /**
- * @author: jiangadmin
- * @date: 2018/5/31
+ * @author: jiangyao
+ * @date: 2018/6/13
  * @Email: www.fangmu@qq.com
  * @Phone: 186 6120 1018
- * TODO: 修改个人资料
+ * TODO: 捡积分
  */
-public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Entity> {
-    private static final String TAG = "Update_MineInfo_Servlet";
-
-    Activity activity;
-
-    public Update_MineInfo_Servlet(Activity activity) {
-        this.activity = activity;
-    }
+public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
+    private static final String TAG = "Scores_Get_Servlet";
 
     @Override
     protected Base_Entity doInBackground(String... strings) {
         Map map = new HashMap();
-        //昵称
-        map.put("nickname", strings[0]);
-        //签名
-        map.put("sign", strings[1]);
-//        //省
-        map.put("province", strings[2]);
-        //市
-        map.put("city", strings[3]);
-        //区
-        map.put("area", strings[4]);
 
+        map.put("111","一");
 
-        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "users/" + SaveUtils.getString(Save_Key.UID), map);
+        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "scores/" + SaveUtils.getString(Save_Key.UID), map);
 
         Base_Entity entity;
 
@@ -82,15 +57,14 @@ public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Ent
     protected void onPostExecute(Base_Entity entity) {
         super.onPostExecute(entity);
         Loading.dismiss();
-
         switch (entity.getStatus()) {
             case 200:
-                TabToast.makeText("修改成功");
+                TabToast.makeText(entity.getMessage());
+                SaveUtils.setString(Save_Key.S_积分, SaveUtils.getString(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
                 break;
             default:
                 TabToast.makeText(entity.getMessage());
                 break;
         }
-
     }
 }

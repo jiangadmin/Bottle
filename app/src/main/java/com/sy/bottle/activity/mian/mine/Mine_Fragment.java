@@ -16,6 +16,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.MineInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.MineInfo_Servlet;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
@@ -32,7 +33,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
     LinearLayout mine_info;
     CircleImageView head;
-    TextView name, id,xx,jf;
+    TextView name, id, xx, jf;
     ImageView sex;
 
     Button mine_mall, mine_setting;
@@ -52,6 +53,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         initview(view);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //获取个人信息
+        new MineInfo_Servlet(this).execute();
+    }
+
     private void initview(View view) {
         mine_info = view.findViewById(R.id.mine_info);
         head = view.findViewById(R.id.mine_head);
@@ -59,8 +67,8 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         id = view.findViewById(R.id.mine_id);
         sex = view.findViewById(R.id.mine_sex);
 
-        xx =view.findViewById(R.id.mine_xx);
-        jf =view.findViewById(R.id.mine_jf);
+        xx = view.findViewById(R.id.mine_xx);
+        jf = view.findViewById(R.id.mine_jf);
 
         mine_mall = view.findViewById(R.id.mine_mall);
         mine_setting = view.findViewById(R.id.mine_setting);
@@ -68,9 +76,8 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         mine_mall.setOnClickListener(this);
         mine_info.setOnClickListener(this);
         mine_setting.setOnClickListener(this);
-
-        //获取个人信息
-        new MineInfo_Servlet(this).execute();
+        xx.setOnClickListener(this);
+        jf.setOnClickListener(this);
 
     }
 
@@ -95,17 +102,22 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         id.setText(SaveUtils.getString(Save_Key.UID));
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
 
-       jf.setText("积分："+bean.getScore()+" 分");
-       xx.setText("星星："+bean.getBalance()+" 个");
+        jf.setText("积分：" + bean.getScore() + " 分");
+        xx.setText("星星：" + bean.getBalance() + " 个");
 
-       SaveUtils.setInt(Save_Key.S_积分,bean.getScore());
-       SaveUtils.setInt(Save_Key.S_星星,bean.getBalance());
+        SaveUtils.setInt(Save_Key.S_积分, bean.getScore());
+        SaveUtils.setInt(Save_Key.S_星星, bean.getBalance());
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.mine_xx:
+                MyBalance_Activity.start(getActivity());
+                break;
+            case R.id.mine_jf:
+                break;
             case R.id.mine_mall:
                 Gift_Activity.start(getActivity());
                 break;

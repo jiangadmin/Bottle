@@ -20,7 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="手指松开，立即发送"
+        android:text="手指上滑，取消发送"
         android:textColor="@color/white"
         android:textSize="12sp" />
 

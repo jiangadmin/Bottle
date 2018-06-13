@@ -128,6 +128,7 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
             case 1:
                 chat.setEnabled(false);
                 transaction.show(chat_fragment);
+
                 break;
             case 2:
                 bottle.setEnabled(false);
@@ -141,6 +142,7 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
             case 4:
                 mine.setEnabled(false);
                 transaction.show(mine_fragment);
+                mine_fragment.onResume();
                 break;
         }
 

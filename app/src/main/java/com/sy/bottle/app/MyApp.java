@@ -94,6 +94,22 @@ public class MyApp extends Application {
     }
 
     /**
+     * 结束其他Activity
+     */
+    public static void finishOtherActivity(Class<?> cls) {
+        if (activities != null) {
+            for (Activity activity : activities) {
+                if (!activity.getClass().equals(cls)) {
+                    activities.remove(activity);
+                    finishActivity(activity);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    /**
      * 结束指定类名的Activity
      */
     public static void finishActivity(Class<?> cls) {
