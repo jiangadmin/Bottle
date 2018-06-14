@@ -124,7 +124,7 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
 
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

@@ -75,7 +75,7 @@ public class Photos_Del_Servlet extends AsyncTask<String, Integer, Base_Entity> 
                 }
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

@@ -120,7 +120,6 @@ public abstract class Message {
      */
     public abstract void save();
 
-
     /**
      * 删除消息
      */
@@ -193,7 +192,6 @@ public abstract class Message {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
 
     private void showDesc(ChatAdapter.ViewHolder viewHolder) {
 

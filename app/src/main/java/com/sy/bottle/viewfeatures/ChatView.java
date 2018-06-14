@@ -7,7 +7,9 @@ import com.tencent.imsdk.ext.message.TIMMessageLocator;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 聊天界面的接口
@@ -76,7 +78,7 @@ public interface ChatView extends MvpView {
     /**
      * 发送礼物
      */
-    void sendGift(String giftid,JSONObject gift);
+    void sendGift(Map map);
 
     /**
      * 开始发送语音消息

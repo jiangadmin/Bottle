@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 import com.sy.bottle.R;
 
@@ -17,7 +18,7 @@ import com.sy.bottle.R;
  * 来源：http://blog.csdn.net/xiaanming/article/details/11066685
  * 实现带清除功能的输入框控件，仿IOS的输入框
  */
-public class EditTextWithClearButton extends AppCompatEditText implements
+public class EditTextWithClearButton extends EditText implements
         View.OnFocusChangeListener, TextWatcher {
 
     private Drawable mClearDrawable;    // 删除按钮的引用
@@ -44,16 +45,16 @@ public class EditTextWithClearButton extends AppCompatEditText implements
         // 获取EditText的DrawableRight，假如没有设置我们使用默认的图片
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            mClearDrawable = getResources().getDrawable(
-                    R.drawable.ic_clear);
+            mClearDrawable = getResources().getDrawable(R.drawable.ic_clear);
         }
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(0, 0,mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         // 默认设置隐藏图标
         setClearIconVisible(false);
         // 设置焦点改变的监听器
         setOnFocusChangeListener(this);
         // 设置输入框里面内容发生改变的监听
         addTextChangedListener(this);
+
     }
 
 
@@ -101,6 +102,7 @@ public class EditTextWithClearButton extends AppCompatEditText implements
         Drawable right = visible ? mClearDrawable : null;
         setCompoundDrawables(getCompoundDrawables()[0],
                 getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
+        setPadding(30,0,20,0);
     }
 
 

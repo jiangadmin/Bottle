@@ -5,10 +5,16 @@ import android.app.Application;
 import android.content.Context;
 
 import com.mob.MobSDK;
+import com.sy.bottle.R;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
+import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
 import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMOfflinePushListener;
+import com.tencent.imsdk.TIMOfflinePushNotification;
 import com.tencent.imsdk.TIMSdkConfig;
+import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +46,25 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
+        Foreground.init(this);
 
         TIMSdkConfig = new TIMSdkConfig(Const.SDK_APPID);
         TIMManager.getInstance().init(this, TIMSdkConfig);
 
-
         //初始化Mob
         MobSDK.init(this);
+
+        if(MsfSdkUtils.isMainProcess(this)) {
+            TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
+                @Override
+                public void handleNotification(TIMOfflinePushNotification notification) {
+                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
+                        //消息被设置为需要提醒
+                        notification.doNotify(getApplicationContext(), R.mipmap.logo);
+                    }
+                }
+            });
+        }
     }
 
     /**

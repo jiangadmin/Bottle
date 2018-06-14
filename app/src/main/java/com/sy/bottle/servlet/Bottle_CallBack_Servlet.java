@@ -35,8 +35,6 @@ public class Bottle_CallBack_Servlet extends AsyncTask<String, Integer, Bottle_G
 
         String res = HttpUtil.request(HttpUtil.PUT, Const.API + "bottles/" + SaveUtils.getString(Save_Key.UID), map);
 
-        LogUtil.e(TAG, res);
-
         Bottle_Get_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -66,7 +64,7 @@ public class Bottle_CallBack_Servlet extends AsyncTask<String, Integer, Bottle_G
 
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 LogUtil.e(TAG, entity.getMessage());

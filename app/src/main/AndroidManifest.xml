@@ -109,6 +109,10 @@
             android:name=".activity.mian.mine.Log_Activity"
             android:screenOrientation="portrait" />
 
+        <!--消息提醒-->
+        <activity android:name=".activity.mian.other.MessageNotifySettingActivity"
+            android:screenOrientation="portrait"/>
+
         <!--关于-->
         <activity
             android:name=".activity.mian.mine.About_Activity"

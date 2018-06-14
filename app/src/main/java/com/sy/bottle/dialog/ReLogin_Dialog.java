@@ -1,8 +1,6 @@
 package com.sy.bottle.dialog;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.sy.bottle.activity.mian.Main_Activity;
@@ -25,9 +23,8 @@ import com.tencent.imsdk.TIMManager;
 public class ReLogin_Dialog extends Base_Dialog {
     private static final String TAG = "ReLogin_Dialog";
 
-
-    public ReLogin_Dialog(@NonNull Context context) {
-        super(context);
+    public ReLogin_Dialog() {
+        super(MyApp.currentActivity());
     }
 
     @Override

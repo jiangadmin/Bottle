@@ -18,14 +18,13 @@ import android.widget.ListView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
-import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
 import com.sy.bottle.activity.mian.friend.Profile_Activity;
+import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FileMessage;
 import com.sy.bottle.model.FriendshipInfo;
-import com.sy.bottle.model.GiftMessage;
 import com.sy.bottle.model.GroupInfo;
 import com.sy.bottle.model.ImageMessage;
 import com.sy.bottle.model.Message;
@@ -53,11 +52,10 @@ import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageExt;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO：聊天界面
@@ -65,8 +63,7 @@ import java.util.List;
 public class ChatActivity extends Base_Activity implements ChatView, View.OnClickListener {
     private static final String TAG = "ChatActivity";
 
-    private List<Message>
-            messageList = new ArrayList<>();
+    private List<Message> messageList = new ArrayList<>();
     private ChatAdapter adapter;
     private ListView listView;
     private ChatPresenter presenter;
@@ -214,12 +211,16 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             if (mMessage != null) {
                 //如果是自定义消息 并且不是礼物消息
                 if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() != CustomMessage.Type.GIFT) {
+                    LogUtil.e(TAG,"showMessage");
                     CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
                     switch (messageType) {
                         case TYPING:
                             setRTitle("对方正在输入...");
                             handler.removeCallbacks(resetTitle);
                             handler.postDelayed(resetTitle, 3000);
+                            break;
+                        case GIFT:
+                            LogUtil.e(TAG,"礼物");
                             break;
                         default:
                             break;
@@ -247,11 +248,22 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     public void showMessage(List<TIMMessage> messages) {
         int newMsgNum = 0;
         for (int i = 0; i < messages.size(); ++i) {
+
             Message mMessage = MessageFactory.getMessage(messages.get(i));
-            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted)
+
+            if (mMessage instanceof CustomMessage){
+                LogUtil.e(TAG,"自定义消息");
+            }
+
+            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted){
+                LogUtil.e(TAG,"111");
                 continue;
+            }
             if (mMessage instanceof CustomMessage && (((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING ||
-                    ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) continue;
+                    ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) {
+                LogUtil.e(TAG, mMessage.getDesc());
+                continue;
+            }
             ++newMsgNum;
             if (i != messages.size() - 1) {
                 mMessage.setHasTime(messages.get(i + 1));
@@ -369,11 +381,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * 发送礼物
      */
     @Override
-    public void sendGift(String giftid,JSONObject jsonObject) {
+    public void sendGift(Map map) {
         if (type == TIMConversationType.C2C) {
-            Message message = new GiftMessage(giftid,jsonObject);
+            Message message = new CustomMessage(CustomMessage.Type.GIFT, map);
             presenter.sendMessage(message.getMessage());
-
         }
     }
 
@@ -455,7 +466,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     public void showToast(String msg) {
         TabToast.makeText(msg);
     }
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -578,7 +588,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         } else {
             TabToast.makeText("文件不存在,发送失败");
         }
-
     }
 
     /**
@@ -623,7 +632,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 //                        startActivity(intent);
 
                         break;
-
                 }
                 break;
 

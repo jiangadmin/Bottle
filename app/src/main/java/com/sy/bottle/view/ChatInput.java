@@ -39,13 +39,12 @@ import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.ChatView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO:聊天界面输入控件
@@ -366,19 +365,16 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     @Override
                     public void onClick(View view) {
                         //逗号分隔  ID在前  地址在后
-                        Gift_Entity.DataBean bean  =dataBeans.get(i);
-                        JSONObject jsonObject = new JSONObject();
-                        try {
-                            jsonObject.put("Id",bean.getId());
-                            jsonObject.put("Content",bean.getContent());
-                            jsonObject.put("Name",bean.getName());
-                            jsonObject.put("Pic_url",bean.getPic_url());
-                            jsonObject.put("Price",bean.getPrice());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Gift_Entity.DataBean bean = dataBeans.get(i);
+                        Map map = new HashMap();
 
-                        chatView.sendGift(String.valueOf(bean.getId()),jsonObject);
+                        map.put("Id", bean.getId());
+                        map.put("Content", bean.getContent());
+                        map.put("Name", bean.getName());
+                        map.put("Pic_url", bean.getPic_url());
+                        map.put("Price", bean.getPrice());
+
+                        chatView.sendGift(map);
                     }
                 });
                 base_dialog.setEsc("取消", null);
@@ -499,8 +495,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
                 break;
             case R.id.btn_file:
-                updateView(InputMode.GIFT);
-//                chatView.sendFile();
+                chatView.sendFile();
                 break;
             case R.id.btn_gift:
                 updateView(InputMode.GIFT);

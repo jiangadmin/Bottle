@@ -1,16 +1,23 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.sy.bottle.adapters.ChatAdapter;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.tencent.imsdk.TIMCustomElem;
+import com.tencent.imsdk.TIMFaceElem;
 import com.tencent.imsdk.TIMMessage;
+import com.tencent.imsdk.TIMTextElem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Map;
 
 /**
  * 自定义消息
@@ -33,20 +40,25 @@ public class CustomMessage extends Message {
 
     }
 
-    public CustomMessage(Type type, String giftid) {
+    Map gift;
+
+    public CustomMessage(Type type, Map gift) {
         message = new TIMMessage();
+
         String data = "";
         JSONObject dataJson = new JSONObject();
         try {
             switch (type) {
                 case TYPING:
+                    this.gift = null;
                     dataJson.put("userAction", TYPE_TYPING);
                     dataJson.put("actionParam", "EIMAMSG_InputStatus_Ing");
                     data = dataJson.toString();
                     break;
                 case GIFT:
+                    this.gift = gift;
                     dataJson.put("userAction", TYPE_GIFT);
-                    dataJson.put("actionParam", giftid);
+                    dataJson.put("actionParam", gift.toString());
                     data = dataJson.toString();
                     break;
             }
@@ -75,11 +87,15 @@ public class CustomMessage extends Message {
             int action = jsonObj.getInt("userAction");
             switch (action) {
                 case TYPE_TYPING:
+                    LogUtil.e(TAG,"TYPE_TYPING");
                     type = Type.TYPING;
                     this.data = jsonObj.getString("actionParam");
                     if (this.data.equals("EIMAMSG_InputStatus_End")) {
                         type = Type.INVALID;
                     }
+                    break;
+                case TYPE_GIFT:
+                    LogUtil.e(TAG,"TYPE_GIFT");
                     break;
             }
 
@@ -97,7 +113,37 @@ public class CustomMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+        //如果是礼物信息
+        if (gift != null) {
+            clearView(viewHolder);
+            if (checkRevoke(viewHolder)) return;
 
+            for (int i = 0; i < message.getElementCount(); ++i) {
+
+                LogUtil.e(TAG,message.getElement(i).getType().toString());
+//                switch (message.getElement(i).getType()) {
+//                    case Face:
+//                        TIMCustomElem faceElem = (TIMCustomElem) message.getElement(i);
+//                        byte[] data = faceElem.getData();
+//                        if (data != null) {
+//                            result.append(new String(data, Charset.forName("UTF-8")));
+//                        }
+//                        break;
+//                    case Text:
+//                        TIMTextElem textElem = (TIMTextElem) message.getElement(i);
+//                        result.append(textElem.getText());
+//                        break;
+//                }
+
+            }
+
+            ImageView imageView = new ImageView(MyApp.getInstance());
+            PicassoUtlis.Cornersimg(String.valueOf(gift.get("Pic_url")), imageView);
+            clearView(viewHolder);
+            getBubbleView(viewHolder).addView(imageView);
+
+            showStatus(viewHolder);
+        }
     }
 
     /**
@@ -105,7 +151,14 @@ public class CustomMessage extends Message {
      */
     @Override
     public String getSummary() {
-        return null;
+        String str = getRevokeSummary();
+        if (str != null) return str;
+        if (gift != null) {
+            return "[礼物]" + gift.get("Name");
+        } else {
+            return null;
+        }
+
     }
 
     /**

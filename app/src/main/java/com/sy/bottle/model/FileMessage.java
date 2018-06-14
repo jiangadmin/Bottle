@@ -24,7 +24,6 @@ import com.tencent.imsdk.TIMMessage;
  */
 public class FileMessage extends Message {
 
-
     public FileMessage(TIMMessage message) {
         this.message = message;
     }
@@ -54,11 +53,8 @@ public class FileMessage extends Message {
         tv.setText(e.getFileName());
 
         ImageView imageView = new ImageView(MyApp.getInstance());
-
         Gift_Entity.DataBean bean = new Gson().fromJson(e.getPath(), Gift_Entity.DataBean.class);
-
         PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
-
         getBubbleView(viewHolder).addView(imageView);
         showStatus(viewHolder);
     }

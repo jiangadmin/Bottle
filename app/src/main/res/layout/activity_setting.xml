@@ -26,12 +26,9 @@
             android:textColor="@color/gray_3"
             android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray_78" />
 
         <Button
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -42,12 +39,24 @@
             android:text="功能介绍"
             android:textColor="@color/gray_3"
             android:textSize="18sp" />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray_78" />
 
         <Button
+            android:layout_marginTop="1dp"
+            android:id="@+id/setting_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableRight="@drawable/ic_in"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="消息提醒"
+            android:textColor="@color/gray_3"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -72,12 +81,9 @@
             android:textColor="@color/gray_3"
             android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray_78" />
 
         <Button
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

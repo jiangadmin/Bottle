@@ -69,7 +69,7 @@ public class Bottle_Random_Servlet extends AsyncTask<String, Integer, Bottle_Ran
                 editText.setText(entity.getData());
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 LogUtil.e(TAG,entity.getMessage());

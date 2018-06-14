@@ -63,7 +63,7 @@ public class Gift_For_Servlet extends AsyncTask<String, Integer, Base_Entity> {
             case 200:
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
         }
     }

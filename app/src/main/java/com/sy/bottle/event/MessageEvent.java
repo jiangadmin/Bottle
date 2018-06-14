@@ -17,13 +17,11 @@ import java.util.Observable;
  */
 public class MessageEvent extends Observable implements TIMMessageListener, TIMMessageRevokedListener {
 
-
     private volatile static MessageEvent instance;
 
     private MessageEvent(){
         //注册消息监听器
         TIMManager.getInstance().addMessageListener(this);
-
 
     }
 

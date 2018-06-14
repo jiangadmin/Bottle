@@ -75,7 +75,7 @@ public class Bottle_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> 
                 dialog.dismiss();
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

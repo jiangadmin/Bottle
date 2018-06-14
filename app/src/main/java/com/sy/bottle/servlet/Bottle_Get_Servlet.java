@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.Bottle_Get_Dialog;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
@@ -66,8 +67,15 @@ public class Bottle_Get_Servlet extends AsyncTask<String, Integer, Bottle_Get_En
                 Bottle_Get_Dialog dialog = new Bottle_Get_Dialog(activity);
                 dialog.init(entity.getData());
                 break;
+            case 400:
+                if (entity.getMessage().equals("无数据")){
+                    Base_Dialog base_dialog = new Base_Dialog(activity);
+                    base_dialog.setMessage("没有捞到，再去捞一次吧");
+                    base_dialog.setOk("好的",null);
+                }
+                break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 LogUtil.e(TAG, entity.getMessage());

@@ -80,8 +80,7 @@ public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Ent
                 TabToast.makeText("修改成功");
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
-                break;
+                new ReLogin_Dialog();;
             default:
                 TabToast.makeText(entity.getMessage());
                 break;

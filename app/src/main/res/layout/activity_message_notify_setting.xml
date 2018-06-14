@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".activity.mian.other.MessageNotifySettingActivity">
+
+    <include layout="@layout/view_title_bar" />
+
+    <com.sy.bottle.view.LineControllerView
+        android:id="@+id/messagePush"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        android:layout_marginTop="20dp"
+        app:isSwitch="true"
+        app:name="离线消息推送" />
+
+    <com.sy.bottle.view.LineControllerView
+        android:id="@+id/c2cMusic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        app:isSwitch="true"
+        app:name="C2C消息推送" />
+
+    <com.sy.bottle.view.LineControllerView
+        android:id="@+id/groupMusic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        app:isSwitch="true"
+        app:name="群消息推送" />
+</LinearLayout>

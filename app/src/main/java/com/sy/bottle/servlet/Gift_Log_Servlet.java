@@ -77,7 +77,7 @@ public class Gift_Log_Servlet extends AsyncTask<String, Integer, Gift_Log_Entity
                 break;
 
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 break;

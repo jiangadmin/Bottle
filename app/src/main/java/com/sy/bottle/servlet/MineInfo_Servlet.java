@@ -83,7 +83,7 @@ public class MineInfo_Servlet extends AsyncTask<String, Integer, MineInfo_Entity
                 }
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 break;

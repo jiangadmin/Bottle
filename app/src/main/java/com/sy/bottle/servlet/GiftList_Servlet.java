@@ -69,7 +69,7 @@ public class GiftList_Servlet extends AsyncTask<String, Integer, Gift_Entity> {
                 }
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
+                new ReLogin_Dialog();
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

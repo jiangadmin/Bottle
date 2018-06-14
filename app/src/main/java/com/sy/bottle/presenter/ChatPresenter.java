@@ -82,7 +82,7 @@ public class ChatPresenter implements Observer {
                 view.onSendMessageFail(code, desc, message);
 
                 TabToast.makeText("错误码："+code);
-                LogUtil.e(TAG,"错误码："+code);
+                LogUtil.e(TAG,"错误码："+code+desc);
 
             }
 

@@ -65,8 +65,7 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
                 SaveUtils.setInt(Save_Key.S_积分, SaveUtils.getInt(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
                 break;
             case 401:
-                new ReLogin_Dialog(MyApp.currentActivity());
-                break;
+                new ReLogin_Dialog();;
             default:
                 TabToast.makeText(entity.getMessage());
                 break;
