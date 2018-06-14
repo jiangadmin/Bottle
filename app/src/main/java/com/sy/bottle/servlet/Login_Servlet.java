@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.Main_Activity;
-import com.sy.bottle.activity.start.Register_Activity;
 import com.sy.bottle.activity.start.Login_Activity;
+import com.sy.bottle.activity.start.Register_Activity;
 import com.sy.bottle.activity.start.Welcome_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
@@ -42,7 +42,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
         map.put("openid", strings[1]);
         map.put("device_id", ToolUtils.getMyUUID());
 
-        String res = HttpUtil.request(HttpUtil.PUT,Const.API + "tokens", map);
+        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "tokens", map);
 
         LogUtil.e(TAG, res);
         Login_Entity entity;

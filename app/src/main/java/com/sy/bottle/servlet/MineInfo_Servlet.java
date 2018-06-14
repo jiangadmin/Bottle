@@ -9,7 +9,9 @@ import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.MineInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
@@ -79,6 +81,9 @@ public class MineInfo_Servlet extends AsyncTask<String, Integer, MineInfo_Entity
                 if (activity instanceof Edit_Mine_Info_Activity) {
                     ((Edit_Mine_Info_Activity) activity).CallBack_Info(entity.getData());
                 }
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 break;

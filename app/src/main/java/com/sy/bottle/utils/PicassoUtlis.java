@@ -9,12 +9,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 import com.sy.bottle.app.MyApp;
+
+import java.io.File;
 
 /**
  * Created by jiangyao
@@ -37,6 +40,11 @@ public class PicassoUtlis {
         if (TextUtils.isEmpty(imageUrl)) {
             return;
         }
+
+        Picasso.with(context).load(imageUrl).into(imageView);
+    }
+
+    public static void img(Uri imageUrl, ImageView imageView) {
 
         Picasso.with(context).load(imageUrl).into(imageView);
     }

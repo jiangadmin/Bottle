@@ -26,7 +26,6 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-
     <ExpandableListView
         android:id="@+id/friend_groupList"
         android:layout_width="match_parent"

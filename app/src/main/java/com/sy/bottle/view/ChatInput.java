@@ -35,11 +35,12 @@ import com.sy.bottle.R;
 import com.sy.bottle.adapters.Gift_Adapter;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.entity.Gift_Entity;
-import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.viewfeatures.ChatView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,16 +91,23 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         btnEmotion = findViewById(R.id.btnEmoticon);
         btnEmotion.setOnClickListener(this);
         morePanel = findViewById(R.id.morePanel);
+
+        //拍照
         LinearLayout BtnImage = findViewById(R.id.btn_photo);
         BtnImage.setOnClickListener(this);
+        //照片
         LinearLayout BtnPhoto = findViewById(R.id.btn_image);
         BtnPhoto.setOnClickListener(this);
+        //视频
         LinearLayout btnVideo = findViewById(R.id.btn_video);
         btnVideo.setOnClickListener(this);
+        //文件
         LinearLayout btnFile = findViewById(R.id.btn_file);
         btnFile.setOnClickListener(this);
+        //礼物
         LinearLayout btnGift = findViewById(R.id.btn_gift);
         btnGift.setOnClickListener(this);
+
         setSendBtn();
         btnKeyboard = findViewById(R.id.btn_keyboard);
         btnKeyboard.setOnClickListener(this);
@@ -336,10 +344,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
     }
 
     /**
-     * 礼物返回
+     * 礼物列表
+     *
+     * @param dataBeans
      */
     public void CallBack_Gift(final List<Gift_Entity.DataBean> dataBeans) {
-
 
         Gift_Adapter gift_adapter = new Gift_Adapter(context);
         gift_adapter.setDataBeans(dataBeans);
@@ -349,36 +358,48 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
         giftPanel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (SaveUtils.getInt(Save_Key.S_星星) < dataBeans.get(i).getPrice()) {
-                    Base_Dialog base_dialog = new Base_Dialog(context);
-                    base_dialog.setTitle("星星余额不足");
-                    base_dialog.setMessage("您可以通过每日登录APP或捡星星，获得一些星星；为了更好的用户体验，我们建议您充值获取大量的星星！");
-                    base_dialog.setOk("去充值", new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            TabToast.makeText("正在开发中");
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
+                Base_Dialog base_dialog = new Base_Dialog(context);
+                base_dialog.setTitle("确认送出" + dataBeans.get(i).getName() + "?");
+                base_dialog.setOk("确认", new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //逗号分隔  ID在前  地址在后
+                        Gift_Entity.DataBean bean  =dataBeans.get(i);
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("Id",bean.getId());
+                            jsonObject.put("Content",bean.getContent());
+                            jsonObject.put("Name",bean.getName());
+                            jsonObject.put("Pic_url",bean.getPic_url());
+                            jsonObject.put("Price",bean.getPrice());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-                    base_dialog.setEsc("关闭", null);
 
-                } else {
-                    Base_Dialog base_dialog = new Base_Dialog(context);
-                    base_dialog.setTitle("确认送出" + dataBeans.get(i).getName() + "?");
-                    base_dialog.setOk("确认", new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            TabToast.makeText("正在开发中");
-
-                        }
-                    });
-                    base_dialog.setEsc("取消", null);
-
-                }
+                        chatView.sendGift(String.valueOf(bean.getId()),jsonObject);
+                    }
+                });
+                base_dialog.setEsc("取消", null);
+//                if (SaveUtils.getInt(Save_Key.S_星星) < dataBeans.get(i).getPrice()) {
+//                    Base_Dialog base_dialog = new Base_Dialog(context);
+//                    base_dialog.setTitle("星星余额不足");
+//                    base_dialog.setMessage("为了更好的用户体验，我们建议您充值获取星星！");
+//                    base_dialog.setOk("去充值", new OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            MyBalance_Activity.start(context);
+//
+//                        }
+//                    });
+//                    base_dialog.setEsc("关闭", null);
+//
+//                } else {
+//
+//                }
             }
         });
-
     }
 
     /**
@@ -478,7 +499,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
                 break;
             case R.id.btn_file:
-                chatView.sendFile();
+                updateView(InputMode.GIFT);
+//                chatView.sendFile();
                 break;
             case R.id.btn_gift:
                 updateView(InputMode.GIFT);

@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
@@ -13,18 +15,8 @@ import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * @author: jiangadmin
@@ -86,6 +78,9 @@ public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Ent
         switch (entity.getStatus()) {
             case 200:
                 TabToast.makeText("修改成功");
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

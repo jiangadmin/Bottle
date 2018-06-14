@@ -8,7 +8,9 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.utils.HttpUtil;
@@ -83,6 +85,9 @@ public class Photos_Get_Servlet extends AsyncTask<String, Integer, Photos_Entity
                 if (activity instanceof Edit_Mine_Info_Activity) {
                     ((Edit_Mine_Info_Activity) activity).CallBack_Photos(null);
                 }
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

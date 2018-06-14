@@ -87,7 +87,6 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
                     break;
             }
         }
-
     }
 
     @Override
@@ -121,7 +120,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
                     SaveUtils.setString(Save_Key.S_签名, sig);
                 }
 
-                if (boy.isChecked() || girl.isChecked()) {
+                if (!boy.isChecked() && !girl.isChecked()) {
                     TabToast.makeText("请选择性别！");
                     return;
                 }

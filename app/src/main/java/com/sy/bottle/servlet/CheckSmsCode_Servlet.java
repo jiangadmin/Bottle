@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
@@ -67,6 +69,9 @@ public class CheckSmsCode_Servlet extends AsyncTask<String, Integer, Base_Entity
                 //注册操作
                 new Register_Servlet().execute();
 
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

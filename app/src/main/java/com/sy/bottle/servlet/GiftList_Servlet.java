@@ -1,12 +1,12 @@
 package com.sy.bottle.servlet;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.sy.bottle.activity.mian.mine.Gift_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.entity.Save_Key;
@@ -28,11 +28,6 @@ public class GiftList_Servlet extends AsyncTask<String, Integer, Gift_Entity> {
     private static final String TAG = "GiftList_Servlet";
 
     ChatInput chatInput;
-    Activity activity;
-
-    public GiftList_Servlet(Activity activity) {
-        this.activity = activity;
-    }
 
     public GiftList_Servlet(ChatInput chatInput) {
         this.chatInput = chatInput;
@@ -68,13 +63,13 @@ public class GiftList_Servlet extends AsyncTask<String, Integer, Gift_Entity> {
         Loading.dismiss();
         switch (entity.getStatus()) {
             case 200:
-                if (activity instanceof Gift_Activity) {
-                    ((Gift_Activity) activity).CallBack(entity.getData());
-                }
 
                 if (chatInput != null) {
                     chatInput.CallBack_Gift(entity.getData());
                 }
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 TabToast.makeText(entity.getMessage());

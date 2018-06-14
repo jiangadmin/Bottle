@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/friendship_0"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        android:background="@color/white"
+        android:text="需验证"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/friendship_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:text="拒绝任何人添加"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/friendship_2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:text="允许任何人添加"
+        android:textColor="@color/black" />
+
+
+</LinearLayout>

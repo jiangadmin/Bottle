@@ -186,8 +186,7 @@ public class TextMessage extends Message {
                         int width = bitmap.getWidth();
                         int height = bitmap.getHeight();
                         matrix.postScale(2, 2);
-                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-                                width, height, matrix, true);
+                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
                         ImageSpan span = new ImageSpan(context, resizedBitmap, ImageSpan.ALIGN_BASELINE);
                         stringBuilder.append(String.valueOf(faceElem.getIndex()));
                         stringBuilder.setSpan(span, startIndex, startIndex + getNumLength(faceElem.getIndex()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -205,6 +204,5 @@ public class TextMessage extends Message {
         }
         return stringBuilder;
     }
-
 
 }

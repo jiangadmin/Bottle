@@ -5,6 +5,8 @@ import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -71,6 +73,10 @@ public interface ChatView extends MvpView {
      */
     void sendFile();
 
+    /**
+     * 发送礼物
+     */
+    void sendGift(String giftid,JSONObject gift);
 
     /**
      * 开始发送语音消息

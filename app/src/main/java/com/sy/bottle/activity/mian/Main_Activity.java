@@ -157,4 +157,12 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
         super.onResume();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i= new Intent(Intent.ACTION_MAIN);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addCategory(Intent.CATEGORY_HOME);
+        startActivity(i);
+    }
 }

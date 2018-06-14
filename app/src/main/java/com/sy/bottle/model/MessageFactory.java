@@ -33,6 +33,9 @@ public class MessageFactory {
                 return new CustomMessage(message);
             case UGC:
                 return new UGCMessage(message);
+            case SNSTips:
+                return new GiftMessage(message);
+
             default:
                 return null;
         }

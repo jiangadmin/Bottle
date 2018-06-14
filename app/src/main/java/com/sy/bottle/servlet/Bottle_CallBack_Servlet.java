@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Bottle_Get_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
@@ -62,6 +64,9 @@ public class Bottle_CallBack_Servlet extends AsyncTask<String, Integer, Bottle_G
         switch (entity.getStatus()) {
             case 200:
 
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 LogUtil.e(TAG, entity.getMessage());

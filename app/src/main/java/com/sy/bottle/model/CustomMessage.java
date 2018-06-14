@@ -17,10 +17,10 @@ import java.io.IOException;
  */
 public class CustomMessage extends Message {
 
-
     private String TAG = getClass().getSimpleName();
 
     private final int TYPE_TYPING = 14;
+    private final int TYPE_GIFT = 16;
 
     private Type type;
     private String desc;
@@ -33,7 +33,7 @@ public class CustomMessage extends Message {
 
     }
 
-    public CustomMessage(Type type) {
+    public CustomMessage(Type type, String giftid) {
         message = new TIMMessage();
         String data = "";
         JSONObject dataJson = new JSONObject();
@@ -43,6 +43,12 @@ public class CustomMessage extends Message {
                     dataJson.put("userAction", TYPE_TYPING);
                     dataJson.put("actionParam", "EIMAMSG_InputStatus_Ing");
                     data = dataJson.toString();
+                    break;
+                case GIFT:
+                    dataJson.put("userAction", TYPE_GIFT);
+                    dataJson.put("actionParam", giftid);
+                    data = dataJson.toString();
+                    break;
             }
         } catch (JSONException e) {
             LogUtil.e(TAG, "generate json error");
@@ -113,5 +119,6 @@ public class CustomMessage extends Message {
     public enum Type {
         TYPING,
         INVALID,
+        GIFT,
     }
 }

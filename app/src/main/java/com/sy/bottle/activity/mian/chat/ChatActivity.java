@@ -15,18 +15,17 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
 import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.adapters.ChatAdapter;
-import com.sy.bottle.event.RefreshEvent;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FileMessage;
-import com.sy.bottle.model.FriendProfile;
 import com.sy.bottle.model.FriendshipInfo;
+import com.sy.bottle.model.GiftMessage;
 import com.sy.bottle.model.GroupInfo;
 import com.sy.bottle.model.ImageMessage;
 import com.sy.bottle.model.Message;
@@ -48,12 +47,13 @@ import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMFriendshipManager;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageStatus;
-import com.tencent.imsdk.TIMUserConfig;
 import com.tencent.imsdk.TIMUserProfile;
 import com.tencent.imsdk.TIMValueCallBack;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageExt;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,16 +65,17 @@ import java.util.List;
 public class ChatActivity extends Base_Activity implements ChatView, View.OnClickListener {
     private static final String TAG = "ChatActivity";
 
-    private List<Message> messageList = new ArrayList<>();
+    private List<Message>
+            messageList = new ArrayList<>();
     private ChatAdapter adapter;
     private ListView listView;
     private ChatPresenter presenter;
     private ChatInput input;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private static final int IMAGE_STORE = 200;
-    private static final int FILE_CODE = 300;
-    private static final int IMAGE_PREVIEW = 400;
-    private static final int VIDEO_RECORD = 500;
+    private static final int IMAGE_STORE = 200;             //礼物
+    private static final int FILE_CODE = 300;               //文件
+    private static final int IMAGE_PREVIEW = 400;           //图片
+    private static final int VIDEO_RECORD = 500;            //视频
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -141,7 +142,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         switch (type) {
             //个人聊天
             case C2C:
-
                 setMenu(R.drawable.btn_person);
                 //判断是否是好友
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
@@ -153,13 +153,13 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                     TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
                         @Override
                         public void onError(int i, String s) {
-                            setRTitle(titleStr= identify);
+                            setRTitle(titleStr = identify);
                         }
 
                         @Override
                         public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                            if (timUserProfiles.size()>0){
-                                setRTitle(titleStr= timUserProfiles.get(0).getNickName());
+                            if (timUserProfiles.size() > 0) {
+                                setRTitle(titleStr = timUserProfiles.get(0).getNickName());
                             }
                         }
                     });
@@ -212,7 +212,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                if (mMessage instanceof CustomMessage) {
+                //如果是自定义消息 并且不是礼物消息
+                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() != CustomMessage.Type.GIFT) {
                     CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
                     switch (messageType) {
                         case TYPING:
@@ -348,7 +349,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     @Override
     public void sendText() {
-        LogUtil.e(TAG,"发送文本消息");
+        LogUtil.e(TAG, "发送文本消息");
         Message message = new TextMessage(input.getText());
         presenter.sendMessage(message.getMessage());
         input.setText("");
@@ -364,6 +365,17 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         startActivityForResult(intent, FILE_CODE);
     }
 
+    /**
+     * 发送礼物
+     */
+    @Override
+    public void sendGift(String giftid,JSONObject jsonObject) {
+        if (type == TIMConversationType.C2C) {
+            Message message = new GiftMessage(giftid,jsonObject);
+            presenter.sendMessage(message.getMessage());
+
+        }
+    }
 
     /**
      * 开始发送语音消息
@@ -373,7 +385,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         voiceSendingView.setVisibility(View.VISIBLE);
         voiceSendingView.showRecording();
         recorder.startRecording();
-
     }
 
     /**
@@ -393,8 +404,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             presenter.sendMessage(message.getMessage());
         }
     }
-
-
 
     /**
      * 发送小视频消息
@@ -423,7 +432,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     public void sending() {
         if (type == TIMConversationType.C2C) {
-            Message message = new CustomMessage(CustomMessage.Type.TYPING);
+            Message message = new CustomMessage(CustomMessage.Type.TYPING, null);
             presenter.sendOnlineMessage(message.getMessage());
         }
     }
@@ -438,16 +447,13 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     @Override
     public void videoAction() {
-        //TODO: TCVideoRecordActivity
-        TabToast.makeText("TCVideoRecordActivity");
-        LogUtil.e(TAG, "TCVideoRecordActivity");
-//        Intent intent = new Intent(this, TCVideoRecordActivity.class);
-//        startActivityForResult(intent, VIDEO_RECORD);
+        Intent intent = new Intent(this, TCVideoRecordActivity.class);
+        startActivityForResult(intent, VIDEO_RECORD);
     }
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        TabToast.makeText(msg);
     }
 
 
@@ -542,17 +548,23 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         }
     }
 
+    /**
+     * 预览要发送的图片
+     *
+     * @param path
+     */
     private void showImagePreview(String path) {
         if (path == null) return;
-        //TODO: ImagePreviewActivity
-
-        TabToast.makeText("ImagePreviewActivity");
-        LogUtil.e(TAG, "ImagePreviewActivity");
-//        Intent intent = new Intent(this, ImagePreviewActivity.class);
-//        intent.putExtra("path", path);
-//        startActivityForResult(intent, IMAGE_PREVIEW);
+        Intent intent = new Intent(this, ImagePreviewActivity.class);
+        intent.putExtra("path", path);
+        startActivityForResult(intent, IMAGE_PREVIEW);
     }
 
+    /**
+     * 发送文件
+     *
+     * @param path
+     */
     private void sendFile(String path) {
         if (path == null) return;
         File file = new File(path);

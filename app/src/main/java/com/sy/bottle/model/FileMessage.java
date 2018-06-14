@@ -3,13 +3,17 @@ package com.sy.bottle.model;
 import android.content.Context;
 import android.os.Environment;
 import android.util.TypedValue;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMFileElem;
@@ -33,7 +37,6 @@ public class FileMessage extends Message {
         message.addElement(elem);
     }
 
-
     /**
      * 显示消息
      *
@@ -49,7 +52,14 @@ public class FileMessage extends Message {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
         tv.setText(e.getFileName());
-        getBubbleView(viewHolder).addView(tv);
+
+        ImageView imageView = new ImageView(MyApp.getInstance());
+
+        Gift_Entity.DataBean bean = new Gson().fromJson(e.getPath(), Gift_Entity.DataBean.class);
+
+        PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
+
+        getBubbleView(viewHolder).addView(imageView);
         showStatus(viewHolder);
     }
 

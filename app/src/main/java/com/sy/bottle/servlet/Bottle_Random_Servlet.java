@@ -5,7 +5,9 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
@@ -65,6 +67,9 @@ public class Bottle_Random_Servlet extends AsyncTask<String, Integer, Bottle_Ran
         switch (entity.getStatus()) {
             case 200:
                 editText.setText(entity.getData());
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 LogUtil.e(TAG,entity.getMessage());

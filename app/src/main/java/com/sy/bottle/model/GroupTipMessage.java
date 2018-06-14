@@ -21,7 +21,6 @@ public class GroupTipMessage extends Message {
         this.message = message;
     }
 
-
     /**
      * 显示消息
      *

@@ -74,6 +74,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+        <!--图片预览-->
+        <activity android:name=".activity.mian.chat.ImagePreviewActivity"
+            android:screenOrientation="portrait"/>
+        
+        <activity android:name=".activity.ui.TCVideoRecordActivity"
+            android:screenOrientation="portrait"/>
+        
+        <activity android:name=".activity.ui.TCVideoPreviewActivity"
+            android:screenOrientation="portrait"/>
 
         <!--图片剪裁-->
         <activity
@@ -97,7 +106,7 @@
 
         <!--道具商城-->
         <activity
-            android:name=".activity.mian.mine.Gift_Activity"
+            android:name=".activity.mian.mine.Log_Activity"
             android:screenOrientation="portrait" />
 
         <!--关于-->

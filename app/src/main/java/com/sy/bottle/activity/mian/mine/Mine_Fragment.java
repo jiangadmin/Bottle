@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
+import com.sy.bottle.dialog.FriendShip_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.MineInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.MineInfo_Servlet;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
@@ -36,7 +36,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     TextView name, id, xx, jf;
     ImageView sex;
 
-    Button mine_mall, mine_setting;
+    Button mine_mall, mine_setting, mine_blackList, mine_friend_Confirm,mine_log;
 
     @Nullable
     @Override
@@ -66,16 +66,22 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         name = view.findViewById(R.id.mine_nickname);
         id = view.findViewById(R.id.mine_id);
         sex = view.findViewById(R.id.mine_sex);
+        mine_blackList = view.findViewById(R.id.mine_blackList);
+        mine_friend_Confirm = view.findViewById(R.id.mine_friend_Confirm);
+        mine_log = view.findViewById(R.id.mine_log);
 
         xx = view.findViewById(R.id.mine_xx);
         jf = view.findViewById(R.id.mine_jf);
 
-        mine_mall = view.findViewById(R.id.mine_mall);
+        mine_mall = view.findViewById(R.id.mine_log);
         mine_setting = view.findViewById(R.id.mine_setting);
 
+        mine_log.setOnClickListener(this);
         mine_mall.setOnClickListener(this);
         mine_info.setOnClickListener(this);
         mine_setting.setOnClickListener(this);
+        mine_friend_Confirm.setOnClickListener(this);
+        mine_blackList.setOnClickListener(this);
         xx.setOnClickListener(this);
         jf.setOnClickListener(this);
 
@@ -117,14 +123,20 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
                 MyBalance_Activity.start(getActivity());
                 break;
             case R.id.mine_jf:
+
                 break;
-            case R.id.mine_mall:
-                Gift_Activity.start(getActivity());
+            case R.id.mine_log:
+                Log_Activity.start(getActivity());
                 break;
             case R.id.mine_info:
                 Mine_Info_Activity.start(getActivity());
                 break;
-
+            case R.id.mine_friend_Confirm:
+                new FriendShip_Dialog(getActivity());
+                break;
+            case R.id.mine_blackList:
+                Black_Activity.start(getActivity());
+                break;
             case R.id.mine_setting:
                 Setting_Activity.start(getActivity());
                 break;

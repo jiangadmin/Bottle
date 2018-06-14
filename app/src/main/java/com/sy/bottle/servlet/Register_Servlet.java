@@ -10,6 +10,7 @@ import com.sy.bottle.activity.start.Login_Activity;
 import com.sy.bottle.activity.start.Welcome_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Login_Entity;
 import com.sy.bottle.entity.Save_Key;
@@ -121,6 +122,9 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                 });
 
 
+                break;
+            case 401:
+                new ReLogin_Dialog(MyApp.currentActivity());
                 break;
             default:
                 TabToast.makeText(entity.getMessage());
