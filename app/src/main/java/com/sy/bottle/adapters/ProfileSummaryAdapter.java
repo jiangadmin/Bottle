@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.model.ProfileSummary;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.view.CircleImageView;
 
 import java.util.List;
@@ -51,6 +52,7 @@ public class ProfileSummaryAdapter extends ArrayAdapter<ProfileSummary> {
             view.setTag(viewHolder);
         }
         ProfileSummary data = getItem(position);
+
         viewHolder.avatar.setImageResource(data.getAvatarRes());
         viewHolder.name.setText(data.getName());
         return view;

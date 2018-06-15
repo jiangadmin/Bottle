@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'piaoliupin'
             keyPassword 'jiangadmin'
-            storeFile file('/Users/jiangyao/Desktop/Bottle/piaoliupin')
+            storeFile file('C:/Users/jiangadmin/Desktop/Bottle/piaoliupin')
             storePassword 'jiangadmin'
         }
     }
@@ -88,7 +88,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //GIF 图
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okio:okio:1.14.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 }
