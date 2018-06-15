@@ -1,30 +1,31 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.tencent.imsdk.TIMCustomElem;
-import com.tencent.imsdk.TIMFaceElem;
 import com.tencent.imsdk.TIMMessage;
-import com.tencent.imsdk.TIMTextElem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 /**
  * 自定义消息
  */
 public class CustomMessage extends Message {
-
-    private String TAG = getClass().getSimpleName();
+    private static final String TAG = "CustomMessage";
 
     private final int TYPE_TYPING = 14;
     private final int TYPE_GIFT = 16;
@@ -70,7 +71,6 @@ public class CustomMessage extends Message {
         message.addElement(elem);
     }
 
-
     public Type getType() {
         return type;
     }
@@ -84,10 +84,11 @@ public class CustomMessage extends Message {
         try {
             String str = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(str);
+
             int action = jsonObj.getInt("userAction");
             switch (action) {
                 case TYPE_TYPING:
-                    LogUtil.e(TAG,"TYPE_TYPING");
+                    LogUtil.e(TAG, "TYPE_TYPING");
                     type = Type.TYPING;
                     this.data = jsonObj.getString("actionParam");
                     if (this.data.equals("EIMAMSG_InputStatus_End")) {
@@ -95,7 +96,8 @@ public class CustomMessage extends Message {
                     }
                     break;
                 case TYPE_GIFT:
-                    LogUtil.e(TAG,"TYPE_GIFT");
+                    type = Type.GIFT;
+
                     break;
             }
 
@@ -113,37 +115,61 @@ public class CustomMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+
+        LogUtil.e(TAG, "自定义消息显示");
         //如果是礼物信息
-        if (gift != null) {
-            clearView(viewHolder);
-            if (checkRevoke(viewHolder)) return;
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) return;
 
-            for (int i = 0; i < message.getElementCount(); ++i) {
+        LogUtil.e(TAG, "进入");
+        TIMCustomElem elem = (TIMCustomElem) message.getElement(0);
 
-                LogUtil.e(TAG,message.getElement(i).getType().toString());
-//                switch (message.getElement(i).getType()) {
-//                    case Face:
-//                        TIMCustomElem faceElem = (TIMCustomElem) message.getElement(i);
-//                        byte[] data = faceElem.getData();
-//                        if (data != null) {
-//                            result.append(new String(data, Charset.forName("UTF-8")));
-//                        }
-//                        break;
-//                    case Text:
-//                        TIMTextElem textElem = (TIMTextElem) message.getElement(i);
-//                        result.append(textElem.getText());
-//                        break;
-//                }
+        LogUtil.e(TAG, new String(elem.getData()));
 
-            }
+        try {
+            JSONObject   jsonObj = new JSONObject(new String(elem.getData()));
+            String actionParam = jsonObj.getString("actionParam");
 
+            actionParam = actionParam.replace("{", "{\"");
+            actionParam = actionParam.replace("=", "\":\"");
+            actionParam = actionParam.replace(",", "\",\"");
+            actionParam = actionParam.replace("}", "\"}");
+
+            actionParam = actionParam.replaceAll(" ","");
+
+            LogUtil.e(TAG, "转换后的数据：" + actionParam);
+
+            JSONObject   gift = new JSONObject(actionParam);
             ImageView imageView = new ImageView(MyApp.getInstance());
-            PicassoUtlis.Cornersimg(String.valueOf(gift.get("Pic_url")), imageView);
-            clearView(viewHolder);
-            getBubbleView(viewHolder).addView(imageView);
 
+            LogUtil.e(TAG, "图片地址：" + gift.getString("Pic_url"));
+
+            PicassoUtlis.img(gift.getString("Pic_url"), imageView);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(400, 400);//两个400分别为添加图片的大小
+            imageView.setLayoutParams(params);
+
+
+            clearView(viewHolder);
+
+            getBubbleView(viewHolder).addView(imageView);
             showStatus(viewHolder);
+
+            LogUtil.e(TAG, "展示图片");
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            TextView tv = new TextView(MyApp.getInstance());
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+            tv.setText("【礼物】");
+
+            clearView(viewHolder);
+
+            getBubbleView(viewHolder).addView(tv);
+            showStatus(viewHolder);
+
+            LogUtil.e(TAG, "展示描述");
         }
+
     }
 
     /**
@@ -153,11 +179,7 @@ public class CustomMessage extends Message {
     public String getSummary() {
         String str = getRevokeSummary();
         if (str != null) return str;
-        if (gift != null) {
-            return "[礼物]" + gift.get("Name");
-        } else {
-            return null;
-        }
+        return "[礼物]";
 
     }
 
@@ -174,4 +196,6 @@ public class CustomMessage extends Message {
         INVALID,
         GIFT,
     }
+
+
 }

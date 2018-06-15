@@ -16,10 +16,10 @@ import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Banner_Entity;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.MineInfo_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.servlet.MineInfo_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
@@ -71,7 +71,7 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
         //获取个人照片墙
         new Photos_Get_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, SaveUtils.getString(Save_Key.UID));
         //获取个人信息
-        new MineInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new UserInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         super.onResume();
     }
 
@@ -92,7 +92,7 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
      *
      * @param dataBean
      */
-    public void CallBack_Info(MineInfo_Entity.DataBean dataBean) {
+    public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
         nickname.setText(dataBean.getNikename());
         head.setImageURI(Uri.parse(dataBean.getAvatar()));
 

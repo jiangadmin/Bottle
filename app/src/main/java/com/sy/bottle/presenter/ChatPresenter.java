@@ -89,6 +89,7 @@ public class ChatPresenter implements Observer {
             @Override
             public void onSuccess(TIMMessage msg) {
                 //发送消息成功,消息状态已在sdk中修改，此时只需更新界面
+
                 MessageEvent.getInstance().onNewMessage(null);
 
             }

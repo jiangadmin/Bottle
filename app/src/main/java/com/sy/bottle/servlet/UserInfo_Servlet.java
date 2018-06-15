@@ -6,15 +6,16 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
+import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.MineInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
@@ -24,39 +25,44 @@ import com.sy.bottle.utils.SaveUtils;
  * @date: 2018/5/31
  * @Email: www.fangmu@qq.com
  * @Phone: 186 6120 1018
- * TODO: 获取个人信息
+ * TODO: 获取用户信息
  */
-public class MineInfo_Servlet extends AsyncTask<String, Integer, MineInfo_Entity> {
+public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity> {
     private static final String TAG = "MineInfo_Servlet";
 
     Activity activity;
 
     Fragment fragment;
 
-    public MineInfo_Servlet(Fragment fragment) {
+    public UserInfo_Servlet(Fragment fragment) {
         this.fragment = fragment;
     }
 
-    public MineInfo_Servlet(Activity activity) {
+    public UserInfo_Servlet(Activity activity) {
         this.activity = activity;
     }
 
     @Override
-    protected MineInfo_Entity doInBackground(String... strings) {
-        String res = HttpUtil.request(HttpUtil.GET,Const.API + "users/" + SaveUtils.getString(Save_Key.UID),null);
+    protected UserInfo_Entity doInBackground(String... strings) {
 
-        MineInfo_Entity entity;
+        String userid = SaveUtils.getString(Save_Key.UID);
+        if (strings.length>0){
+            userid = strings[0];
+        }
+        String res = HttpUtil.request(HttpUtil.GET, Const.API + "users/" + userid, null);
+
+        UserInfo_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
-            entity = new MineInfo_Entity();
+            entity = new UserInfo_Entity();
             entity.setStatus(-1);
             entity.setMessage("连接服务器失败！");
         } else {
             try {
                 LogUtil.e(TAG, res);
-                entity = new Gson().fromJson(res, MineInfo_Entity.class);
+                entity = new Gson().fromJson(res, UserInfo_Entity.class);
             } catch (Exception e) {
-                entity = new MineInfo_Entity();
+                entity = new UserInfo_Entity();
                 entity.setStatus(-2);
                 entity.setMessage("数据解析失败！");
             }
@@ -66,7 +72,7 @@ public class MineInfo_Servlet extends AsyncTask<String, Integer, MineInfo_Entity
     }
 
     @Override
-    protected void onPostExecute(MineInfo_Entity entity) {
+    protected void onPostExecute(UserInfo_Entity entity) {
         super.onPostExecute(entity);
         Loading.dismiss();
 
@@ -80,6 +86,12 @@ public class MineInfo_Servlet extends AsyncTask<String, Integer, MineInfo_Entity
                 }
                 if (activity instanceof Edit_Mine_Info_Activity) {
                     ((Edit_Mine_Info_Activity) activity).CallBack_Info(entity.getData());
+                }
+                if (activity instanceof AddFriend_Activity) {
+                    ((AddFriend_Activity) activity).CallBack(entity.getData());
+                }
+                if (activity instanceof Profile_Activity) {
+                    ((Profile_Activity) activity).CallBack(entity.getData());
                 }
                 break;
             case 401:

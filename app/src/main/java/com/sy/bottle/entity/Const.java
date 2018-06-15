@@ -12,8 +12,8 @@ public class Const {
     //sdk appid 由腾讯分配
     public static final int SDK_APPID = 1400093238;
 
-    public static String API = "http://api.syplp.com/";
-//    public static String API = "http://192.168.1.188/syplp/code/web/api/public/index.php/";
+//    public static String API = "http://api.syplp.com/";
+    public static String API = "http://192.168.1.188/syplp/code/web/api/public/index.php/";
     public static String IMG = "http://hmc-1256670088.cos.ap-shanghai.myqcloud.com/";
 
 }

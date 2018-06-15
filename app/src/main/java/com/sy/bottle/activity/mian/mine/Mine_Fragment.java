@@ -14,9 +14,9 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.dialog.FriendShip_Dialog;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.MineInfo_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.servlet.MineInfo_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
@@ -57,7 +57,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
         //获取个人信息
-        new MineInfo_Servlet(this).execute();
+        new UserInfo_Servlet(this).execute();
     }
 
     private void initview(View view) {
@@ -87,14 +87,14 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
     }
 
-    MineInfo_Entity.DataBean bean;
+    UserInfo_Entity.DataBean bean;
 
     /**
      * 个人信息回调
      *
      * @param bean
      */
-    public void initeven(MineInfo_Entity.DataBean bean) {
+    public void initeven(UserInfo_Entity.DataBean bean) {
         this.bean = bean;
 
         name.setText(bean.getNikename());

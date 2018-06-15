@@ -63,7 +63,7 @@ public class Log_Activity extends Base_Activity {
      */
     public void CallBack(List<Gift_Log_Entity.DataBean> beans) {
 
-        if (beans != null && beans.size() > 1) {
+        if (beans != null && beans.size() > 0) {
             view_null.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
             gift_log_adapter.setDataBeans(beans);

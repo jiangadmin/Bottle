@@ -14,8 +14,10 @@ import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.ListPicker_Dialog;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.model.FriendshipInfo;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.view.LineControllerView;
 import com.sy.bottle.view.TabToast;
 import com.sy.bottle.viewfeatures.FriendshipManageView;
@@ -66,6 +68,17 @@ public class AddFriend_Activity extends Base_Activity implements View.OnClickLis
         chat.setOnClickListener(this);
 
         presenter = new FriendshipManagerPresenter(this);
+
+        //查询好友资料
+        new UserInfo_Servlet(this).execute(id);
+
+    }
+
+    /**
+     * 查询数据返回
+     * @param bean
+     */
+    public void CallBack(UserInfo_Entity.DataBean bean){
 
     }
 

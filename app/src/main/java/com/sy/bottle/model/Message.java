@@ -5,6 +5,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.sy.bottle.adapters.ChatAdapter;
+import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
+import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.TimeUtil;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMMessage;
@@ -66,6 +70,7 @@ public abstract class Message {
                 if (name.equals("")) name = message.getSender();
                 viewHolder.sender.setText(name);
             } else {
+                PicassoUtlis.img(message.getSenderProfile().getFaceUrl(), viewHolder.leftAvatar);
                 viewHolder.sender.setVisibility(View.GONE);
             }
             return viewHolder.leftMessage;

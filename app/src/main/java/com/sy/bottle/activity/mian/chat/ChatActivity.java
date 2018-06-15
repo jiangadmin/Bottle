@@ -34,6 +34,7 @@ import com.sy.bottle.model.UGCMessage;
 import com.sy.bottle.model.VideoMessage;
 import com.sy.bottle.model.VoiceMessage;
 import com.sy.bottle.presenter.ChatPresenter;
+import com.sy.bottle.servlet.Gift_For_Servlet;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.MediaUtil;
@@ -209,22 +210,27 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         } else {
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
-                //如果是自定义消息 并且不是礼物消息
-                if (mMessage instanceof CustomMessage && ((CustomMessage) mMessage).getType() != CustomMessage.Type.GIFT) {
-                    LogUtil.e(TAG,"showMessage");
-                    CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
-                    switch (messageType) {
+
+                if (mMessage instanceof CustomMessage){
+                    switch (((CustomMessage) mMessage).getType()){
+
                         case TYPING:
                             setRTitle("对方正在输入...");
                             handler.removeCallbacks(resetTitle);
                             handler.postDelayed(resetTitle, 3000);
                             break;
                         case GIFT:
-                            LogUtil.e(TAG,"礼物");
-                            break;
-                        default:
+                            if (messageList.size() == 0) {
+                                mMessage.setHasTime(null);
+                            } else {
+                                mMessage.setHasTime(messageList.get(messageList.size() - 1).getMessage());
+                            }
+                            messageList.add(mMessage);
+                            adapter.notifyDataSetChanged();
+                            listView.setSelection(adapter.getCount() - 1);
                             break;
                     }
+
                 } else {
                     if (messageList.size() == 0) {
                         mMessage.setHasTime(null);
@@ -251,19 +257,20 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
             Message mMessage = MessageFactory.getMessage(messages.get(i));
 
-            if (mMessage instanceof CustomMessage){
-                LogUtil.e(TAG,"自定义消息");
+            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted) {
+                continue;
             }
 
-            if (mMessage == null || messages.get(i).status() == TIMMessageStatus.HasDeleted){
-                LogUtil.e(TAG,"111");
-                continue;
+            //判断自定义消息
+            if (mMessage instanceof CustomMessage) {
+                switch (((CustomMessage) mMessage).getType()) {
+                    case TYPING:
+                        continue;
+                    case INVALID:
+                        continue;
+                }
             }
-            if (mMessage instanceof CustomMessage && (((CustomMessage) mMessage).getType() == CustomMessage.Type.TYPING ||
-                    ((CustomMessage) mMessage).getType() == CustomMessage.Type.INVALID)) {
-                LogUtil.e(TAG, mMessage.getDesc());
-                continue;
-            }
+
             ++newMsgNum;
             if (i != messages.size() - 1) {
                 mMessage.setHasTime(messages.get(i + 1));
@@ -277,6 +284,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         listView.setSelection(newMsgNum);
     }
 
+    /**
+     * 显示撤销信息
+     * @param timMessageLocator
+     */
     @Override
     public void showRevokeMessage(TIMMessageLocator timMessageLocator) {
         for (Message msg : messageList) {
@@ -383,9 +394,24 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     public void sendGift(Map map) {
         if (type == TIMConversationType.C2C) {
-            Message message = new CustomMessage(CustomMessage.Type.GIFT, map);
-            presenter.sendMessage(message.getMessage());
+
+            map.put("give_user_id", identify);
+            map.put("number", "6");
+
+            //请求发送礼物
+            new Gift_For_Servlet(this).execute(map);
+
         }
+    }
+
+    /**
+     * 赠送礼物
+     * @param map
+     */
+    public void CallBack_ForGitf(Map map) {
+        TabToast.makeText("赠送成功");
+        Message message = new CustomMessage(CustomMessage.Type.GIFT, map);
+        presenter.sendMessage(message.getMessage());
     }
 
     /**
@@ -443,8 +469,9 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     public void sending() {
         if (type == TIMConversationType.C2C) {
+            //TODO: 正在输入状态发送
             Message message = new CustomMessage(CustomMessage.Type.TYPING, null);
-            presenter.sendOnlineMessage(message.getMessage());
+//            presenter.sendOnlineMessage(message.getMessage());
         }
     }
 
@@ -634,7 +661,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                         break;
                 }
                 break;
-
         }
     }
 }

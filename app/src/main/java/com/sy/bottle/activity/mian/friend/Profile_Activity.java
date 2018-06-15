@@ -5,17 +5,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.Edit_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
+import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.ShowImage_Dialog;
+import com.sy.bottle.entity.Banner_Entity;
+import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Photos_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.event.FriendshipEvent;
 import com.sy.bottle.model.FriendshipInfo;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
+import com.sy.bottle.servlet.Photos_Get_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
+import com.sy.bottle.view.CircleImageView;
+import com.sy.bottle.view.ImageCycleView;
 import com.sy.bottle.view.LineControllerView;
 import com.sy.bottle.view.TabToast;
 import com.sy.bottle.viewfeatures.FriendshipManageView;
@@ -45,8 +57,10 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
     private FriendshipManagerPresenter friendshipManagerPresenter;
     private String identify, categoryStr;
 
-    TextView name;
+    TextView name, sign;
     LineControllerView id, remark, category, black;
+    ImageCycleView photos;
+    CircleImageView head;
 
     public static void start(Context context, String identify) {
         Intent intent = new Intent(context, Profile_Activity.class);
@@ -67,16 +81,65 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
         identify = getIntent().getStringExtra(IDentify);
         friendshipManagerPresenter = new FriendshipManagerPresenter(this);
         showProfile(identify);
+
+        //获取用户信息
+        new UserInfo_Servlet(this).execute(identify);
+
+        //获取照片墙
+        new Photos_Get_Servlet(this).execute(identify);
     }
 
     private void initview() {
-        name = findViewById(R.id.name);
-        id = findViewById(R.id.id);
-        remark = findViewById(R.id.remark);
-        category = findViewById(R.id.group);
-        black = findViewById(R.id.blackList);
+        photos = findViewById(R.id.user_info_photos);
+        head = findViewById(R.id.user_info_avatar);
+        name = findViewById(R.id.user_info_name);
+        sign = findViewById(R.id.user_info_sign);
+        id = findViewById(R.id.user_info_id);
+        remark = findViewById(R.id.user_info_remark);
+        category = findViewById(R.id.user_info_group);
+        black = findViewById(R.id.user_info_blackList);
 
         black.setCheckListener(this);
+
+    }
+
+    /**
+     * 用户信息
+     *
+     * @param bean
+     */
+    public void CallBack(UserInfo_Entity.DataBean bean) {
+        PicassoUtlis.img(Const.IMG + bean.getAvatar(), head);
+        sign.setText(bean.getSign());
+    }
+
+    List<Banner_Entity.DBean> dBeans = new ArrayList<>();
+    /**
+     * 照片返回
+     *
+     * @param dataBeans
+     */
+    public void CallBack_Photos(List<Photos_Entity.DataBean> dataBeans) {
+        dataBeans.clear();
+        for (Photos_Entity.DataBean bean : dataBeans) {
+            Banner_Entity.DBean dBean = new Banner_Entity.DBean();
+            dBean.setPicUrl(bean.getPic_url());
+            dBean.setId(bean.getId());
+            dBeans.add(dBean);
+        }
+
+        photos.setBeans(dBeans, new ImageCycleView.Listener() {
+            @Override
+            public void displayImage(String imageURL, ImageView imageView) {
+                PicassoUtlis.img(imageURL, imageView);
+            }
+
+            @Override
+            public void onImageClick(Banner_Entity.DBean bean, View imageView) {
+                new ShowImage_Dialog(Profile_Activity.this, bean.getPicUrl()).show();
+            }
+        });
+
     }
 
     /**
@@ -99,6 +162,7 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
 
                 if (timUserProfiles.size() > 0) {
                     //头像
+                    PicassoUtlis.img(timUserProfiles.get(0).getFaceUrl(), head);
                     //照片墙
                     //昵称
                     name.setText(timUserProfiles.get(0).getNickName());
@@ -165,14 +229,14 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnChat:
+            case R.id.user_info_btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("identify", identify);
                 intent.putExtra("type", TIMConversationType.C2C);
                 startActivity(intent);
                 MyApp.finishActivity();
                 break;
-            case R.id.btnDel:
+            case R.id.user_info_btnDel:
                 friendshipManagerPresenter.delFriend(identify);
                 break;
             case R.id.group:
@@ -207,7 +271,7 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
             }
         } else if (requestCode == CHANGE_REMARK_CODE) {
             if (resultCode == RESULT_OK) {
-                LineControllerView remark = findViewById(R.id.remark);
+                LineControllerView remark = findViewById(R.id.user_info_remark);
 //                remark.setContent(data.getStringExtra(EditActivity.RETURN_EXTRA));
 
             }

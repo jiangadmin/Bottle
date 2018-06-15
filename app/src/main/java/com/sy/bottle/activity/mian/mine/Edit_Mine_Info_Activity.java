@@ -23,11 +23,11 @@ import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.Photos_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.MineInfo_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Head_Set_Servlet;
-import com.sy.bottle.servlet.MineInfo_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.servlet.Photos_Del_Servlet;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.servlet.Photos_Set_Servlet;
@@ -88,7 +88,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
     /**
      * 记录个人信息
      */
-    MineInfo_Entity.DataBean dataBean;
+    UserInfo_Entity.DataBean dataBean;
 
     /**
      * 新省市区
@@ -121,7 +121,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
      * 加载个人信息
      */
     public void initinfo() {
-        new MineInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new UserInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
@@ -136,7 +136,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
      *
      * @param dataBean
      */
-    public void CallBack_Info(MineInfo_Entity.DataBean dataBean) {
+    public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
         this.dataBean = dataBean;
         if (dataBean.getAvatar().contains("http")) {
 

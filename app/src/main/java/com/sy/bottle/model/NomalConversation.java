@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
+import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMConversation;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMUserProfile;

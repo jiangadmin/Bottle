@@ -7,7 +7,7 @@ package com.sy.bottle.entity;
  * @Phone: 186 6120 1018
  * TODO: 个人信息
  */
-public class MineInfo_Entity extends Base_Entity {
+public class UserInfo_Entity extends Base_Entity {
 
 
     /**

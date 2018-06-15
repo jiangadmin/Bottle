@@ -79,7 +79,13 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                     @Override
                     public void onError(int i, String s) {
 
-                        TabToast.makeText("登录失败，请稍后重试");
+                        if (MyApp.currentActivity() instanceof Welcome_Activity){
+                            Login_Activity.start(MyApp.currentActivity());
+                            MyApp.finishActivity(Welcome_Activity.class);
+
+                        }else {
+                            TabToast.makeText("登录失败，请稍后重试");
+                        }
                     }
 
                     @Override

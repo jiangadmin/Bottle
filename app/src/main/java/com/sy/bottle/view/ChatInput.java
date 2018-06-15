@@ -32,11 +32,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
 import com.sy.bottle.adapters.Gift_Adapter;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.entity.Gift_Entity;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.viewfeatures.ChatView;
 
 import java.io.IOException;
@@ -359,41 +362,41 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
-                Base_Dialog base_dialog = new Base_Dialog(context);
-                base_dialog.setTitle("确认送出" + dataBeans.get(i).getName() + "?");
-                base_dialog.setOk("确认", new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //逗号分隔  ID在前  地址在后
-                        Gift_Entity.DataBean bean = dataBeans.get(i);
-                        Map map = new HashMap();
+                if (SaveUtils.getInt(Save_Key.S_星星) < dataBeans.get(i).getPrice()) {
+                    Base_Dialog base_dialog = new Base_Dialog(context);
+                    base_dialog.setTitle("星星余额不足");
+                    base_dialog.setMessage("为了更好的用户体验，我们建议您充值获取星星！");
+                    base_dialog.setOk("去充值", new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            MyBalance_Activity.start(context);
 
-                        map.put("Id", bean.getId());
-                        map.put("Content", bean.getContent());
-                        map.put("Name", bean.getName());
-                        map.put("Pic_url", bean.getPic_url());
-                        map.put("Price", bean.getPrice());
+                        }
+                    });
+                    base_dialog.setEsc("关闭", null);
 
-                        chatView.sendGift(map);
-                    }
-                });
-                base_dialog.setEsc("取消", null);
-//                if (SaveUtils.getInt(Save_Key.S_星星) < dataBeans.get(i).getPrice()) {
-//                    Base_Dialog base_dialog = new Base_Dialog(context);
-//                    base_dialog.setTitle("星星余额不足");
-//                    base_dialog.setMessage("为了更好的用户体验，我们建议您充值获取星星！");
-//                    base_dialog.setOk("去充值", new OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            MyBalance_Activity.start(context);
-//
-//                        }
-//                    });
-//                    base_dialog.setEsc("关闭", null);
-//
-//                } else {
-//
-//                }
+                } else {
+
+                    Base_Dialog base_dialog = new Base_Dialog(context);
+                    base_dialog.setTitle("确认送出" + dataBeans.get(i).getName() + "?");
+                    base_dialog.setOk("确认", new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //逗号分隔  ID在前  地址在后
+                            Gift_Entity.DataBean bean = dataBeans.get(i);
+                            Map map = new HashMap();
+
+                            map.put("Id", bean.getId());
+                            map.put("Content", bean.getContent());
+                            map.put("Name", bean.getName());
+                            map.put("Pic_url", bean.getPic_url());
+                            map.put("Price", bean.getPrice());
+
+                            chatView.sendGift(map);
+                        }
+                    });
+                    base_dialog.setEsc("取消", null);
+                }
             }
         });
     }

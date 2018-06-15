@@ -1,6 +1,8 @@
 package com.sy.bottle.event;
 
 
+import android.util.Log;
+
 import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMFriendshipSettings;
 import com.tencent.imsdk.TIMSNSChangeInfo;
@@ -37,7 +39,6 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
                 .enableFriendshipStorage(true)
                 .setFriendshipProxyListener(this);
     }
-
 
     @Override
     public void OnAddFriends(List<TIMUserProfile> list) {
@@ -127,6 +128,7 @@ public class FriendshipEvent extends Observable implements TIMFriendshipProxyLis
         DEL,//删除好友
         PROFILE_UPDATE,//变更好友资料
         GROUP_UPDATE,//分组变更
+
     }
 
 

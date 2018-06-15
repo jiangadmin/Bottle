@@ -10,52 +10,69 @@
 
     <include layout="@layout/view_title_bar" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="190dp">
 
+        <!--照片墙-->
+        <com.sy.bottle.view.ImageCycleView
+            android:id="@+id/user_info_photos"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/loading">
+
+        </com.sy.bottle.view.ImageCycleView>
+
+        <!--头像-->
         <com.sy.bottle.view.CircleImageView
-            android:id="@+id/avatar"
-            android:layout_width="115dp"
-            android:layout_height="115dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/head_other" />
+            android:id="@+id/user_info_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/gray_3"
-            android:textSize="16sp" />
-    </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/user_info_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/user_info_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textSize="14sp" />
 
     <com.sy.bottle.view.LineControllerView
-        android:id="@+id/id"
+        android:id="@+id/user_info_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:name="账号" />
 
     <com.sy.bottle.view.LineControllerView
-        android:id="@+id/remark"
+        android:id="@+id/user_info_remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:canNav="true"
         app:name="备注名" />
 
     <com.sy.bottle.view.LineControllerView
-        android:id="@+id/blackList"
+        android:id="@+id/user_info_blackList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:isSwitch="true"
         app:name="加入黑名单" />
 
     <com.sy.bottle.view.LineControllerView
-        android:id="@+id/group"
+        android:id="@+id/user_info_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
@@ -72,7 +89,7 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:id="@+id/btnDel"
+            android:id="@+id/user_info_btnDel"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -85,7 +102,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/btnChat"
+            android:id="@+id/user_info_btnChat"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"

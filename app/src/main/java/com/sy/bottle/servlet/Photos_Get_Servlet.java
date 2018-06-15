@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
@@ -41,7 +41,7 @@ public class Photos_Get_Servlet extends AsyncTask<String, Integer, Photos_Entity
 
     @Override
     protected Photos_Entity doInBackground(String... strings) {
-        String res = HttpUtil.request(HttpUtil.GET,Const.API + "photos/" + strings[0],null);
+        String res = HttpUtil.request(HttpUtil.GET, Const.API + "photos/" + strings[0], null);
 
         LogUtil.e(TAG, res);
 
@@ -79,7 +79,13 @@ public class Photos_Get_Servlet extends AsyncTask<String, Integer, Photos_Entity
                 if (activity instanceof Mine_Info_Activity) {
                     ((Mine_Info_Activity) activity).CallBack_Phtots(entity.getData());
                 }
+
+                if (activity instanceof Profile_Activity) {
+                    ((Profile_Activity) activity).CallBack_Photos(entity.getData());
+                }
                 break;
+
+
             case 400:
 
                 if (activity instanceof Edit_Mine_Info_Activity) {

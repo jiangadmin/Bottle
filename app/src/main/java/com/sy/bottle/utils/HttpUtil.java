@@ -118,10 +118,10 @@ public class HttpUtil {
                 if (type != POST) {
                     String write = String.valueOf(ToolUtils.map2Json((Map<String, Object>) o));
 
-                    LogUtil.e(TAG, "HTTP内容:" + write);
-
                     // 获取URLConnection对象对应的输出流
                     PrintWriter out = new PrintWriter(urlConn.getOutputStream());
+
+                    LogUtil.e(TAG, "HTTP内容:" + write);
                     out.print(write);
                     // flush输出流的缓冲
                     out.flush();
@@ -174,7 +174,6 @@ public class HttpUtil {
 
         return res;
     }
-
 
     /**
      * @param uploadUrl      上传路径参数
@@ -254,8 +253,5 @@ public class HttpUtil {
             e.printStackTrace();
             return null;
         }
-
     }
-
-
 }

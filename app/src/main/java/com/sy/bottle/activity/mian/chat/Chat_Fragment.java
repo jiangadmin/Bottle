@@ -25,7 +25,6 @@ import com.sy.bottle.model.NomalConversation;
 import com.sy.bottle.presenter.ConversationPresenter;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
 import com.sy.bottle.presenter.GroupManagerPresenter;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.ConversationView;
 import com.sy.bottle.viewfeatures.FriendshipMessageView;
 import com.sy.bottle.viewfeatures.GroupManageMessageView;
@@ -64,7 +63,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
 
     LinearLayout viewnull;
 
-     View v;
+    View v;
 
     @Nullable
     @Override
@@ -100,7 +99,6 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
         registerForContextMenu(listView);
 
         updateview();
-
 
     }
 
@@ -143,7 +141,12 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
             groupManagerPresenter.getGroupManageLastMessage();
             return;
         }
-        if (MessageFactory.getMessage(message) instanceof CustomMessage) return;
+        if (MessageFactory.getMessage(message) instanceof CustomMessage) {
+            if (((CustomMessage) MessageFactory.getMessage(message)).getType() != CustomMessage.Type.GIFT) {
+                return;
+            }
+
+        }
         NomalConversation conversation = new NomalConversation(message.getConversation());
         Iterator<Conversation> iterator = conversationList.iterator();
         while (iterator.hasNext()) {
@@ -309,13 +312,13 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
     /**
      * 更新页面显示
      */
-    public void updateview(){
+    public void updateview() {
         adapter.notifyDataSetChanged();
 
-        if (adapter.getCount()==0){
+        if (adapter.getCount() == 0) {
             viewnull.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
-        }else {
+        } else {
             viewnull.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
         }

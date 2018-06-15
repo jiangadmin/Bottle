@@ -14,7 +14,6 @@ import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMImage;
@@ -70,15 +69,7 @@ public class ImageMessage extends Message {
             case Sending:
 
                 ImageView imageView = new ImageView(MyApp.getInstance());
-                String path = e.getPath();
-                LogUtil.e(TAG, path);
-                if (e.getPath().contains(",")) {
-                    LogUtil.e(TAG, path.substring(path.indexOf(",")+1));
-                    PicassoUtlis.img(e.getPath().substring(e.getPath().indexOf(",")+1), imageView);
-                } else {
-                    imageView.setImageBitmap(getThumb(e.getPath()));
-
-                }
+                imageView.setImageBitmap(getThumb(e.getPath()));
                 clearView(viewHolder);
                 getBubbleView(viewHolder).addView(imageView);
                 break;
