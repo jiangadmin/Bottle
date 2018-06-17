@@ -1,7 +1,6 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.friend.FriendshipManageMessageActivity;
@@ -49,9 +48,16 @@ public class FriendshipConversation extends Conversation {
      * 获取头像
      */
     @Override
-    public int getAvatar() {
+    public String getAvatar() {
+        //TODO:优化
+        return null;
+    }
+
+    @Override
+    public Integer getAvatarID() {
         return R.mipmap.ic_news;
     }
+
 
     /**
      * 跳转到聊天界面或会话详情
@@ -60,8 +66,7 @@ public class FriendshipConversation extends Conversation {
      */
     @Override
     public void navToDetail(Context context) {
-        Intent intent = new Intent(context, FriendshipManageMessageActivity.class);
-        context.startActivity(intent);
+        FriendshipManageMessageActivity.start(context);
     }
 
     /**

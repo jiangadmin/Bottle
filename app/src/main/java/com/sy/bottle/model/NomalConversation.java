@@ -1,10 +1,10 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
-import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMConversation;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMUserProfile;
@@ -32,14 +32,27 @@ public class NomalConversation extends Conversation {
     }
 
     @Override
-    public int getAvatar() {
+    public String getAvatar() {
         switch (type) {
             case C2C:
-                return R.drawable.head_other;
+                TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+
+                if (profile != null) {
+
+                    faceurl = profile.getFaceUrl();
+
+                }
+                break;
             case Group:
-                return R.drawable.head_group;
+                faceurl = null;
+                break;
         }
-        return 0;
+        return faceurl;
+    }
+
+    @Override
+    public Integer getAvatarID() {
+        return R.drawable.head_other;
     }
 
     /**
@@ -81,7 +94,19 @@ public class NomalConversation extends Conversation {
             if (name.equals("")) name = identify;
         } else {
             TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-            name = profile == null ? identify : profile.getNickName();
+
+            if (profile != null) {
+
+                if (!TextUtils.isEmpty(profile.getRemark())) {
+                    name = profile.getRemark();
+                } else {
+                    name = profile.getNickName();
+                }
+
+                faceurl = profile.getFaceUrl();
+
+            }
+
         }
         return name;
     }

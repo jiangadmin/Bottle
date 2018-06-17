@@ -2,6 +2,7 @@ package com.sy.bottle.activity.mian.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -275,24 +276,26 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         Conversation conversation = conversationList.get(info.position);
-        if (conversation instanceof NomalConversation) {
+//        if (conversation instanceof NomalConversation) {
             menu.add(0, 1, Menu.NONE, "删除会话");
-        }
+//        }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        NomalConversation conversation = (NomalConversation) conversationList.get(info.position);
+            Conversation conversation =  conversationList.get(info.position);
         switch (item.getItemId()) {
             case 1:
                 if (conversation != null) {
-                    if (presenter.delConversation(conversation.getType(), conversation.getIdentify())) {
+
+//                    if (presenter.delConversation(conversation.getType(), conversation.getIdentify())) {
                         conversationList.remove(conversation);
                         updateview();
-                    }
+//                    }
                 }
                 break;
             default:

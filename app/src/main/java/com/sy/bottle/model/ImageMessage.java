@@ -9,9 +9,11 @@ import android.media.ExifInterface;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.sy.bottle.R;
 import com.sy.bottle.activity.ImageViewActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.view.TabToast;
@@ -62,6 +64,10 @@ public class ImageMessage extends Message {
      */
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+
+        viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
+        viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
+
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
         TIMImageElem e = (TIMImageElem) message.getElement(0);
@@ -69,6 +75,7 @@ public class ImageMessage extends Message {
             case Sending:
 
                 ImageView imageView = new ImageView(MyApp.getInstance());
+
                 imageView.setImageBitmap(getThumb(e.getPath()));
                 clearView(viewHolder);
                 getBubbleView(viewHolder).addView(imageView);
@@ -101,6 +108,8 @@ public class ImageMessage extends Message {
                         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                LogUtil.e(TAG,"图片地址 "+image.getUrl());
+                                new ShowImage_Dialog(MyApp.currentActivity(),image.getUrl()).show();
                                 navToImageview(image, context);
                             }
                         });
@@ -109,7 +118,6 @@ public class ImageMessage extends Message {
                 break;
         }
         showStatus(viewHolder);
-
 
     }
 
@@ -225,9 +233,11 @@ public class ImageMessage extends Message {
                 TabToast.makeText("正在下载,请稍后");
                 return;
             }
-            Intent intent = new Intent(context, ImageViewActivity.class);
-            intent.putExtra("filename", image.getUuid());
-            context.startActivity(intent);
+
+//            new ShowImage_Dialog(MyApp.currentActivity(),image.getUrl()).show();
+//            Intent intent = new Intent(context, ImageViewActivity.class);
+//            intent.putExtra("filename", image.getUuid());
+//            context.startActivity(intent);
         } else {
             if (!isDownloading) {
                 isDownloading = true;
@@ -244,9 +254,10 @@ public class ImageMessage extends Message {
                     @Override
                     public void onSuccess() {
                         isDownloading = false;
-                        Intent intent = new Intent(context, ImageViewActivity.class);
-                        intent.putExtra("filename", image.getUuid());
-                        context.startActivity(intent);
+//                        new ShowImage_Dialog(MyApp.currentActivity(),image.getUrl()).show();
+//                        Intent intent = new Intent(context, ImageViewActivity.class);
+//                        intent.putExtra("filename", image.getUuid());
+//                        context.startActivity(intent);
                     }
                 });
             } else {

@@ -20,6 +20,9 @@ public abstract class Conversation implements Comparable {
     //会话对象名称
     protected String name;
 
+    //会话对象头像
+    protected String faceurl;
+
     /**
      * 获取最后一条消息的时间
      */
@@ -38,7 +41,11 @@ public abstract class Conversation implements Comparable {
     /**
      * 获取头像
      */
-    abstract public int getAvatar();
+    abstract public String getAvatar();
+  /**
+     * 获取头像本地
+     */
+    abstract public Integer getAvatarID();
 
     /**
      * 跳转到聊天界面或会话详情

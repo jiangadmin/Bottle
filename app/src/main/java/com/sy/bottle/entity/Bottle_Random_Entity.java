@@ -1,4 +1,4 @@
-package com.sy.bottle.event;
+package com.sy.bottle.entity;
 
 import com.sy.bottle.entity.Base_Entity;
 

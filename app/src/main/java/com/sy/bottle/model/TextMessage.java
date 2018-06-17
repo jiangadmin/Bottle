@@ -96,9 +96,7 @@ public class TextMessage extends Message {
             textElem.setText(s.subSequence(currentIndex, s.length()).toString());
             message.addElement(textElem);
         }
-
     }
-
 
     /**
      * 在聊天界面显示消息
@@ -108,6 +106,9 @@ public class TextMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+        viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
+        viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
+
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
         boolean hasText = false;
@@ -126,6 +127,7 @@ public class TextMessage extends Message {
             stringBuilder.insert(0, " ");
         }
         tv.setText(stringBuilder);
+
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
     }

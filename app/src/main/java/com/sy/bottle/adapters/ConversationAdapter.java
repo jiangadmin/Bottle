@@ -1,14 +1,18 @@
 package com.sy.bottle.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.model.Conversation;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.TimeUtil;
 import com.sy.bottle.view.CircleImageView;
 
@@ -18,6 +22,7 @@ import java.util.List;
  * 会话界面adapter
  */
 public class ConversationAdapter extends ArrayAdapter<Conversation> {
+    private static final String TAG = "ConversationAdapter";
 
     private int resourceId;
     private View view;
@@ -53,7 +58,11 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }
         final Conversation data = getItem(position);
         viewHolder.tvName.setText(data.getName());
-        viewHolder.avatar.setImageResource(data.getAvatar());
+        if (!TextUtils.isEmpty(data.getAvatar())&&!data.getName().equals("新朋友")) {
+            PicassoUtlis.img(data.getAvatar(), viewHolder.avatar);
+        }else {
+            viewHolder.avatar.setImageResource(data.getAvatarID());
+        }
         viewHolder.lastMessage.setText(data.getLastMessageSummary());
         viewHolder.time.setText(TimeUtil.getTimeStr(data.getLastMessageTime()));
         long unRead = data.getUnreadNum();
@@ -77,7 +86,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
     public class ViewHolder {
         public TextView tvName;
-        public CircleImageView avatar;
+        public ImageView avatar;
         public TextView lastMessage;
         public TextView time;
         public TextView unread;

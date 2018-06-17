@@ -1,6 +1,9 @@
 package com.sy.bottle.event;
 
 
+import com.sy.bottle.servlet.Music_Servlet;
+import com.sy.bottle.utils.LogUtil;
+import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageListener;
@@ -16,10 +19,11 @@ import java.util.Observable;
  * 消息通知事件，上层界面可以订阅此事件
  */
 public class MessageEvent extends Observable implements TIMMessageListener, TIMMessageRevokedListener {
+    private static final String TAG = "MessageEvent";
 
     private volatile static MessageEvent instance;
 
-    private MessageEvent(){
+    private MessageEvent() {
         //注册消息监听器
         TIMManager.getInstance().addMessageListener(this);
 
@@ -31,7 +35,7 @@ public class MessageEvent extends Observable implements TIMMessageListener, TIMM
         return ext;
     }
 
-    public static MessageEvent getInstance(){
+    public static MessageEvent getInstance() {
         if (instance == null) {
             synchronized (MessageEvent.class) {
                 if (instance == null) {
@@ -42,9 +46,25 @@ public class MessageEvent extends Observable implements TIMMessageListener, TIMM
         return instance;
     }
 
+    /**
+     * 新消息
+     *
+     * @param list
+     * @return
+     */
     @Override
     public boolean onNewMessages(List<TIMMessage> list) {
-        for (TIMMessage item:list){
+        for (TIMMessage item : list) {
+            //播放铃声
+            if (item.getElement(0).getType() != TIMElemType.SNSTips
+                    &&item.getElement(0).getType() != TIMElemType.ProfileTips)
+                new Music_Servlet().execute(item);
+//            LogUtil.e(TAG, "getSender: " + item.getSender());
+//            LogUtil.e(TAG, "getNickName: " + item.getSenderProfile().getNickName());
+//            LogUtil.e(TAG, "getFaceUrl: " + item.getSenderProfile().getFaceUrl());
+            LogUtil.e(TAG, "getType: " + item.getElement(0).getType());
+
+
             setChanged();
             notifyObservers(item);
         }
@@ -54,7 +74,8 @@ public class MessageEvent extends Observable implements TIMMessageListener, TIMM
     /**
      * 主动通知新消息
      */
-    public void onNewMessage(TIMMessage message){
+    public void onNewMessage(TIMMessage message) {
+
         setChanged();
         notifyObservers(message);
     }
@@ -62,7 +83,7 @@ public class MessageEvent extends Observable implements TIMMessageListener, TIMM
     /**
      * 清理消息监听
      */
-    public void clear(){
+    public void clear() {
         instance = null;
     }
 

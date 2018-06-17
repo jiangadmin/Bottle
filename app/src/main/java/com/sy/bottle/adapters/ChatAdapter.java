@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.model.Message;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
@@ -30,6 +29,16 @@ public class ChatAdapter extends ArrayAdapter<Message> {
     private int resourceId;
     private View view;
     private ViewHolder viewHolder;
+
+    String head = null;
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
 
     @Override
     public boolean hasStableIds() {
@@ -54,6 +63,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         resourceId = resource;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView != null) {
@@ -77,6 +87,9 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         }
         if (position < getCount()) {
             final Message data = getItem(position);
+            if (head != null) {
+                PicassoUtlis.img(head, viewHolder.leftAvatar);
+            }
             PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar);
             data.showMessage(viewHolder, getContext());
         }

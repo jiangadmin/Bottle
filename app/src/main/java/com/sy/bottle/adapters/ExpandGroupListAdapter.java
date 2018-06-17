@@ -9,7 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.sy.bottle.R;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.tencent.imsdk.TIMUserProfile;
 
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.Map;
  * 分组列表Adapters
  */
 public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
+    private static final String TAG = "ExpandGroupListAdapter";
+
     private Context mContext;
     private boolean selectable;
 
@@ -127,13 +132,24 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_childmember, null);
             itemHolder.tag = convertView.findViewById(R.id.chooseTag);
             itemHolder.name = convertView.findViewById(R.id.name);
+            itemHolder.avatar = convertView.findViewById(R.id.avatar);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ChildrenHolder) convertView.getTag();
         }
         TIMUserProfile data = (TIMUserProfile) getChild(groupPosition, childPosition);
-        itemHolder.name.setText(TextUtils.isEmpty(data.getNickName())?"ID:"+data.getIdentifier():data.getNickName());
+        if (!TextUtils.isEmpty(data.getNickName())) {
+            itemHolder.name.setText(data.getNickName());
+        }
+
+        if (!TextUtils.isEmpty(data.getRemark())) {
+            itemHolder.name.setText(data.getRemark());
+        }
         itemHolder.tag.setVisibility(selectable ? View.VISIBLE : View.GONE);
+        LogUtil.e(TAG, "头像：" + data.getFaceUrl());
+        if (!TextUtils.isEmpty(data.getFaceUrl())) {
+            PicassoUtlis.img(data.getFaceUrl(), itemHolder.avatar);
+        }
 //        itemHolder.tag.setImageResource(data.isSelected() ? R.drawable.selected : R.drawable.unselected);
         return convertView;
     }

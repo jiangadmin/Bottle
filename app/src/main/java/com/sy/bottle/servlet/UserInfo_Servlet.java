@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
@@ -18,6 +19,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 
 /**
@@ -33,6 +35,12 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
     Activity activity;
 
     Fragment fragment;
+
+    ImageView imageView;
+
+    public UserInfo_Servlet(ImageView imageView) {
+        this.imageView = imageView;
+    }
 
     public UserInfo_Servlet(Fragment fragment) {
         this.fragment = fragment;
@@ -92,6 +100,9 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 }
                 if (activity instanceof Profile_Activity) {
                     ((Profile_Activity) activity).CallBack(entity.getData());
+                }
+                if (imageView!=null){
+                    PicassoUtlis.img(entity.getData().getAvatar(),imageView);
                 }
                 break;
             case 401:

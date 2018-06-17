@@ -44,6 +44,9 @@ public class FileMessage extends Message {
      */
     @Override
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+        viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
+        viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
+
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
         TIMFileElem e = (TIMFileElem) message.getElement(0);
@@ -54,7 +57,9 @@ public class FileMessage extends Message {
 
         ImageView imageView = new ImageView(MyApp.getInstance());
         Gift_Entity.DataBean bean = new Gson().fromJson(e.getPath(), Gift_Entity.DataBean.class);
-        PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
+        if (bean.getPic_url() != null)
+            PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
+
         getBubbleView(viewHolder).addView(imageView);
         showStatus(viewHolder);
     }

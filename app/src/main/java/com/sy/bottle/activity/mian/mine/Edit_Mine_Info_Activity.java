@@ -23,21 +23,23 @@ import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.Photos_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Head_Set_Servlet;
-import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.servlet.Photos_Del_Servlet;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.servlet.Photos_Set_Servlet;
 import com.sy.bottle.servlet.Update_MineInfo_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.ImageUtils;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
 import com.sy.bottle.view.TabToast;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMFriendshipManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ import java.util.List;
  * TODO: 编辑个人资料
  */
 
-public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnClickListener, Photos_Adapter.DelListenner {
+public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnClickListener, Photos_Adapter.DelListenner, TIMCallBack {
     private static final String TAG = "Mine_Info_Activity";
 
     /**
@@ -195,13 +197,17 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
 
     }
 
+    String new_nickname;
+    String new_sign;
+    String new_city;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu:
-                String new_nickname = nickname.getText().toString();
-                String new_sign = sign.getText().toString();
-                String new_city = city.getText().toString();
+                new_nickname = nickname.getText().toString();
+                new_sign = sign.getText().toString();
+                new_city = city.getText().toString();
 
                 if (TextUtils.isEmpty(new_nickname)) {
                     TabToast.makeText("昵称不能为空");
@@ -224,9 +230,20 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                     Loading.show(this, "修改中");
 
                     if (!TextUtils.isEmpty(new_Area)) {
-                        new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign, new_Province, new_City, new_Area);
+                        TIMFriendshipManager.ModifyUserProfileParam userProfileParam = new TIMFriendshipManager.ModifyUserProfileParam();
+                        userProfileParam.setNickname(new_nickname);
+                        userProfileParam.setSelfSignature(new_sign);
+                        userProfileParam.setLocation(new_Province + "-" + new_City + "-" + new_Area);
+
+                        TIMFriendshipManager.getInstance().modifyProfile(userProfileParam, this);
+
                     } else {
-                        new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign, "", "", "");
+
+                        TIMFriendshipManager.ModifyUserProfileParam userProfileParam = new TIMFriendshipManager.ModifyUserProfileParam();
+                        userProfileParam.setNickname(new_nickname);
+                        userProfileParam.setSelfSignature(new_sign);
+
+                        TIMFriendshipManager.getInstance().modifyProfile(userProfileParam, this);
 
                     }
 
@@ -320,4 +337,21 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
         startActivityForResult(intent, REQUEST_CROP_PHOTO);
     }
 
+    @Override
+    public void onError(int i, String s) {
+        Loading.dismiss();
+        TabToast.makeText(s);
+    }
+
+    @Override
+    public void onSuccess() {
+
+        if (!TextUtils.isEmpty(new_Area)) {
+            new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign, new_Province, new_City, new_Area);
+
+        } else {
+            new Update_MineInfo_Servlet(this).execute(new_nickname, new_sign);
+
+        }
+    }
 }

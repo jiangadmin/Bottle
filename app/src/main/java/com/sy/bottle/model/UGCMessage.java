@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.utils.FileUtil;
@@ -68,6 +69,9 @@ public class UGCMessage extends Message {
      */
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+
+        viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
+        viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
         final TIMUGCElem e = (TIMUGCElem) message.getElement(0);

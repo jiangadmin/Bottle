@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.servlet.Music_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
@@ -49,6 +50,7 @@ public abstract class Message {
      * @param viewHolder 界面样式
      */
     public RelativeLayout getBubbleView(ChatAdapter.ViewHolder viewHolder) {
+
         viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
         viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
         showDesc(viewHolder);

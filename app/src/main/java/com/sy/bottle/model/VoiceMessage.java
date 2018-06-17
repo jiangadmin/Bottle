@@ -33,7 +33,6 @@ public class VoiceMessage extends Message {
         this.message = message;
     }
 
-
     /**
      * 语音消息构造方法
      *
@@ -84,6 +83,10 @@ public class VoiceMessage extends Message {
             tv.setLayoutParams(lp);
             linearLayout.addView(tv);
         }
+
+        viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
+        viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
+
         clearView(viewHolder);
         getBubbleView(viewHolder).addView(linearLayout);
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
@@ -91,12 +94,10 @@ public class VoiceMessage extends Message {
             public void onClick(View v) {
                 VoiceMessage.this.playAudio(frameAnimatio);
 
-
             }
         });
         showStatus(viewHolder);
     }
-
 
     /**
      * 获取消息摘要

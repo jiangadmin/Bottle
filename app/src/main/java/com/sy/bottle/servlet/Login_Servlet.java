@@ -106,6 +106,11 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                 Register_Activity.start(MyApp.currentActivity(), 1);
                 break;
             default:
+                if (MyApp.currentActivity() instanceof Welcome_Activity){
+                    Login_Activity.start(MyApp.currentActivity());
+                    MyApp.finishActivity(Welcome_Activity.class);
+
+                }
                 TabToast.makeText(entity.getMessage());
                 LogUtil.e(TAG, entity.getMessage());
                 break;

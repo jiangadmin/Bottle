@@ -66,11 +66,17 @@ public class GroupManageConversation extends Conversation {
         });
     }
 
+    @Override
+    public String getAvatar() {
+        return null;
+    }
+
     /**
      * 获取头像
      */
     @Override
-    public int getAvatar() {
+    public Integer getAvatarID() {
+//        return null;
         return R.mipmap.ic_news;
     }
 

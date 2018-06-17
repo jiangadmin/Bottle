@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
@@ -37,17 +36,25 @@ public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Ent
     @Override
     protected Base_Entity doInBackground(String... strings) {
         Map map = new HashMap();
-        //昵称
-        map.put("nickname", strings[0]);
-        //签名
-        map.put("sign", strings[1]);
-//        //省
-        map.put("province", strings[2]);
-        //市
-        map.put("city", strings[3]);
-        //区
-        map.put("area", strings[4]);
 
+        switch (strings.length) {
+            case 5:
+                //区
+                map.put("area", strings[4]);
+            case 4:
+                //市
+                map.put("city", strings[3]);
+            case 3:
+                //省
+                map.put("province", strings[2]);
+            case 2:
+                //签名
+                map.put("sign", strings[1]);
+            case 1:
+                //昵称
+                map.put("nickname", strings[0]);
+
+        }
 
         String res = HttpUtil.request(HttpUtil.PUT, Const.API + "users/" + SaveUtils.getString(Save_Key.UID), map);
 
@@ -80,7 +87,8 @@ public class Update_MineInfo_Servlet extends AsyncTask<String, Integer, Base_Ent
                 TabToast.makeText("修改成功");
                 break;
             case 401:
-                new ReLogin_Dialog();;
+                new ReLogin_Dialog();
+                ;
             default:
                 TabToast.makeText(entity.getMessage());
                 break;

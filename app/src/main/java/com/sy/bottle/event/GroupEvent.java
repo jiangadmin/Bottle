@@ -17,7 +17,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
 
     private final String TAG = "GroupInfo";
 
-
     private GroupEvent(){
     }
 
@@ -37,7 +36,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
                         .setGroupAssistantListener(this);
     }
 
-
     @Override
     public void onMemberJoin(String s, List<TIMGroupMemberInfo> list) {
 
@@ -56,13 +54,11 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
     }
 
 
-
     @Override
     public void onGroupAdd(TIMGroupCacheInfo timGroupCacheInfo) {
         setChanged();
         notifyObservers(new NotifyCmd(NotifyType.ADD, timGroupCacheInfo));
     }
-
 
 
     @Override
@@ -77,9 +73,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
         notifyObservers(new NotifyCmd(NotifyType.UPDATE, timGroupCacheInfo));
     }
 
-
-
-
     /**
      * 通知上层用的数据
      */
@@ -91,7 +84,6 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
             this.type = type;
             this.data = data;
         }
-
     }
 
     public enum NotifyType{
@@ -100,6 +92,5 @@ public class GroupEvent extends Observable implements TIMGroupAssistantListener 
         DEL,//删除群
         UPDATE,//更新群信息
     }
-
 
 }

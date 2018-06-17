@@ -5,19 +5,14 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
-import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.event.Bottle_Random_Entity;
+import com.sy.bottle.entity.Bottle_Random_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author: jiangyao

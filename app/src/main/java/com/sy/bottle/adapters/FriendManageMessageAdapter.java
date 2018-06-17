@@ -2,6 +2,7 @@ package com.sy.bottle.adapters;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.model.FriendFuture;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.CircleImageView;
 import com.tencent.imsdk.TIMValueCallBack;
 import com.tencent.imsdk.ext.sns.TIMFriendResult;
@@ -23,6 +26,7 @@ import java.util.List;
  * 好友关系链管理消息adapter
  */
 public class FriendManageMessageAdapter extends ArrayAdapter<FriendFuture> {
+    private static final String TAG = "FriendManageMessageAdap";
 
     private int resourceId;
     private View view;
@@ -59,7 +63,12 @@ public class FriendManageMessageAdapter extends ArrayAdapter<FriendFuture> {
         }
         Resources res = getContext().getResources();
         final FriendFuture data = getItem(position);
-        viewHolder.avatar.setImageResource(R.drawable.head_other);
+        LogUtil.e(TAG,data.getFaceUrl());
+        if (!TextUtils.isEmpty(data.getFaceUrl())) {
+            PicassoUtlis.img(data.getFaceUrl(), viewHolder.avatar);
+        } else {
+            viewHolder.avatar.setImageResource(R.drawable.head_other);
+        }
         viewHolder.name.setText(data.getName());
         viewHolder.des.setText(data.getMessage());
         viewHolder.status.setTextColor(res.getColor(R.color.gray_3));

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import com.sy.bottle.model.VideoMessage;
 import com.sy.bottle.model.VoiceMessage;
 import com.sy.bottle.presenter.ChatPresenter;
 import com.sy.bottle.servlet.Gift_For_Servlet;
+import com.sy.bottle.servlet.Music_Servlet;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.MediaUtil;
@@ -104,6 +106,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         input.setChatView(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = findViewById(R.id.list);
+
         listView.setAdapter(adapter);
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
         listView.setOnTouchListener(new View.OnTouchListener() {
@@ -145,6 +148,9 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
                     TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
                     setRTitle(titleStr = profile == null ? identify : profile.getNickName());
+                    if (!TextUtils.isEmpty(profile.getFaceUrl())){
+                        adapter.setHead(profile.getFaceUrl());
+                    }
                 } else {
                     List list = new ArrayList();
                     list.add(identify);
@@ -158,10 +164,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                         public void onSuccess(List<TIMUserProfile> timUserProfiles) {
                             if (timUserProfiles.size() > 0) {
                                 setRTitle(titleStr = timUserProfiles.get(0).getNickName());
+                                LogUtil.e(TAG,"非好友头像"+timUserProfiles.get(0).getFaceUrl());
                             }
                         }
                     });
-
                 }
                 break;
             //群聊
@@ -197,7 +203,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         presenter.stop();
     }
 
-
     /**
      * 显示消息
      *
@@ -205,9 +210,11 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     @Override
     public void showMessage(TIMMessage message) {
+
         if (message == null) {
             adapter.notifyDataSetChanged();
         } else {
+
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
 
@@ -220,6 +227,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                             handler.postDelayed(resetTitle, 3000);
                             break;
                         case GIFT:
+                            TabToast.makeText("礼物到了");
                             if (messageList.size() == 0) {
                                 mMessage.setHasTime(null);
                             } else {

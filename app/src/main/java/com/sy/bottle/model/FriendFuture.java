@@ -1,6 +1,7 @@
 package com.sy.bottle.model;
 
 
+import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.ext.sns.TIMFriendFutureItem;
 import com.tencent.imsdk.ext.sns.TIMFutureFriendType;
 
@@ -9,6 +10,7 @@ import com.tencent.imsdk.ext.sns.TIMFutureFriendType;
  * 可用于本地操作后界面修改
  */
 public class FriendFuture {
+    private static final String TAG = "FriendFuture";
 
     TIMFriendFutureItem futureItem;
 
@@ -30,6 +32,11 @@ public class FriendFuture {
 
     public String getName(){
         return futureItem.getProfile().getNickName().equals("") ? futureItem.getIdentifier() : futureItem.getProfile().getNickName();
+    }
+
+    public String getFaceUrl(){
+        LogUtil.e(TAG,futureItem.getProfile().getFaceUrl());
+        return futureItem.getProfile().getFaceUrl().equals("") ? null : futureItem.getProfile().getFaceUrl();
     }
 
     public String getMessage(){
