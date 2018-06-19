@@ -69,7 +69,7 @@ public class Save_Key {
     public static String S_积分 = "Score";
 
     /**
-     * 星星
+     * 能量
      */
-    public static String S_星星 = "Province";
+    public static String S_能量 = "Province";
 }

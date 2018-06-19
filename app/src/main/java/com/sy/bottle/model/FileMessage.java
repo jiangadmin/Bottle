@@ -57,9 +57,9 @@ public class FileMessage extends Message {
 
         ImageView imageView = new ImageView(MyApp.getInstance());
         Gift_Entity.DataBean bean = new Gson().fromJson(e.getPath(), Gift_Entity.DataBean.class);
-        if (bean.getPic_url() != null)
+        if (bean.getPic_url() != null) {
             PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
-
+        }
         getBubbleView(viewHolder).addView(imageView);
         showStatus(viewHolder);
     }

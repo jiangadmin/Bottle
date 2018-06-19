@@ -5,21 +5,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
+import com.sy.bottle.adapters.Adapter_Friends;
 import com.sy.bottle.adapters.ExpandGroupListAdapter;
-import com.sy.bottle.dialog.Move_Dialog;
-import com.sy.bottle.model.FriendProfile;
+import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.SearchFriend_Dialog;
 import com.sy.bottle.model.FriendshipInfo;
 import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMUserProfile;
-import com.tencent.imsdk.TIMValueCallBack;
-import com.tencent.imsdk.ext.sns.TIMFriendshipManagerExt;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.Observer;
  * @Phone: 186 6120 1018
  * TODO: 好友
  */
-public class Friend_Fragment extends Base_Fragment implements View.OnClickListener, ExpandableListView.OnChildClickListener,Observer {
+public class Friend_Fragment extends Base_Fragment implements View.OnClickListener, ExpandableListView.OnChildClickListener, Observer, AdapterView.OnItemClickListener {
     private static final String TAG = "Mine_Fragment";
 
     /**
@@ -45,6 +45,8 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
      * 好友列表
      */
     private ExpandableListView mGroupListView;
+    ListView friends_List;
+    Adapter_Friends adapter_friends;
 
     LinearLayout view_null;
 
@@ -69,15 +71,18 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setTitle(view, "好友");
+        setTitle(view, "好友列表");
 
-        setMenu(view, R.drawable.ic_add);
+        setMenu(view, R.drawable.ic_add, "添加");
 
         mGroupListView = view.findViewById(R.id.friend_groupList);
+        friends_List = view.findViewById(R.id.friends);
         view_null = view.findViewById(R.id.view_null);
 
         mGroupListView.setOnChildClickListener(this);
-
+        friends_List.setOnItemClickListener(this);
+        adapter_friends = new Adapter_Friends(getActivity());
+        friends_List.setAdapter(adapter_friends);
 
     }
 
@@ -86,13 +91,16 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
         friends = FriendshipInfo.getInstance().getFriends();
         groups = FriendshipInfo.getInstance().getGroups();
 
-        if (friends.size()==0){
+        if (MyApp.friendsbeans.size() == 0) {
             view_null.setVisibility(View.VISIBLE);
             mGroupListView.setVisibility(View.GONE);
-        }else {
+        } else {
             view_null.setVisibility(View.GONE);
             mGroupListView.setVisibility(View.VISIBLE);
+            adapter_friends.setListData(MyApp.friendsbeans);
         }
+
+        adapter_friends.notifyDataSetChanged();
 
         mGroupListAdapter = new ExpandGroupListAdapter(getActivity(), groups, friends);
         mGroupListView.setAdapter(mGroupListAdapter);
@@ -103,14 +111,18 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu:
-                new Move_Dialog(getActivity());
+
+                //查找好友
+                new SearchFriend_Dialog(getActivity());
+//                SearchFriend_Activity.start(getActivity());
+//                new Move_Dialog(getActivity());
                 break;
         }
     }
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        Profile_Activity.start(getActivity(),friends.get(groups.get(groupPosition)).get(childPosition).getIdentifier());
+        Profile_Activity.start(getActivity(), friends.get(groups.get(groupPosition)).get(childPosition).getIdentifier());
         return false;
     }
 
@@ -120,5 +132,10 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
             mGroupListAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        FriendInfo_Activity.start(getActivity(), MyApp.friendsbeans.get(i).getFriend_id());
     }
 }

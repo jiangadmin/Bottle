@@ -10,7 +10,9 @@ import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.SaveUtils;
 
 /**
  * @author: jiangadmin
@@ -31,7 +33,8 @@ public class Black_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
     @Override
     protected Base_Entity doInBackground(String... strings) {
 
-        String res = HttpUtil.request(HttpUtil.GET, Const.API + "", null);
+        String res = HttpUtil.request(HttpUtil.GET, Const.API + "blacklists/"+ SaveUtils.getString(Save_Key.UID), null);
+
         Base_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Base_Entity();
@@ -58,6 +61,14 @@ public class Black_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
             case 200:
                 if (activity instanceof Black_Activity) {
                     ((Black_Activity) activity).CallBack();
+                }
+                break;
+            case 400:
+                if (activity instanceof Black_Activity) {
+                    if (entity.getMessage().equals("暂无黑名单")){
+                        ((Black_Activity) activity).CallBack();
+                    }
+
                 }
                 break;
             case 401:

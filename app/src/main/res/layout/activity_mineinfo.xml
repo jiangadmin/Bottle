@@ -63,7 +63,7 @@
             android:id="@+id/mine_info_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:name="手机号" />
+            app:name="手机号(仅自己可见)" />
 
         <com.sy.bottle.view.LineControllerView
             android:id="@+id/mine_info_sex"

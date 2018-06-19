@@ -279,9 +279,9 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         Conversation conversation = conversationList.get(info.position);
-//        if (conversation instanceof NomalConversation) {
+        if (conversation instanceof NomalConversation) {
             menu.add(0, 1, Menu.NONE, "删除会话");
-//        }
+        }
     }
 
     @Override
@@ -292,10 +292,12 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
             case 1:
                 if (conversation != null) {
 
-//                    if (presenter.delConversation(conversation.getType(), conversation.getIdentify())) {
-                        conversationList.remove(conversation);
-                        updateview();
-//                    }
+                    if (conversation instanceof NomalConversation) {
+                        if (presenter.delConversation(((NomalConversation) conversation).getType(), conversation.getIdentify())) {
+                            conversationList.remove(conversation);
+                            updateview();
+                        }
+                    }
                 }
                 break;
             default:

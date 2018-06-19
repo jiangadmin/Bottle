@@ -9,11 +9,15 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
 import com.sy.bottle.activity.mian.friend.Profile_Activity;
+import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.MyDialog;
 import com.sy.bottle.dialog.ReLogin_Dialog;
+import com.sy.bottle.dialog.SearchFriend_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
@@ -38,6 +42,12 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
     ImageView imageView;
 
+    SearchFriend_Dialog myDialog;
+
+    public UserInfo_Servlet(SearchFriend_Dialog myDialog) {
+        this.myDialog = myDialog;
+    }
+
     public UserInfo_Servlet(ImageView imageView) {
         this.imageView = imageView;
     }
@@ -59,6 +69,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
         }
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "users/" + userid, null);
 
+        LogUtil.e(TAG,res);
         UserInfo_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -104,7 +115,12 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 if (imageView!=null){
                     PicassoUtlis.img(entity.getData().getAvatar(),imageView);
                 }
+                if (myDialog!=null){
+                    myDialog.dismiss();
+                    UserInfo_Activity.start(MyApp.currentActivity(),entity.getData());
+                }
                 break;
+
             case 401:
                 new ReLogin_Dialog();
                 break;

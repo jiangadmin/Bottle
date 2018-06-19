@@ -7,6 +7,7 @@ import android.content.Context;
 import com.mob.MobSDK;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
@@ -14,6 +15,8 @@ import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
 import com.tencent.imsdk.TIMOfflinePushNotification;
 import com.tencent.imsdk.TIMSdkConfig;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 import java.util.ArrayList;
@@ -39,8 +42,14 @@ public class MyApp extends Application {
         return context;
     }
 
+    public static IWXAPI api;
 
     TIMSdkConfig TIMSdkConfig;
+
+    /**
+     * 好友列表
+     */
+    public static List<Friends_Entity.DataBean> friendsbeans = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -54,11 +63,14 @@ public class MyApp extends Application {
         //初始化Mob
         MobSDK.init(this);
 
-        if(MsfSdkUtils.isMainProcess(this)) {
+        api = WXAPIFactory.createWXAPI(this, null);
+        api.registerApp("25e56ce23ee18");
+
+        if (MsfSdkUtils.isMainProcess(this)) {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification notification) {
-                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
+                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify) {
                         //消息被设置为需要提醒
                         notification.doNotify(getApplicationContext(), R.mipmap.logo);
                     }

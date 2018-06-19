@@ -4,90 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bottle_bg"
+    android:background="@mipmap/bottle_bg"
+    android:gravity="bottom"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/icon_plp" />
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="155dp"
-            android:scaleType="fitEnd"
-            android:src="@drawable/icon_xiaodao" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/icon_haian"
-            android:layout_alignParentStart="true"
-            android:scaleType="fitEnd"
-            android:src="@drawable/icon_hailang" />
-
-        <ImageView
-            android:id="@+id/icon_haian"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/icon_haian" />
-
-        <ImageView
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="64dp"
-            android:src="@drawable/icon_qiaotou" />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#ffe6af"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
+
+        <TextView
             android:id="@+id/bottle_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_setp"
-            app:layout_constraintBottom_toBottomOf="@+id/bottle_get"
-            app:layout_constraintEnd_toStartOf="@+id/bottle_get"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottle_get" />
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/yuanjiao_r_b"
+            android:gravity="center"
+            android:text="扔一个"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <ImageView
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+
+        <TextView
             android:id="@+id/bottle_get"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_getp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bottle_set"
-            tools:layout_editor_absoluteY="33dp" />
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/yuanjiao_r_r"
+            android:gravity="center"
+            android:text="捡一个"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/bottle_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_getp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/bottle_set"

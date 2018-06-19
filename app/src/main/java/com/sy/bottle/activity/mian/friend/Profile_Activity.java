@@ -74,6 +74,7 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
         setContentView(R.layout.activity_profile);
 
         setTitle("详细资料");
+        setMenu("投诉");
         setBack(true);
 
         initview();
@@ -229,6 +230,9 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.menu:
+                TabToast.makeText("投诉");
+                break;
             case R.id.user_info_btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);
                 intent.putExtra("identify", identify);

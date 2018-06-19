@@ -24,7 +24,8 @@
             android:hint="昵称"
             android:inputType="text"
             android:paddingLeft="@dimen/margin_la"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:visibility="gone" />
 
         <com.sy.bottle.view.EditTextWithClearButton
             android:id="@+id/register_sign"
@@ -35,7 +36,8 @@
             android:hint="个性签名"
             android:inputType="text"
             android:minHeight="@dimen/edit_heigt"
-            android:paddingLeft="@dimen/margin_la" />
+            android:paddingLeft="@dimen/margin_la"
+            android:visibility="gone" />
 
         <com.sy.bottle.view.EditTextWithClearButton
             android:id="@+id/register_phone"
@@ -79,6 +81,12 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="*注：注册成功后将不可修改"
+            android:textColor="@color/style_color" />
+
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_heigt"
@@ -102,6 +110,17 @@
                 android:text="女生" />
 
         </RadioGroup>
+
+        <Button
+            android:id="@+id/register_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_style"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

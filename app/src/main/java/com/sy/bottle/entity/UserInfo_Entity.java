@@ -11,7 +11,7 @@ public class UserInfo_Entity extends Base_Entity {
 
 
     /**
-     * data : {"nikename":"JUST DO IT","phone":"13218061231","sex":"1","score":"0","balance":"0","avatar":"http://thirdqq.qlogo.cn/qqapp/1106842163/259D058ED101957F23B668BE7A002E33/100","sign":"这个人很懒，什么都没有留下","province":"江苏省","city":"南京市","area":""}
+     * data : {"id":1000001,"nikename":"伟大领袖姜主席","phone":"18661201018","sex":"1","score":"75988557","balance":"88992060","avatar":"syplp/1000001/15292030725450.jpeg","sign":"这个人很懒，什么都没有留下","province":"北京","city":"北京市","area":"东城区"}
      */
 
     private DataBean data;
@@ -26,28 +26,38 @@ public class UserInfo_Entity extends Base_Entity {
 
     public static class DataBean {
         /**
-         * nikename : JUST DO IT
-         * phone : 13218061231
+         * id : 1000001
+         * nikename : 伟大领袖姜主席
+         * phone : 18661201018
          * sex : 1
-         * score : 0  积分
-         * balance : 0  星星
-         * avatar : http://thirdqq.qlogo.cn/qqapp/1106842163/259D058ED101957F23B668BE7A002E33/100
+         * score : 75988557
+         * balance : 88992060
+         * avatar : syplp/1000001/15292030725450.jpeg
          * sign : 这个人很懒，什么都没有留下
-         * province : 江苏省
-         * city : 南京市
-         * area :
+         * province : 北京
+         * city : 北京市
+         * area : 东城区
          */
 
+        private String id;
         private String nikename;
         private String phone;
         private String sex;
-        private int score;
-        private int balance;
+        private long score;
+        private long balance;
         private String avatar;
         private String sign;
         private String province;
         private String city;
         private String area;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getNikename() {
             return nikename;
@@ -73,19 +83,19 @@ public class UserInfo_Entity extends Base_Entity {
             this.sex = sex;
         }
 
-        public int getScore() {
+        public long getScore() {
             return score;
         }
 
-        public void setScore(int score) {
+        public void setScore(long score) {
             this.score = score;
         }
 
-        public int getBalance() {
+        public long getBalance() {
             return balance;
         }
 
-        public void setBalance(int balance) {
+        public void setBalance(long balance) {
             this.balance = balance;
         }
 

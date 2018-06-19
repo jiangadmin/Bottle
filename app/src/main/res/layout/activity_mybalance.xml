@@ -40,7 +40,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="星星余额"
+                        android:text="能量余额"
                         android:textColor="@color/white"
                         android:textSize="22sp" />
 
@@ -318,6 +318,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/mybalance_rmb_other"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edit_heigt"

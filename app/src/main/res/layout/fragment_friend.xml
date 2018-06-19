@@ -5,28 +5,39 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar"/>
+    <include layout="@layout/view_title_bar" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/view_null"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <ImageView
-            android:src="@mipmap/icon_null_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_null_1" />
+
         <TextView
-            android:layout_marginTop="10dp"
-            android:textColor="@color/gray_9"
-            android:textSize="16sp"
-            android:text="快去认识新朋友吧"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="快去认识新朋友吧"
+            android:textColor="@color/gray_9"
+            android:textSize="16sp" />
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/friends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
     <ExpandableListView
+        android:visibility="gone"
         android:id="@+id/friend_groupList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

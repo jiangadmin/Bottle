@@ -40,6 +40,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!--add static shortcut-->
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/static_shortcuts" />
+
         </activity>
 
         <!--引导页-->
@@ -118,14 +122,14 @@
             android:name=".activity.mian.mine.About_Activity"
             android:screenOrientation="portrait" />
 
-        <!--我的星星-->
+        <!--我的能量-->
         <activity
             android:name=".activity.mian.mine.MyBalance_Activity"
             android:screenOrientation="portrait" />
 
         <!--充值-->
         <activity
-            android:name=".activity.Recharge_Activity"
+            android:name=".activity.mian.other.Recharge_Activity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -137,10 +141,16 @@
             android:name=".activity.mian.chat.ChatActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mian.friend.UserInfo_Activity"
+            android:screenOrientation="portrait"/>
+
         <!--搜索好友-->
         <activity
             android:name=".activity.mian.friend.SearchFriend_Activity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mian.friend.FriendInfo_Activity"
+            android:screenOrientation="portrait"/>
 
         <!--添加好友-->
         <activity
@@ -170,6 +180,10 @@
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <!-- alipay sdk end -->
+
+
+
+
 
         <!-- 【必须】消息收发service -->
         <service

@@ -30,22 +30,24 @@ public class Welcome_Activity extends Base_Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        if (SaveUtils.getBoolean(Save_Key.S_跳过引导)) {
-            //判断是否登录过
-            //判定是否有登录数据
-            if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.OPENID)) && SaveUtils.getBoolean(Save_Key.S_登录)) {
+        //判定是否有登录数据
+        if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.OPENID)) && SaveUtils.getBoolean(Save_Key.S_登录)) {
 
-                LogUtil.e(TAG, "快捷登录");
+            LogUtil.e(TAG, "快捷登录");
 
-                new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
+            new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
 
-            }else {
-                Login_Activity.start(this);
-            }
-
-        } else {
-            Guide_Activity.start(this);
-            MyApp.finishActivity();
+        }else {
+            Login_Activity.start(this);
         }
+
+
+//        if (SaveUtils.getBoolean(Save_Key.S_跳过引导)) {
+//            //判断是否登录过
+//
+//        } else {
+//            Guide_Activity.start(this);
+//            MyApp.finishActivity();
+//        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -108,6 +109,8 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_mineinfo);
 
+        createCameraTempFile(savedInstanceState);
+
         setBack(true);
         setTitle("编辑个人资料");
         setMenu("确定");
@@ -117,6 +120,34 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
         initinfo();
         initphotos();
 
+    }
+
+
+    /**
+     * 创建调用系统照相机待存储的临时文件
+     */
+    private void createCameraTempFile(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey("tempFile")) {
+            tempFile = (File) savedInstanceState.getSerializable("tempFile");
+        } else {
+            tempFile = new File(checkDirPath(Environment.getExternalStorageDirectory().getPath() + "/image/"),
+                    System.currentTimeMillis() + ".jpg");
+        }
+    }
+
+
+    /**
+     * 检查文件是否存在
+     */
+    private static String checkDirPath(String dirPath) {
+        if (TextUtils.isEmpty(dirPath)) {
+            return "";
+        }
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        return dirPath;
     }
 
     /**
@@ -172,6 +203,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
             dataBeans.add(bean);
         }
 
+        photos.setAdapter(photos_adapter);
         photos_adapter.setPhotos_entity(dataBeans);
         photos_adapter.notifyDataSetChanged();
 
@@ -189,8 +221,6 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
         sr.setEnabled(false);
 
         photos_adapter = new Photos_Adapter(this, this);
-
-        photos.setAdapter(photos_adapter);
 
         head.setOnClickListener(this);
         city.setOnClickListener(this);
@@ -252,7 +282,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                 break;
             case R.id.mine_info_head:
                 isupdatehead = true;
-                new Photos_Dialog(this);
+                new Photos_Dialog(this,tempFile);
                 break;
             case R.id.mine_info_city:
                 new ChooseCity_Dialog(this, city).show();
@@ -277,7 +307,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
     public void picurl(String url) {
         if (TextUtils.isEmpty(url)) {
             isupdatehead = false;
-            new Photos_Dialog(this);
+            new Photos_Dialog(this,tempFile);
         } else {
             new ShowImage_Dialog(this, url).show();
         }

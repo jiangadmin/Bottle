@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.servlet.Bottle_Random_Servlet;
@@ -29,10 +30,9 @@ public class Bottle_Set_Dailog extends MyDialog implements View.OnClickListener 
 
     EditText message;
 
-    Button random;
+    TextView random;
 
     Button submit;
-
 
     public Bottle_Set_Dailog(@NonNull Context context) {
 

@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
-import com.sy.bottle.activity.Recharge_Activity;
+import com.sy.bottle.activity.mian.other.Recharge_Activity;
 import com.sy.bottle.dialog.ReCharge_Dialog;
 
 /**
@@ -21,7 +20,7 @@ import com.sy.bottle.dialog.ReCharge_Dialog;
  * @date: 2018/6/13
  * @Email: www.fangmu@qq.com
  * @Phone: 186 6120 1018
- * TODO: 我的星星
+ * TODO: 我的能量
  */
 public class MyBalance_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "MyBalance_Activity";
@@ -43,17 +42,13 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_mybalance);
 
-        setTitle("我的星星");
+        setTitle("我的能量");
 
         setBack(true);
 
-        setMenu("明细");
-
         initview();
-
 
     }
 

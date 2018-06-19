@@ -109,10 +109,10 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
 
         jf.setText("积分：" + bean.getScore() + " 分");
-        xx.setText("星星：" + bean.getBalance() + " 个");
+        xx.setText("能量：" + bean.getBalance() + " 个");
 
         SaveUtils.setInt(Save_Key.S_积分, bean.getScore());
-        SaveUtils.setInt(Save_Key.S_星星, bean.getBalance());
+        SaveUtils.setInt(Save_Key.S_能量, bean.getBalance());
 
     }
 

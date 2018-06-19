@@ -1,21 +1,18 @@
 package com.sy.bottle.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
-import com.sy.bottle.activity.Recharge_Activity;
+import com.sy.bottle.activity.mian.other.Recharge_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.view.TabToast;
 

@@ -8,6 +8,7 @@
     <include layout="@layout/view_title_bar" />
 
     <LinearLayout
+        android:gravity="center"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -29,6 +30,7 @@
             android:textSize="18sp" />
 
         <TextView
+            android:layout_marginBottom="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,6 +39,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:visibility="gone"
             android:textSize="14sp"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="16dp"
@@ -45,6 +48,8 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:visibility="gone"
+
             android:layout_marginTop="5dp"
             android:textColor="@color/gray_9"
             android:textSize="15sp"
@@ -54,6 +59,8 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:visibility="gone"
+
             android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
@@ -61,6 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
+
             android:textColor="@color/gray_9"
             android:layout_marginTop="5dp"
             android:textSize="15sp"
@@ -70,6 +79,8 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:visibility="gone"
+
             android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
@@ -77,6 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
+
             android:textColor="@color/gray_9"
             android:layout_marginTop="5dp"
             android:textSize="15sp"
@@ -85,6 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
+
             android:textColor="@color/gray_9"
             android:layout_marginTop="5dp"
             android:textSize="15sp"
@@ -93,6 +108,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
+
             android:textColor="@color/gray_9"
             android:layout_marginTop="5dp"
             android:textSize="15sp"

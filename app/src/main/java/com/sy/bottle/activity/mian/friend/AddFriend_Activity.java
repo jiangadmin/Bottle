@@ -69,8 +69,7 @@ public class AddFriend_Activity extends Base_Activity implements View.OnClickLis
 
         presenter = new FriendshipManagerPresenter(this);
 
-        //查询好友资料
-        new UserInfo_Servlet(this).execute(id);
+
 
     }
 

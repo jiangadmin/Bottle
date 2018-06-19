@@ -13,6 +13,7 @@ import com.sy.bottle.activity.mian.bottle.Bottle_Fragment;
 import com.sy.bottle.activity.mian.chat.Chat_Fragment;
 import com.sy.bottle.activity.mian.friend.Friend_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
+import com.sy.bottle.servlet.Friends_Servlet;
 
 public class Main_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -24,6 +25,8 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
     Friend_Fragment friend_fragment;
     Mine_Fragment mine_fragment;
 
+    static Main_Activity activity;
+
     public static void start(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, Main_Activity.class);
@@ -34,13 +37,25 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity  = this;
 
         initview();
 
         initeven();
 
         ShowFragmet(1);
+
+        UpdateFriend();
     }
+
+    public static void UpdateFriend(){
+        new Friends_Servlet(activity).execute();
+    }
+
+    public void CallBack_Friend(){
+        friend_fragment.onResume();
+    }
+
 
     private void initview() {
 

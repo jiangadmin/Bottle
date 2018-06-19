@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--搜索-->
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/logo"
+        android:shortcutDisabledMessage="@string/app_name"
+        android:shortcutId="shortcut_id_search"
+        android:shortcutLongLabel="@string/app_name"
+        android:shortcutShortLabel="@string/app_name">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.sy.bottle.activity.start.Welcome_Activity"
+            android:targetPackage="com.sy.bottle" />
+        <!--当前只有这个分类-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

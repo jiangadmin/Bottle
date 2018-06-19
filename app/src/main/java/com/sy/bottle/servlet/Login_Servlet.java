@@ -103,7 +103,10 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                 break;
             //未注册
             case 202:
+
+                Login_Activity.start(MyApp.currentActivity());
                 Register_Activity.start(MyApp.currentActivity(), 1);
+                MyApp.finishActivity(Welcome_Activity.class);
                 break;
             default:
                 if (MyApp.currentActivity() instanceof Welcome_Activity){

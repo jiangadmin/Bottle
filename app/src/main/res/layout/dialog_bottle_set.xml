@@ -26,6 +26,7 @@
                 android:src="@drawable/ic_turnoff" />
 
             <TextView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -39,6 +40,7 @@
                 android:textSize="12sp" />
 
             <ImageView
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:scaleType="centerCrop"
@@ -53,30 +55,38 @@
             android:padding="10dp">
 
             <EditText
-                android:gravity="left|top"
-                android:hint="说点什么吧..."
-                android:textColor="@color/gray_6"
                 android:id="@+id/dialog_bottle_set_message"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@drawable/xz_bg"
-                android:lines="3" />
+                android:gravity="left|top"
+                android:hint="说点什么吧..."
+                android:lines="3"
+                android:textColor="@color/gray_6" />
 
-            <Button
+            <TextView
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
                 android:id="@+id/dialog_bottle_set_random"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/dialog_bottle_set_message"
+                android:layout_alignStart="@+id/dialog_bottle_set_message"
                 android:layout_below="@+id/dialog_bottle_set_message"
-                android:text="写点啥？" />
+                android:background="@drawable/yuanjiao_white_t"
+                android:text="随机生成内容"
+                android:textColor="@color/gray_9" />
 
             <Button
+                android:textSize="16sp"
+                android:textColor="@color/gray_6"
+                android:background="@drawable/yuanjiao_white_t1"
                 android:id="@+id/dialog_bottle_set_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="扔出去" />
+                android:text="扔 出 去" />
 
         </RelativeLayout>
 

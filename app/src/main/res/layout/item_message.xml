@@ -30,8 +30,8 @@
 
             <com.sy.bottle.view.CircleImageView
                 android:id="@+id/leftAvatar"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/head_other" />
 
@@ -81,8 +81,8 @@
             <com.sy.bottle.view.CircleImageView
                 android:layout_alignParentBottom="true"
                 android:id="@+id/rightAvatar"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/head_me" />
 

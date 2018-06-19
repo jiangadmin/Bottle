@@ -106,9 +106,9 @@ public class ReLogin_Dialog extends Base_Dialog {
                         SaveUtils.setInt(Save_Key.S_积分, 0);
 
                         /**
-                         * 星星
+                         * 能量
                          */
-                        SaveUtils.setInt(Save_Key.S_星星, 0);
+                        SaveUtils.setInt(Save_Key.S_能量, 0);
 
                         Login_Activity.start(MyApp.currentActivity());
                         MyApp.finishActivity(Setting_Activity.class);

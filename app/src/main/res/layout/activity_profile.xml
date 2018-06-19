@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         app:name="账号" />
 
     <com.sy.bottle.view.LineControllerView
@@ -79,6 +80,22 @@
         app:canNav="true"
         app:isBottom="true"
         app:name="所在分组" />
+
+    <com.sy.bottle.view.LineControllerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        app:canNav="true"
+        app:isBottom="true"
+        app:name="年龄" />
+
+    <com.sy.bottle.view.LineControllerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        app:canNav="true"
+        app:isBottom="true"
+        app:name="所在地" />
 
     <LinearLayout
         android:layout_width="match_parent"

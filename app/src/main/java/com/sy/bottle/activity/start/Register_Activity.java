@@ -34,7 +34,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
     EditTextWithClearButton nickname, sign, phone, smscode;
 
-    Button getsms;
+    Button getsms,submit;
 
     RadioButton boy, girl;
 
@@ -54,8 +54,6 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
         setTitle("新用户");
 
-        setMenu("注册");
-
         setBack(true);
 
         initview();
@@ -70,8 +68,10 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
         getsms = findViewById(R.id.register_sms_get);
         boy = findViewById(R.id.register_boy);
         girl = findViewById(R.id.register_girl);
+        submit = findViewById(R.id.register_submit);
 
         getsms.setOnClickListener(this);
+        submit.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.S_昵称))) {
             nickname.setText(SaveUtils.getString(Save_Key.S_昵称));
@@ -97,7 +97,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
         String sig = sign.getText().toString();
 
         switch (view.getId()) {
-            case R.id.menu:
+            case R.id.register_submit:
                 if (phonenum.length() != 11) {
                     TabToast.makeText("请输入正确的手机号！");
                     return;
@@ -107,17 +107,13 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
                     TabToast.makeText("请输入正确的验证码！");
                     return;
                 }
+
                 if (TextUtils.isEmpty(name)) {
-                    TabToast.makeText("请输入昵称！");
-                    return;
-                } else {
-                    SaveUtils.setString(Save_Key.S_昵称, name);
+                    SaveUtils.setString(Save_Key.S_昵称, "随缘" + phonenum.substring(8));
                 }
+
                 if (TextUtils.isEmpty(sig)) {
-                    TabToast.makeText("请输入个性签名！");
-                    return;
-                } else {
-                    SaveUtils.setString(Save_Key.S_签名, sig);
+                    SaveUtils.setString(Save_Key.S_签名, "这个人很懒 什么都没留下");
                 }
 
                 if (!boy.isChecked() && !girl.isChecked()) {

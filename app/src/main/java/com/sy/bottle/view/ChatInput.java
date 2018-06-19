@@ -362,10 +362,10 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
-                if (SaveUtils.getInt(Save_Key.S_星星) < dataBeans.get(i).getPrice()) {
+                if (SaveUtils.getInt(Save_Key.S_能量) < dataBeans.get(i).getPrice()) {
                     Base_Dialog base_dialog = new Base_Dialog(context);
-                    base_dialog.setTitle("星星余额不足");
-                    base_dialog.setMessage("为了更好的用户体验，我们建议您充值获取星星！");
+                    base_dialog.setTitle("能量余额不足");
+                    base_dialog.setMessage("今日系统签到赠送能量已使用完，请补充能量");
                     base_dialog.setOk("去充值", new OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -373,7 +373,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
                         }
                     });
-                    base_dialog.setEsc("关闭", null);
+                    base_dialog.setEsc("明天聊", null);
 
                 } else {
 

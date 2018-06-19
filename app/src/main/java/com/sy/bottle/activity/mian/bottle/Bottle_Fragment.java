@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
@@ -23,7 +24,8 @@ import com.sy.bottle.servlet.Scores_Get_Servlet;
 public class Bottle_Fragment extends Base_Fragment implements View.OnClickListener {
     private static final String TAG = "Mine_Fragment";
 
-    ImageView bottle_set, bottle_get, bottle_balance;
+    TextView bottle_set, bottle_get;
+    ImageView  bottle_balance;
 
     @Nullable
     @Override

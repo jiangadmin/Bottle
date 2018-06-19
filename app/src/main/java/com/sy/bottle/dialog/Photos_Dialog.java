@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
-import com.sy.bottle.BuildConfig;
 import com.sy.bottle.R;
 
 import java.io.File;
@@ -38,16 +37,12 @@ public class Photos_Dialog extends MyDialog implements View.OnClickListener {
      * 请求相册
      */
     private static final int REQUEST_PICK = 201;
-    /**
-     * 请求截图
-     */
-    private static final int REQUEST_CROP_PHOTO = 202;
-    private Uri tempUri;
+
     private static File tempFile;
 
-    public Photos_Dialog(@NonNull Activity context) {
+    public Photos_Dialog(@NonNull Activity context, File tempFile) {
         super(context, R.style.myDialogTheme);
-
+        this.tempFile = tempFile;
         activity = context;
         show();
     }
@@ -55,7 +50,9 @@ public class Photos_Dialog extends MyDialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.dialog_photos);
+
 
         initview();
     }
@@ -73,17 +70,18 @@ public class Photos_Dialog extends MyDialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.photos_camera:
 
-                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                tempUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileprovider", tempFile);
-                // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
-                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                activity.startActivityForResult(openCameraIntent, REQUEST_CAPTURE);
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
+                Uri photoUri = Uri.fromFile(new File(String.valueOf(tempFile))); // 传递路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);// 更改系统默认存储路径
+                activity.startActivityForResult(intent, REQUEST_CAPTURE);
+
                 break;
             case R.id.photos_gallery:
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 activity.startActivityForResult(intent, REQUEST_PICK);// //适用于4.4及以上android版本
                 break;
@@ -91,4 +89,5 @@ public class Photos_Dialog extends MyDialog implements View.OnClickListener {
         }
         dismiss();
     }
+
 }

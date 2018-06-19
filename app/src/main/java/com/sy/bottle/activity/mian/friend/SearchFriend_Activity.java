@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.adapters.Adapter_Friends;
 import com.sy.bottle.adapters.ProfileSummaryAdapter;
 import com.sy.bottle.model.FriendProfile;
 import com.sy.bottle.model.ProfileSummary;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.viewfeatures.FriendInfoView;
 import com.tencent.imsdk.TIMUserProfile;
 
@@ -25,15 +28,18 @@ import java.util.List;
 /**
  * TODO:查找添加新朋友
  */
-public class SearchFriend_Activity extends Base_Activity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener {
+public class SearchFriend_Activity extends Base_Activity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener, View.OnClickListener {
     private final static String TAG = "SearchFriendActivity";
 
     private FriendshipManagerPresenter presenter;
+    Adapter_Friends adapter_search_friend;
     ListView mSearchList;
     EditText mSearchInput;
     TextView tvNoResult;
     ProfileSummaryAdapter adapter;
     List<ProfileSummary> list = new ArrayList<>();
+
+    Button search;
 
     public static void start(Context context) {
         Intent intent = new Intent();
@@ -52,11 +58,14 @@ public class SearchFriend_Activity extends Base_Activity implements FriendInfoVi
         mSearchInput = findViewById(R.id.inputSearch);
         mSearchList = findViewById(R.id.list);
         tvNoResult = findViewById(R.id.noResult);
+        search = findViewById(R.id.search);
         adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         mSearchList.setAdapter(adapter);
         mSearchList.setOnItemClickListener(this);
         presenter = new FriendshipManagerPresenter(this);
         mSearchInput.setOnKeyListener(this);
+
+        search.setOnClickListener(this);
 
     }
 
@@ -83,6 +92,9 @@ public class SearchFriend_Activity extends Base_Activity implements FriendInfoVi
                     key = "86-" + key;
                 }
                 presenter.searchFriendById(key);
+
+                new UserInfo_Servlet(this).execute(key);
+
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);
@@ -124,4 +136,24 @@ public class SearchFriend_Activity extends Base_Activity implements FriendInfoVi
         return true;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.search:
+                list.clear();
+                adapter.notifyDataSetChanged();
+                String key = mSearchInput.getText().toString();
+                if (key.equals("")) return;
+                presenter.searchFriendByName(key, true);
+                //给手机号加上86-
+                if (maybePhone(key)) {
+                    key = "86-" + key;
+                }
+                presenter.searchFriendById(key);
+
+                new UserInfo_Servlet(this).execute(key);
+
+                break;
+        }
+    }
 }

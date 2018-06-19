@@ -1,4 +1,4 @@
-package com.sy.bottle.activity;
+package com.sy.bottle.activity.mian.other;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,19 +16,21 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.sy.bottle.R;
+import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.PayResult;
 import com.sy.bottle.utils.OrderInfoUtil2_0;
 import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Map;
-
-import javax.xml.transform.Result;
 
 /**
  * @author: jiangyao
@@ -151,6 +153,17 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                         break;
                     //微信
                     case 1:
+
+                        PayReq request = new PayReq();
+                        request.appId = "25e56ce23ee18";
+                        request.partnerId = "1900000109";
+                        request.prepayId = "1101000000140415649af9fc314aa427";
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = "1101000000140429eb40476f8896f4c9";
+                        request.timeStamp = "1398746574";
+                        request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
+                        MyApp.api.sendReq(request);
+
                         break;
 
                 }
@@ -160,6 +173,7 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
 
         }
     }
+
     private static final int SDK_PAY_FLAG = 1;
 
     @SuppressLint("HandlerLeak")

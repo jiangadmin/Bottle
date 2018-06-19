@@ -50,10 +50,10 @@ public class SaveUtils {
      * @param value
      * @return
      */
-    public static boolean setInt(String key, int value) {
+    public static boolean setInt(String key, long value) {
         SharedPreferences settings = MyApp.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(key, value);
+        editor.putLong(key, value);
         return editor.commit();
     }
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Photos_Entity;
+import com.sy.bottle.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +70,12 @@ public class Photos_Adapter extends BaseAdapter {
 
         final Photos_Entity.DataBean bean = dataBeans.get(position);
 
-        if (bean.getId() == -1) {
+        LogUtil.e(TAG,"ID："+bean.getId());
+        LogUtil.e(TAG,"地址："+bean.getPic_url());
+
+        if (bean.getPic_url() == null) {
             holder.del.setVisibility(View.GONE);
-            holder.photo.setImageResource(R.drawable.loading);
+            holder.photo.setImageResource(R.mipmap.add_bg);
         } else {
             holder.del.setVisibility(View.VISIBLE);
             Picasso.with(context).load(bean.getPic_url()).into(holder.photo);

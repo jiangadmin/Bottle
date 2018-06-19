@@ -89,4 +89,7 @@ dependencies {
     //GIF 图
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
 }
