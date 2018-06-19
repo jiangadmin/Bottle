@@ -102,11 +102,8 @@ public class NomalConversation extends Conversation {
                 } else {
                     name = profile.getNickName();
                 }
-
                 faceurl = profile.getFaceUrl();
-
             }
-
         }
         return name;
     }

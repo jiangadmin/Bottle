@@ -17,6 +17,7 @@ import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Friend_Add_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.LineControllerView;
 import com.tencent.imsdk.TIMConversationType;
@@ -87,6 +88,13 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
             address.setContent(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getArea());
 
         }
+
+        if (id!=null){
+
+            //获取用户信息
+            new UserInfo_Servlet(this).execute(id);
+            setMenu("举报");
+        }
     }
 
     /**
@@ -94,6 +102,19 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
      */
     public void CallBack() {
         btnAdd.setVisibility(View.GONE);
+    }
+
+    /**
+     * 好友数据返回
+     * @param entity
+     */
+    public void CallBack_UserInfo(UserInfo_Entity.DataBean entity){
+        this.entity = entity;
+        PicassoUtlis.img(entity.getAvatar().contains("http") ? entity.getAvatar() : Const.IMG + entity.getAvatar(), head);
+        sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
+        name.setText(entity.getNikename());
+        sign.setText(entity.getSign());
+        address.setContent(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getArea());
     }
 
     @Override

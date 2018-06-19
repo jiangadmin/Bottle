@@ -143,7 +143,6 @@ public class HttpUtil {
                     out.flush();
 
                 }
-
             }
 
             InputStreamReader input_stream_reader;

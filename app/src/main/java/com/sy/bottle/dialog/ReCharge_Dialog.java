@@ -86,7 +86,7 @@ public class ReCharge_Dialog extends MyDialog implements TextWatcher, View.OnCli
                     TabToast.makeText("金额不合法");
                     return;
                 }
-                Recharge_Activity.start(MyApp.currentActivity(), Float.parseFloat(money.getText().toString()));
+//                Recharge_Activity.start(MyApp.currentActivity(), Float.parseFloat(money.getText().toString()));
                 dismiss();
                 break;
         }

@@ -14,6 +14,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +71,7 @@ public class Friend_Add_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
         switch (entity.getStatus()) {
             case 200:
+                TabToast.makeText("已添加为好友");
                 if (activity instanceof UserInfo_Activity) {
                     ((UserInfo_Activity) activity).CallBack();
                     //刷新好友数据

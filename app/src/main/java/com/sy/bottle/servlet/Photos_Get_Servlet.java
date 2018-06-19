@@ -85,7 +85,6 @@ public class Photos_Get_Servlet extends AsyncTask<String, Integer, Photos_Entity
                     ((Profile_Activity) activity).CallBack_Photos(entity.getData());
                 }
 
-
                 if (activity instanceof FriendInfo_Activity){
                     ((FriendInfo_Activity) activity).CallBack_Photos(entity.getData());
                 }

@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.model.Conversation;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.TimeUtil;
-import com.sy.bottle.view.CircleImageView;
 
 import java.util.List;
 
@@ -57,10 +57,13 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
+
+      LogUtil.e(TAG,"进入");
+
         viewHolder.tvName.setText(data.getName());
-        if (!TextUtils.isEmpty(data.getAvatar())&&!data.getName().equals("新朋友")) {
-            PicassoUtlis.img(data.getAvatar(), viewHolder.avatar);
-        }else {
+        if (!TextUtils.isEmpty(data.getAvatar()) && !data.getName().equals("新朋友")) {
+            PicassoUtlis.img(data.getAvatar().contains("http") ? data.getAvatar() : Const.IMG + data.getAvatar(), viewHolder.avatar);
+        } else {
             viewHolder.avatar.setImageResource(data.getAvatarID());
         }
         viewHolder.lastMessage.setText(data.getLastMessageSummary());

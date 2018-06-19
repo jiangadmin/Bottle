@@ -19,10 +19,11 @@ import android.widget.ListView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
-import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
-import com.sy.bottle.activity.mian.friend.Profile_Activity;
+import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
+import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FileMessage;
 import com.sy.bottle.model.FriendshipInfo;
@@ -36,7 +37,6 @@ import com.sy.bottle.model.VideoMessage;
 import com.sy.bottle.model.VoiceMessage;
 import com.sy.bottle.presenter.ChatPresenter;
 import com.sy.bottle.servlet.Gift_For_Servlet;
-import com.sy.bottle.servlet.Music_Servlet;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.MediaUtil;
@@ -144,11 +144,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             //个人聊天
             case C2C:
                 setMenu(R.drawable.btn_person);
+
+                if (MyApp.friendsbeans != null && MyApp.friendsbeans.size() > 0) {
+
+                } else {
+
+                }
+
                 //判断是否是好友
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
                     TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
                     setRTitle(titleStr = profile == null ? identify : profile.getNickName());
-                    if (!TextUtils.isEmpty(profile.getFaceUrl())){
+                    if (!TextUtils.isEmpty(profile.getFaceUrl())) {
                         adapter.setHead(profile.getFaceUrl());
                     }
                 } else {
@@ -164,7 +171,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                         public void onSuccess(List<TIMUserProfile> timUserProfiles) {
                             if (timUserProfiles.size() > 0) {
                                 setRTitle(titleStr = timUserProfiles.get(0).getNickName());
-                                LogUtil.e(TAG,"非好友头像"+timUserProfiles.get(0).getFaceUrl());
+                                LogUtil.e(TAG, "非好友头像" + timUserProfiles.get(0).getFaceUrl());
                             }
                         }
                     });
@@ -218,8 +225,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             Message mMessage = MessageFactory.getMessage(message);
             if (mMessage != null) {
 
-                if (mMessage instanceof CustomMessage){
-                    switch (((CustomMessage) mMessage).getType()){
+                if (mMessage instanceof CustomMessage) {
+                    switch (((CustomMessage) mMessage).getType()) {
 
                         case TYPING:
                             setRTitle("对方正在输入...");
@@ -294,6 +301,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     /**
      * 显示撤销信息
+     *
      * @param timMessageLocator
      */
     @Override
@@ -414,6 +422,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     /**
      * 赠送礼物
+     *
      * @param map
      */
     public void CallBack_ForGitf(Map map) {
@@ -643,23 +652,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                     //个人聊天
                     case C2C:
 
-                        //判断是否是好友
-                        if (FriendshipInfo.getInstance().isFriend(identify)) {
-
-                            Intent intent = new Intent(this, Profile_Activity.class);
-                            intent.putExtra("identify", identify);
-                            startActivity(intent);
-                        } else {
-                            Intent person = new Intent(ChatActivity.this, AddFriend_Activity.class);
-                            person.putExtra("id", identify);
-                            person.putExtra("name", identify);
-                            startActivity(person);
-
+                        for (int i = 0; i < MyApp.friendsbeans.size(); i++) {
+                            if (identify.equals(MyApp.friendsbeans.get(i).getFriend_id())) {
+                                FriendInfo_Activity.start(this, identify);
+                                return;
+                            }
                         }
+                        UserInfo_Activity.start(this, identify);
+
                         break;
                     //群聊
                     case Group:
-//TODO:GroupProfileActivity
+                        //TODO:GroupProfileActivity
                         TabToast.makeText("GroupProfileActivity");
                         LogUtil.e(TAG, "GroupProfileActivity");
 //                        Intent intent = new Intent(ChatActivity.this, GroupProfileActivity.class);

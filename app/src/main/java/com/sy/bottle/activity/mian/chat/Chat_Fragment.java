@@ -2,7 +2,6 @@ package com.sy.bottle.activity.mian.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,7 +49,7 @@ import java.util.List;
  * TODO: 会话
  */
 public class Chat_Fragment extends Base_Fragment implements ConversationView, FriendshipMessageView, GroupManageMessageView {
-    private static final String TAG = "Mine_Fragment";
+    private static final String TAG = "Chat_Fragment";
 
     private List<Conversation> conversationList = new LinkedList<>();
     private ConversationAdapter adapter;
@@ -287,11 +286,10 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            Conversation conversation =  conversationList.get(info.position);
+        Conversation conversation = conversationList.get(info.position);
         switch (item.getItemId()) {
             case 1:
                 if (conversation != null) {
-
                     if (conversation instanceof NomalConversation) {
                         if (presenter.delConversation(((NomalConversation) conversation).getType(), conversation.getIdentify())) {
                             conversationList.remove(conversation);

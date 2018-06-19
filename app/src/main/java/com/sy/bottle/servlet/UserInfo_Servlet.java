@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
+import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
 import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
@@ -118,6 +119,14 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 if (myDialog!=null){
                     myDialog.dismiss();
                     UserInfo_Activity.start(MyApp.currentActivity(),entity.getData());
+                }
+
+                if (activity instanceof UserInfo_Activity){
+                    ((UserInfo_Activity) activity).CallBack_UserInfo(entity.getData());
+                }
+
+                if (activity instanceof FriendInfo_Activity){
+                    ((FriendInfo_Activity) activity).CallBack(entity.getData());
                 }
                 break;
 

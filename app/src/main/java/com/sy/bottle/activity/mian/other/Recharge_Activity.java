@@ -21,14 +21,15 @@ import com.alipay.sdk.app.PayTask;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Goods_Entity;
 import com.sy.bottle.entity.PayResult;
+import com.sy.bottle.servlet.Order_Get_Servlet;
 import com.sy.bottle.utils.OrderInfoUtil2_0;
 import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Map;
 
@@ -52,17 +53,18 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
 
     Button submit;
 
-    static float money;
+
 
     /**
-     * 付款 0 支付宝  1 微信
+     * 付款  1 微信 2 支付宝
      */
-    int paytype = 0;
+    int paytype = 2;
+    static Goods_Entity.DataBean bean;
 
-    public static void start(Context context, float i) {
+    public static void start(Context context, Goods_Entity.DataBean b) {
         Intent intent = new Intent();
         intent.setClass(context, Recharge_Activity.class);
-        money = i;
+        bean = b;
         context.startActivity(intent);
     }
 
@@ -103,10 +105,10 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
         wechat.setOnClickListener(this);
         submit.setOnClickListener(this);
 
-        balance.setText((int) (money * 10) + "=");
-        rmb.setText(ToolUtils.float2(money) + "元");
+        balance.setText(bean.getStars() + "=");
+        rmb.setText(bean.getMoney() + "元");
 
-        submit.setText("确认充值" + ToolUtils.float2(money) + "元");
+        submit.setText("确认充值" + bean.getMoney() + "元");
 
     }
 
@@ -114,7 +116,7 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.recharge_alipay:
-                paytype = 0;
+                paytype = 2;
                 alipay_type.setImageResource(R.drawable.ic_select);
                 wechat_type.setImageResource(R.drawable.ic_unselect);
                 break;
@@ -124,48 +126,11 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                 wechat_type.setImageResource(R.drawable.ic_select);
                 break;
             case R.id.recharge_submit:
-                switch (paytype) {
-                    //支付宝
-                    case 0:
-                        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.AliPay_APPID, true);
-                        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
-
-                        String sign = OrderInfoUtil2_0.getSign(params, Const.AliPay_RSA2_PRIVATE, true);
-                        final String orderInfo = orderParam + "&" + sign;
-
-                        Runnable payRunnable = new Runnable() {
-
-                            @Override
-                            public void run() {
-                                PayTask alipay = new PayTask(Recharge_Activity.this);
-                                Map<String, String> result = alipay.payV2(orderInfo, true);
-                                Log.i("msp", result.toString());
-
-                                Message msg = new Message();
-                                msg.what = SDK_PAY_FLAG;
-                                msg.obj = result;
-                                mHandler.sendMessage(msg);
-                            }
-                        };
-
-                        Thread payThread = new Thread(payRunnable);
-                        payThread.start();
-                        break;
-                    //微信
-                    case 1:
-
-                        PayReq request = new PayReq();
-                        request.appId = "25e56ce23ee18";
-                        request.partnerId = "1900000109";
-                        request.prepayId = "1101000000140415649af9fc314aa427";
-                        request.packageValue = "Sign=WXPay";
-                        request.nonceStr = "1101000000140429eb40476f8896f4c9";
-                        request.timeStamp = "1398746574";
-                        request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
-                        MyApp.api.sendReq(request);
-
-                        break;
-
+                if (checkBox.isChecked()) {
+                    Loading.show(this, "创建订单");
+                    new Order_Get_Servlet(this).execute(String.valueOf(paytype), bean.getMoney(), bean.getStars());
+                }else {
+                    TabToast.makeText("请先阅读并同意《充值协议》");
                 }
                 break;
             case R.id.recharge_agreement:
@@ -173,6 +138,53 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
 
         }
     }
+
+    public void CallBack_Order() {
+        switch (paytype) {
+            //支付宝
+            case 0:
+                Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.AliPay_APPID, true);
+                String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+
+                String sign = OrderInfoUtil2_0.getSign(params, Const.AliPay_RSA2_PRIVATE, true);
+                final String orderInfo = orderParam + "&" + sign;
+
+                Runnable payRunnable = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        PayTask alipay = new PayTask(Recharge_Activity.this);
+                        Map<String, String> result = alipay.payV2(orderInfo, true);
+                        Log.i("msp", result.toString());
+
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+                break;
+            //微信
+            case 1:
+
+                PayReq request = new PayReq();
+                request.appId = "25e56ce23ee18";
+                request.partnerId = "1900000109";
+                request.prepayId = "1101000000140415649af9fc314aa427";
+                request.packageValue = "Sign=WXPay";
+                request.nonceStr = "1101000000140429eb40476f8896f4c9";
+                request.timeStamp = "1398746574";
+                request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
+                MyApp.api.sendReq(request);
+
+                break;
+
+        }
+    }
+
 
     private static final int SDK_PAY_FLAG = 1;
 
