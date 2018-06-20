@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.Main_Activity;
+import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
 import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
@@ -68,10 +69,15 @@ public class Friend_Bac_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
         switch (entity.getStatus()) {
             case 200:
+                //刷新好友数据
+                Main_Activity.UpdateFriend();
                 if (activity instanceof UserInfo_Activity) {
                     MyApp.finishActivity(activity);
-                    //刷新好友数据
-                    Main_Activity.UpdateFriend();
+
+                }
+                if (activity instanceof FriendInfo_Activity) {
+                    MyApp.finishActivity(activity);
+
                 }
                 break;
             case 401:

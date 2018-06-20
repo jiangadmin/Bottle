@@ -11,7 +11,7 @@ import com.tencent.imsdk.TIMUserProfile;
 import com.tencent.imsdk.ext.message.TIMConversationExt;
 
 /**
- * 好友或群聊的会话
+ * 好友或群聊的消息
  */
 public class NomalConversation extends Conversation {
     private static final String TAG = "NomalConversation";
@@ -56,7 +56,7 @@ public class NomalConversation extends Conversation {
     }
 
     /**
-     * 跳转到聊天界面或会话详情
+     * 跳转到聊天界面或消息详情
      *
      * @param context 跳转上下文
      */
@@ -96,12 +96,12 @@ public class NomalConversation extends Conversation {
             TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
 
             if (profile != null) {
-
-                if (!TextUtils.isEmpty(profile.getRemark())) {
-                    name = profile.getRemark();
-                } else {
-                    name = profile.getNickName();
-                }
+                name = profile.getNickName();
+//                if (!TextUtils.isEmpty(profile.getRemark())) {
+//                    name = profile.getRemark();
+//                } else {
+//
+//                }
                 faceurl = profile.getFaceUrl();
             }
         }
@@ -147,7 +147,7 @@ public class NomalConversation extends Conversation {
     }
 
     /**
-     * 获取会话类型
+     * 获取消息类型
      */
     public TIMConversationType getType() {
         return conversation.getType();

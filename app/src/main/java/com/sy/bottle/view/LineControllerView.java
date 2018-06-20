@@ -45,8 +45,7 @@ public class LineControllerView extends LinearLayout {
         tvName.setText(name);
         TextView tvContent = findViewById(R.id.content);
         tvContent.setText(substance);
-        View bottomLine = findViewById(R.id.bottomLine);
-        bottomLine.setVisibility(isBottom ? VISIBLE : GONE);
+
         ImageView navArrow = findViewById(R.id.rightArrow);
         navArrow.setVisibility(canNav ? VISIBLE : GONE);
         LinearLayout contentPanel = findViewById(R.id.contentText);
@@ -67,7 +66,6 @@ public class LineControllerView extends LinearLayout {
         tvContent.setText(substance);
     }
 
-
     /**
      * 获取内容
      */
@@ -75,7 +73,6 @@ public class LineControllerView extends LinearLayout {
         TextView tvContent = findViewById(R.id.content);
         return tvContent.getText().toString();
     }
-
 
     /**
      * 设置是否可以跳转
@@ -87,7 +84,6 @@ public class LineControllerView extends LinearLayout {
         ImageView navArrow = findViewById(R.id.rightArrow);
         navArrow.setVisibility(canNav ? VISIBLE : GONE);
     }
-
 
     /**
      * 设置开关状态

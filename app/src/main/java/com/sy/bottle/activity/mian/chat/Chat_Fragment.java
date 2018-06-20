@@ -46,7 +46,7 @@ import java.util.List;
  * @date: 2018/5/26
  * @Email: www.fangmu@qq.com
  * @Phone: 186 6120 1018
- * TODO: 会话
+ * TODO: 消息
  */
 public class Chat_Fragment extends Base_Fragment implements ConversationView, FriendshipMessageView, GroupManageMessageView {
     private static final String TAG = "Chat_Fragment";
@@ -76,7 +76,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         v = view;
-        setTitle(view, "会话");
+        setTitle(view, "消息");
 
         listView = view.findViewById(R.id.chat_list);
         viewnull = view.findViewById(R.id.view_null);
@@ -123,7 +123,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
         friendshipManagerPresenter.getFriendshipLastMessage();
         groupManagerPresenter.getGroupManageLastMessage();
 
-        setTitle(v, "会话");
+        setTitle(v, "消息");
     }
 
     /**
@@ -279,7 +279,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         Conversation conversation = conversationList.get(info.position);
         if (conversation instanceof NomalConversation) {
-            menu.add(0, 1, Menu.NONE, "删除会话");
+            menu.add(0, 1, Menu.NONE, "删除消息");
         }
     }
 

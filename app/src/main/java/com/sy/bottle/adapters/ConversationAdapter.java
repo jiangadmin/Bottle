@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.model.Conversation;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.TimeUtil;
@@ -58,11 +59,18 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }
         final Conversation data = getItem(position);
 
-      LogUtil.e(TAG,"进入");
-
         viewHolder.tvName.setText(data.getName());
-        if (!TextUtils.isEmpty(data.getAvatar()) && !data.getName().equals("新朋友")) {
-            PicassoUtlis.img(data.getAvatar().contains("http") ? data.getAvatar() : Const.IMG + data.getAvatar(), viewHolder.avatar);
+
+        LogUtil.e(TAG, "头像" + data.getAvatar());
+
+        //判断是c2c聊天
+        if (!TextUtils.isEmpty(data.getIdentify())) {
+            //判断有没有头像
+//            if (data.getAvatar() != null) {
+//                PicassoUtlis.img(data.getAvatar().contains("http") ? data.getAvatar() : Const.IMG + data.getAvatar(), viewHolder.avatar);
+//            } else {
+                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
+//            }
         } else {
             viewHolder.avatar.setImageResource(data.getAvatarID());
         }

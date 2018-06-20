@@ -64,9 +64,9 @@ public class SaveUtils {
      * @param key
      * @return
      */
-    public static int getInt(String key) {
+    public static long getInt(String key) {
         SharedPreferences settings = MyApp.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        return settings.getInt(key, -1);
+        return settings.getLong(key, -1);
 
     }
 

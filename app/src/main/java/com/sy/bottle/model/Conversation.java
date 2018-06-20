@@ -6,7 +6,7 @@ import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMConversationType;
 
 /**
- * 会话数据
+ * 消息数据
  */
 public abstract class Conversation implements Comparable {
     private static final String TAG = "Conversation";

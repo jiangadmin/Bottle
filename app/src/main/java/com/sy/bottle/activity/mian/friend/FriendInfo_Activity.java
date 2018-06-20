@@ -19,9 +19,11 @@ import com.sy.bottle.entity.Banner_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.UserInfo_Entity;
+import com.sy.bottle.servlet.Friend_Bac_Servlet;
 import com.sy.bottle.servlet.Friend_Del_Servlet;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.CircleImageView;
 import com.sy.bottle.view.ImageCycleView;
@@ -43,7 +45,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
     private String identify;
 
     TextView name, sign;
-    LineControllerView id, remark, category, black;
+    LineControllerView id, remark, category, black, address;
     ImageCycleView photos;
     CircleImageView head;
 
@@ -82,6 +84,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         remark = findViewById(R.id.user_info_remark);
         category = findViewById(R.id.user_info_group);
         black = findViewById(R.id.user_info_blackList);
+        address = findViewById(R.id.user_info_address);
 
         black.setCheckListener(this);
 
@@ -97,6 +100,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), head);
         name.setText(bean.getNikename());
         sign.setText(bean.getSign());
+        address.setContent(bean.getProvince() + "-" + bean.getCity() + "-" + bean.getArea());
 
     }
 
@@ -108,7 +112,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
      * @param dataBeans
      */
     public void CallBack_Photos(List<Photos_Entity.DataBean> dataBeans) {
-        dataBeans.clear();
+        dBeans.clear();
         for (Photos_Entity.DataBean bean : dataBeans) {
             Banner_Entity.DBean dBean = new Banner_Entity.DBean();
             dBean.setPicUrl(bean.getPic_url());
@@ -119,7 +123,8 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         photos.setBeans(dBeans, new ImageCycleView.Listener() {
             @Override
             public void displayImage(String imageURL, ImageView imageView) {
-                PicassoUtlis.img(imageURL, imageView);
+                LogUtil.e(TAG,"图片 "+Const.IMG + imageURL);
+                PicassoUtlis.img(imageURL.contains("http") ? imageURL : Const.IMG + imageURL, imageView);
             }
 
             @Override
@@ -127,9 +132,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
                 new ShowImage_Dialog(FriendInfo_Activity.this, bean.getPicUrl()).show();
             }
         });
-
     }
-
 
     /**
      * Called when a view has been clicked.
@@ -176,7 +179,6 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         }
     }
 
-
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (b) {
@@ -185,7 +187,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
             base_dialog.setOk("确定", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new Friend_Del_Servlet(FriendInfo_Activity.this).execute(identify);
+                    new Friend_Bac_Servlet(FriendInfo_Activity.this).execute(identify);
                 }
             });
             base_dialog.setEsc("取消", new View.OnClickListener() {

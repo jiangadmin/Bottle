@@ -27,7 +27,7 @@
             android:background="@color/white"
             android:drawableTop="@drawable/ic_message"
             android:paddingTop="5dp"
-            android:text="会话"
+            android:text="消息"
             android:textSize="12sp" />
 
         <Button

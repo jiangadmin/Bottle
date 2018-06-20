@@ -9,7 +9,7 @@ import java.util.List;
  * @Phone: 186 6120 1018
  * TODO: 赠送记录
  */
-public class Gift_Log_Entity extends Base_Entity {
+public class Gift_Set_Log_Entity extends Base_Entity {
 
     private List<DataBean> data;
 

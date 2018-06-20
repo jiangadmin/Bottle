@@ -72,16 +72,8 @@
         app:isSwitch="true"
         app:name="加入黑名单" />
 
-
     <com.sy.bottle.view.LineControllerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        app:canNav="true"
-        app:isBottom="true"
-        app:name="年龄" />
-
-    <com.sy.bottle.view.LineControllerView
+        android:id="@+id/user_info_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"

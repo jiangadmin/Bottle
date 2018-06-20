@@ -171,6 +171,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                         public void onSuccess(List<TIMUserProfile> timUserProfiles) {
                             if (timUserProfiles.size() > 0) {
                                 setRTitle(titleStr = timUserProfiles.get(0).getNickName());
+                                adapter.setHead(timUserProfiles.get(0).getFaceUrl());
+                                adapter.notifyDataSetChanged();
                                 LogUtil.e(TAG, "非好友头像" + timUserProfiles.get(0).getFaceUrl());
                             }
                         }

@@ -24,14 +24,17 @@ import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Goods_Entity;
+import com.sy.bottle.entity.Order_Entity;
 import com.sy.bottle.entity.PayResult;
 import com.sy.bottle.servlet.Order_Get_Servlet;
 import com.sy.bottle.utils.OrderInfoUtil2_0;
-import com.sy.bottle.utils.ToolUtils;
+import com.sy.bottle.utils.TimeUtil;
 import com.sy.bottle.view.TabToast;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: jiangyao
@@ -52,7 +55,6 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
     CheckBox checkBox;
 
     Button submit;
-
 
 
     /**
@@ -129,7 +131,7 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                 if (checkBox.isChecked()) {
                     Loading.show(this, "创建订单");
                     new Order_Get_Servlet(this).execute(String.valueOf(paytype), bean.getMoney(), bean.getStars());
-                }else {
+                } else {
                     TabToast.makeText("请先阅读并同意《充值协议》");
                 }
                 break;
@@ -139,14 +141,40 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
         }
     }
 
-    public void CallBack_Order() {
+    /**
+     * 订单数据
+     *
+     * @param bean
+     */
+    public void CallBack_Order(Order_Entity.DataBean bean) {
         switch (paytype) {
             //支付宝
-            case 0:
-                Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.AliPay_APPID, true);
-                String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+            case 2:
+                Map<String, String> keyValues = new HashMap<>();
 
-                String sign = OrderInfoUtil2_0.getSign(params, Const.AliPay_RSA2_PRIVATE, true);
+                keyValues.put("app_id", Const.AliPay_APPID);
+
+                keyValues.put("biz_content",
+                        "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\"," +
+                                "\"total_amount\":\""+bean.getTotal_fee()+"\",\"subject\":\""+bean.getBody()+"\"," +
+                                "\"body\":\""+bean.getBody()+"\",\"out_trade_no\":\"" + bean.getOut_trade_no() + "\"}");
+
+                keyValues.put("charset", "utf-8");
+
+                keyValues.put("method", "alipay.trade.app.pay");
+
+                keyValues.put("notify_url", "http://api.syplp.com/alipaycallbacks");
+//
+
+                keyValues.put("sign_type", "RSA2");
+
+                keyValues.put("timestamp", TimeUtil.StringPattern(bean.getTime()));
+
+                keyValues.put("version", "1.0");
+
+                String orderParam = OrderInfoUtil2_0.buildOrderParam(keyValues);
+
+                String sign = OrderInfoUtil2_0.getSign(keyValues, Const.AliPay_RSA2_PRIVATE, true);
                 final String orderInfo = orderParam + "&" + sign;
 
                 Runnable payRunnable = new Runnable() {
@@ -155,7 +183,6 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                     public void run() {
                         PayTask alipay = new PayTask(Recharge_Activity.this);
                         Map<String, String> result = alipay.payV2(orderInfo, true);
-                        Log.i("msp", result.toString());
 
                         Message msg = new Message();
                         msg.what = SDK_PAY_FLAG;
@@ -171,20 +198,20 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
             case 1:
 
                 PayReq request = new PayReq();
-                request.appId = "25e56ce23ee18";
-                request.partnerId = "1900000109";
-                request.prepayId = "1101000000140415649af9fc314aa427";
+                request.appId =bean.getAppid() ;
+                request.partnerId = bean.getPartnerid();
+                request.prepayId = bean.getPrepayid();
                 request.packageValue = "Sign=WXPay";
-                request.nonceStr = "1101000000140429eb40476f8896f4c9";
-                request.timeStamp = "1398746574";
-                request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
+                request.nonceStr = bean.getNoncestr();
+                request.timeStamp = bean.getTimestamp();
+                request.sign = bean.getSign();
                 MyApp.api.sendReq(request);
+
 
                 break;
 
         }
     }
-
 
     private static final int SDK_PAY_FLAG = 1;
 

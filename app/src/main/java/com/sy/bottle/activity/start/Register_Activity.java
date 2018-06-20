@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
@@ -40,6 +42,10 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
     String phonenum;
 
+    CheckBox checkBox;
+
+    TextView agreement;
+
     public static void start(Context context, int type) {
         Intent intent = new Intent();
         intent.setClass(context, Register_Activity.class);
@@ -69,9 +75,12 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
         boy = findViewById(R.id.register_boy);
         girl = findViewById(R.id.register_girl);
         submit = findViewById(R.id.register_submit);
+        checkBox = findViewById(R.id.checkBox);
+        agreement = findViewById(R.id.agreement);
 
         getsms.setOnClickListener(this);
         submit.setOnClickListener(this);
+        agreement.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.S_昵称))) {
             nickname.setText(SaveUtils.getString(Save_Key.S_昵称));
@@ -97,7 +106,11 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
         String sig = sign.getText().toString();
 
         switch (view.getId()) {
+            case R.id.agreement:
+
+                break;
             case R.id.register_submit:
+
                 if (phonenum.length() != 11) {
                     TabToast.makeText("请输入正确的手机号！");
                     return;
@@ -118,6 +131,11 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
                 if (!boy.isChecked() && !girl.isChecked()) {
                     TabToast.makeText("请选择性别！");
+                    return;
+                }
+
+                if (!checkBox.isChecked()){
+                    TabToast.makeText("请阅读并同意《用户协议》");
                     return;
                 }
 

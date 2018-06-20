@@ -10,6 +10,7 @@ import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Order_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
@@ -25,7 +26,7 @@ import java.util.Map;
  * @Phone: 186 6120 1018
  * TODO: 获取订单
  */
-public class Order_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
+public class Order_Get_Servlet extends AsyncTask<String, Integer, Order_Entity> {
     private static final String TAG = "Order_Get_Servlet";
 
     Activity activity;
@@ -35,7 +36,7 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
     }
 
     @Override
-    protected Base_Entity doInBackground(String... strings) {
+    protected Order_Entity doInBackground(String... strings) {
         Map map = new HashMap();
         map.put("type", strings[0]);
         map.put("money", strings[1]);
@@ -47,16 +48,16 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
 
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "recharges/" + SaveUtils.getString(Save_Key.UID), map);
 
-        Base_Entity entity;
+        Order_Entity entity;
         if (TextUtils.isEmpty(res)) {
-            entity = new Base_Entity();
+            entity = new Order_Entity();
             entity.setStatus(-1);
             entity.setMessage("连接服务器失败");
         } else {
             try {
-                entity = new Gson().fromJson(res, Base_Entity.class);
+                entity = new Gson().fromJson(res, Order_Entity.class);
             } catch (Exception e) {
-                entity = new Base_Entity();
+                entity = new Order_Entity();
                 entity.setStatus(-2);
                 entity.setMessage("数据解析失败");
             }
@@ -66,13 +67,13 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> {
     }
 
     @Override
-    protected void onPostExecute(Base_Entity entity) {
+    protected void onPostExecute(Order_Entity entity) {
         super.onPostExecute(entity);
         Loading.dismiss();
         switch (entity.getStatus()) {
             case 200:
                 if (activity instanceof Recharge_Activity) {
-                    ((Recharge_Activity) activity).CallBack_Order();
+                    ((Recharge_Activity) activity).CallBack_Order(entity.getData());
                 }
                 break;
             case 401:

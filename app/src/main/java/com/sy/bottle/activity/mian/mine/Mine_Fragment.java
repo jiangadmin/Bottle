@@ -14,8 +14,8 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.dialog.FriendShip_Dialog;
 import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
@@ -36,7 +36,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     TextView name, id, xx, jf;
     ImageView sex;
 
-    Button mine_mall, mine_setting, mine_blackList, mine_friend_Confirm,mine_log;
+    Button mine_mall, mine_setting, mine_friend_Confirm, mine_log;
 
     @Nullable
     @Override
@@ -66,14 +66,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         name = view.findViewById(R.id.mine_nickname);
         id = view.findViewById(R.id.mine_id);
         sex = view.findViewById(R.id.mine_sex);
-        mine_blackList = view.findViewById(R.id.mine_blackList);
         mine_friend_Confirm = view.findViewById(R.id.mine_friend_Confirm);
         mine_log = view.findViewById(R.id.mine_log);
 
         xx = view.findViewById(R.id.mine_xx);
         jf = view.findViewById(R.id.mine_jf);
 
-        mine_mall = view.findViewById(R.id.mine_log);
+        mine_mall = view.findViewById(R.id.mine_mall);
         mine_setting = view.findViewById(R.id.mine_setting);
 
         mine_log.setOnClickListener(this);
@@ -81,7 +80,6 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         mine_info.setOnClickListener(this);
         mine_setting.setOnClickListener(this);
         mine_friend_Confirm.setOnClickListener(this);
-        mine_blackList.setOnClickListener(this);
         xx.setOnClickListener(this);
         jf.setOnClickListener(this);
 
@@ -99,11 +97,9 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
         name.setText(bean.getNikename());
 
-        if (bean.getAvatar().contains("http")) {
-            PicassoUtlis.img(bean.getAvatar(), head, R.drawable.head_me);
-        } else {
-            PicassoUtlis.img(Const.IMG + bean.getAvatar(), head, R.drawable.head_me);
-        }
+
+        PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), head, R.drawable.head_me);
+
 
         id.setText(SaveUtils.getString(Save_Key.UID));
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
@@ -120,10 +116,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_xx:
-                MyBalance_Activity.start(getActivity());
+
                 break;
             case R.id.mine_jf:
 
+                break;
+            case R.id.mine_mall:
+                MyBalance_Activity.start(getActivity());
                 break;
             case R.id.mine_log:
                 Log_Activity.start(getActivity());
@@ -134,9 +133,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
             case R.id.mine_friend_Confirm:
                 new FriendShip_Dialog(getActivity());
                 break;
-            case R.id.mine_blackList:
-                Black_Activity.start(getActivity());
-                break;
+
             case R.id.mine_setting:
                 Setting_Activity.start(getActivity());
                 break;

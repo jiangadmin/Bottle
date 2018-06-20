@@ -72,10 +72,11 @@ public class Friend_Add_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         switch (entity.getStatus()) {
             case 200:
                 TabToast.makeText("已添加为好友");
+                //刷新好友数据
+                Main_Activity.UpdateFriend();
                 if (activity instanceof UserInfo_Activity) {
                     ((UserInfo_Activity) activity).CallBack();
-                    //刷新好友数据
-                    Main_Activity.UpdateFriend();
+
                 }
                 break;
             case 401:

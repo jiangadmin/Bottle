@@ -102,4 +102,16 @@ public class TimeUtil {
         }
 
     }
+
+
+    /**
+     * 将String型格式化,比如想要将2011-11-11格式化成2011年11月11日,就StringPattern("2011-11-11","yyyy-MM-dd","yyyy年MM月dd日").
+     *
+     * @param date String 想要格式化的日期
+     * @return String
+     */
+    public static String StringPattern(long date) {
+
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(date));
+    }
 }

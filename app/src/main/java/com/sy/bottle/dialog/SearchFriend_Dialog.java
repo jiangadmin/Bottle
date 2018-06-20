@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.UserInfo_Servlet;
+import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -66,13 +69,20 @@ public class SearchFriend_Dialog extends MyDialog implements View.OnClickListene
                     return;
                 }
 
+                if (SaveUtils.getString(Save_Key.UID).equals(id)){
+                    TabToast.makeText("不能添加自己为好友");
+                    input.setText("");
+                    return;
+                }
+
                 new UserInfo_Servlet(this).execute(id);
                 break;
         }
     }
 
     public void CallBack() {
-
+        message.setVisibility(View.VISIBLE);
+        message.setText("查无此用户");
     }
 
     @Override

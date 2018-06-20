@@ -70,7 +70,7 @@ public class Bottle_Get_Servlet extends AsyncTask<String, Integer, Bottle_Get_En
             case 400:
                 if (entity.getMessage().equals("无数据")){
                     Base_Dialog base_dialog = new Base_Dialog(activity);
-                    base_dialog.setMessage("没有捞到，再去捞一次吧");
+                    base_dialog.setMessage("呀！瓶子捡完了！一会儿再来吧");
                     base_dialog.setOk("好的",null);
                 }
                 break;

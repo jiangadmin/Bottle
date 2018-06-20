@@ -108,8 +108,13 @@ public class ImageMessage extends Message {
                         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                LogUtil.e(TAG,"图片地址 "+image.getUrl());
-                                new ShowImage_Dialog(MyApp.currentActivity(),image.getUrl()).show();
+                                LogUtil.e(TAG, "图片地址 " + image.getUrl());
+                                try {
+                                    new ShowImage_Dialog(MyApp.currentActivity(), image.getUrl()).show();
+
+                                } catch (Exception e) {
+                                    LogUtil.e(TAG, e.getMessage());
+                                }
                                 navToImageview(image, context);
                             }
                         });

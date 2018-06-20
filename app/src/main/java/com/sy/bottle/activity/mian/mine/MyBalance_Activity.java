@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.mian.other.Put_forward_Activity;
 import com.sy.bottle.activity.mian.other.Recharge_Activity;
 import com.sy.bottle.adapters.Adapter_Goods;
 import com.sy.bottle.dialog.ReCharge_Dialog;
 import com.sy.bottle.entity.Goods_Entity;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Goods_Servlet;
+import com.sy.bottle.utils.SaveUtils;
 
 import java.util.List;
 
@@ -76,11 +79,13 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
         goods = findViewById(R.id.goods);
 
 
+        num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_能量)));
         rmb_other = findViewById(R.id.mybalance_rmb_other);
 
         sl.setEnabled(false);
 
         rmb_other.setOnClickListener(this);
+        put_forward.setOnClickListener(this);
 
     }
 
@@ -93,7 +98,7 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                 break;
 
             case R.id.mybalance_put_forward:
-
+                Put_forward_Activity.start(this);
                 break;
         }
     }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
@@ -14,9 +13,9 @@ import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
+import com.sy.bottle.adapters.ConversationAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
-import com.sy.bottle.dialog.MyDialog;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.dialog.SearchFriend_Dialog;
 import com.sy.bottle.entity.Const;
@@ -41,7 +40,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
     Fragment fragment;
 
-    ImageView imageView;
+    ConversationAdapter.ViewHolder viewHolder;
 
     SearchFriend_Dialog myDialog;
 
@@ -49,9 +48,6 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
         this.myDialog = myDialog;
     }
 
-    public UserInfo_Servlet(ImageView imageView) {
-        this.imageView = imageView;
-    }
 
     public UserInfo_Servlet(Fragment fragment) {
         this.fragment = fragment;
@@ -61,16 +57,20 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
         this.activity = activity;
     }
 
+    public UserInfo_Servlet(ConversationAdapter.ViewHolder viewHolder) {
+        this.viewHolder = viewHolder;
+    }
+
     @Override
     protected UserInfo_Entity doInBackground(String... strings) {
 
         String userid = SaveUtils.getString(Save_Key.UID);
-        if (strings.length>0){
+        if (strings.length > 0) {
             userid = strings[0];
         }
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "users/" + userid, null);
 
-        LogUtil.e(TAG,res);
+        LogUtil.e(TAG, res);
         UserInfo_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -113,20 +113,29 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 if (activity instanceof Profile_Activity) {
                     ((Profile_Activity) activity).CallBack(entity.getData());
                 }
-                if (imageView!=null){
-                    PicassoUtlis.img(entity.getData().getAvatar(),imageView);
+                if (viewHolder != null) {
+                    viewHolder.tvName.setText(entity.getData().getNikename());
+                    PicassoUtlis.img(entity.getData().getAvatar().contains("http") ? entity.getData().getAvatar() : Const.IMG + entity.getData().getAvatar(), viewHolder.avatar);
                 }
-                if (myDialog!=null){
+                if (myDialog != null) {
                     myDialog.dismiss();
-                    UserInfo_Activity.start(MyApp.currentActivity(),entity.getData());
+                    UserInfo_Activity.start(MyApp.currentActivity(), entity.getData());
                 }
 
-                if (activity instanceof UserInfo_Activity){
+                if (activity instanceof UserInfo_Activity) {
                     ((UserInfo_Activity) activity).CallBack_UserInfo(entity.getData());
                 }
 
-                if (activity instanceof FriendInfo_Activity){
+                if (activity instanceof FriendInfo_Activity) {
                     ((FriendInfo_Activity) activity).CallBack(entity.getData());
+                }
+                break;
+
+            case 400:
+                if (entity.getMessage().equals("无数据")){
+                    if (myDialog != null) {
+                        myDialog.CallBack();
+                    }
                 }
                 break;
 

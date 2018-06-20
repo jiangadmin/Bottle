@@ -22,7 +22,7 @@ import com.sy.bottle.dialog.Esc_Dialog;
 public class Setting_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "Setting_Servlet";
 
-    Button about, esc, notify;
+    Button blackList,about, esc, notify;
 
     public static void start(Context context) {
         Intent intent = new Intent();
@@ -43,6 +43,7 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
     }
 
     private void initview() {
+        blackList = findViewById(R.id.blackList);
         about = findViewById(R.id.setting_about);
         esc = findViewById(R.id.setting_out);
         notify = findViewById(R.id.setting_notify);
@@ -55,6 +56,9 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.blackList:
+                Black_Activity.start(this);
+                break;
             case R.id.setting_notify:
                 MessageNotifySettingActivity.start(this);
                 break;

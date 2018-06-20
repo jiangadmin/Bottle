@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'piaoliupin'
             keyPassword 'jiangadmin'
-            storeFile file('C:/Users/jiangadmin/Desktop/Bottle/piaoliupin')
+            storeFile file('/Users/jiangyao/Desktop/Bottle/piaoliupin')
             storePassword 'jiangadmin'
         }
     }
@@ -20,6 +20,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
+
+    dexOptions {
+        preDexLibraries false
+    }
+
     buildTypes {
         release {
             debuggable true
@@ -41,7 +46,10 @@ android {
     }
     productFlavors {
     }
+
+
 }
+
 
 MobSDK {
     appKey "25e56ce23ee18"

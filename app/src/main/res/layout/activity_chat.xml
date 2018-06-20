@@ -4,8 +4,8 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     tools:context=".activity.mian.chat.ChatActivity">
 
     <include layout="@layout/view_title_bar" />
@@ -25,6 +25,28 @@
         android:divider="@null">
 
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/mesage"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar_tob"
+        android:background="#7ff9f923"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/gray_6"
+            android:textSize="14sp"
+            android:text="发现涉及色情、钱财、其他平台、多属欺诈，请投诉"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <com.sy.bottle.view.VoiceSendingView
         android:id="@+id/voice_sending"
