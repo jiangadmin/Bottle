@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
+import com.sy.bottle.activity.mian.other.Report_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.Loading;
@@ -143,7 +144,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu:
-                TabToast.makeText("投诉");
+                Report_Activity.start(this,identify);
                 break;
             case R.id.user_info_btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);

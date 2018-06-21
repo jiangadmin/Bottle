@@ -25,6 +25,7 @@ import com.sy.bottle.model.NomalConversation;
 import com.sy.bottle.presenter.ConversationPresenter;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
 import com.sy.bottle.presenter.GroupManagerPresenter;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.ConversationView;
 import com.sy.bottle.viewfeatures.FriendshipMessageView;
 import com.sy.bottle.viewfeatures.GroupManageMessageView;
@@ -89,7 +90,6 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
                 if (conversationList.get(position) instanceof GroupManageConversation) {
                     groupManagerPresenter.getGroupManageLastMessage();
                 }
-
             }
         });
         friendshipManagerPresenter = new FriendshipManagerPresenter(this);
@@ -209,6 +209,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
      */
     @Override
     public void refresh() {
+        LogUtil.e(TAG,"刷新");
         Collections.sort(conversationList);
         updateview();
         if (getActivity() instanceof Main_Activity)

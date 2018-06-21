@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
@@ -30,11 +31,8 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
     @Override
     protected Base_Entity doInBackground(String... strings) {
-        Map map = new HashMap();
 
-        map.put("111","一");
-
-        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "scores/" + SaveUtils.getString(Save_Key.UID), map);
+        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "scores/" + SaveUtils.getString(Save_Key.UID), null);
 
         Base_Entity entity;
 
@@ -62,10 +60,13 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         switch (entity.getStatus()) {
             case 200:
                 TabToast.makeText(entity.getMessage());
+                if (MyApp.currentActivity() instanceof Main_Activity){
+                    Main_Activity.UpdateMyInfo();
+                }
                 SaveUtils.setInt(Save_Key.S_积分, SaveUtils.getInt(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
                 break;
             case 401:
-                new ReLogin_Dialog();;
+                new ReLogin_Dialog();
             default:
                 TabToast.makeText(entity.getMessage());
                 break;

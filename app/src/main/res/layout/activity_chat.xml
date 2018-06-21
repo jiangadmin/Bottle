@@ -26,27 +26,25 @@
 
     </ListView>
 
-    <LinearLayout
+    <TextView
         android:id="@+id/mesage"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_bar_tob"
-        android:background="#7ff9f923"
-        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="#eaffffff"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:text="发现涉及色情、钱财、其他平台、多属欺诈，请投诉"
+        android:textColor="#FF8000"
+        android:textSize="14sp" />
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/gray_6"
-            android:textSize="14sp"
-            android:text="发现涉及色情、钱财、其他平台、多属欺诈，请投诉"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
     <com.sy.bottle.view.VoiceSendingView
         android:id="@+id/voice_sending"

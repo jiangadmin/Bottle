@@ -11,6 +11,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -146,7 +147,7 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/ic_image" />
+                    android:src="@drawable/ic_image_a" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,13 +159,13 @@
 
             <!--小视频-->
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/btn_video"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="60dp"
@@ -181,13 +182,13 @@
 
             <!--文件-->
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/btn_file"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="60dp"
@@ -228,15 +229,23 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/emoticonPanel"
+    <ScrollView
+        android:id="@+id/emoticonPanel_sl"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/background"
-        android:orientation="vertical"
         android:visibility="gone">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/emoticonPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <GridView
         android:id="@+id/giftPanel"

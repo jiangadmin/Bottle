@@ -119,15 +119,12 @@ public class CustomMessage extends Message {
     public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
         viewHolder.rightMessage.setBackground(null);
         viewHolder.leftMessage.setBackground(null);
-        LogUtil.e(TAG, "自定义消息显示");
         //如果是礼物信息
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 
-        LogUtil.e(TAG, "进入");
         TIMCustomElem elem = (TIMCustomElem) message.getElement(0);
 
-        LogUtil.e(TAG, new String(elem.getData()));
 
         try {
             JSONObject jsonObj = new JSONObject(new String(elem.getData()));
@@ -140,13 +137,11 @@ public class CustomMessage extends Message {
 
             actionParam = actionParam.replaceAll(" ", "");
 
-            LogUtil.e(TAG, "转换后的数据：" + actionParam);
 
             JSONObject gift = new JSONObject(actionParam);
 
 
             final String gifturl = gift.getString("Pic_url");
-            LogUtil.e(TAG, "图片地址：" + gift.getString("Pic_url"));
 
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setGravity(Gravity.CENTER);
@@ -179,7 +174,6 @@ public class CustomMessage extends Message {
             getBubbleView(viewHolder).addView(linearLayout);
             showStatus(viewHolder);
 
-            LogUtil.e(TAG, "展示图片");
         } catch (Exception e) {
             LogUtil.e(TAG, e.getMessage());
             TextView tv = new TextView(MyApp.getInstance());
@@ -192,7 +186,6 @@ public class CustomMessage extends Message {
             getBubbleView(viewHolder).addView(tv);
             showStatus(viewHolder);
 
-            LogUtil.e(TAG, "展示描述");
         }
 
     }

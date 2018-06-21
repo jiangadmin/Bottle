@@ -151,6 +151,17 @@
         <activity android:name=".activity.mian.friend.UserInfo_Activity"
             android:screenOrientation="portrait"/>
 
+        <!--投诉-->
+        <activity android:name=".activity.mian.other.Report_Activity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.mian.other.NewWebActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--帮助-->
+        <activity android:name=".activity.mian.other.Help_Activity"
+            android:screenOrientation="portrait"/>
+
         <!--搜索好友-->
         <activity
             android:name=".activity.mian.friend.SearchFriend_Activity"

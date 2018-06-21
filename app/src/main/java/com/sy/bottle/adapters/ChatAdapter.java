@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
+import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.model.Message;
 import com.sy.bottle.utils.PicassoUtlis;
@@ -87,10 +90,22 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         }
         if (position < getCount()) {
             final Message data = getItem(position);
-            if (head != null) {
-                PicassoUtlis.img(head, viewHolder.leftAvatar);
-            }
-            PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar);
+//            if (head != null) {
+//                PicassoUtlis.img(head, viewHolder.leftAvatar);
+//            }
+            viewHolder.leftAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int i = 0; i < MyApp.friendsbeans.size(); i++) {
+                        if (data.getSender().equals(MyApp.friendsbeans.get(i).getFriend_id())) {
+                            FriendInfo_Activity.start(MyApp.currentActivity(), data.getSender());
+                            return;
+                        }
+                    }
+                    UserInfo_Activity.start(MyApp.currentActivity(), data.getSender());
+                }
+            });
+//            PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar);
             data.showMessage(viewHolder, getContext());
         }
         return view;

@@ -14,6 +14,7 @@ import com.sy.bottle.activity.mian.chat.Chat_Fragment;
 import com.sy.bottle.activity.mian.friend.Friend_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
 import com.sy.bottle.servlet.Friends_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 
 public class Main_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -37,7 +38,7 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        activity  = this;
+        activity = this;
 
         initview();
 
@@ -48,14 +49,33 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
         UpdateFriend();
     }
 
-    public static void UpdateFriend(){
+    /**
+     * 更新好友数据
+     */
+    public static void UpdateFriend() {
         new Friends_Servlet(activity).execute();
     }
 
-    public void CallBack_Friend(){
+    /**
+     * 更新我的数据
+     */
+    public static void UpdateMyInfo() {
+        new UserInfo_Servlet(activity).execute();
+    }
+
+    /**
+     * 刷新好友页面
+     */
+    public void CallBack_Friend() {
         friend_fragment.onResume();
     }
 
+    /**
+     * 刷新我的页面
+     */
+    public void CallBack_MyInfo() {
+        mine_fragment.onResume();
+    }
 
     private void initview() {
 
@@ -175,7 +195,7 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
 
     @Override
     public void onBackPressed() {
-        Intent i= new Intent(Intent.ACTION_MAIN);
+        Intent i = new Intent(Intent.ACTION_MAIN);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addCategory(Intent.CATEGORY_HOME);
         startActivity(i);

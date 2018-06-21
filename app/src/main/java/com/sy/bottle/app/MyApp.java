@@ -8,6 +8,7 @@ import com.mob.MobSDK;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
@@ -50,6 +51,11 @@ public class MyApp extends Application {
      * 好友列表
      */
     public static List<Friends_Entity.DataBean> friendsbeans = new ArrayList<>();
+
+    /**
+     * 我的数据
+     */
+    public static UserInfo_Entity.DataBean mybean  = new UserInfo_Entity.DataBean();
 
     @Override
     public void onCreate() {

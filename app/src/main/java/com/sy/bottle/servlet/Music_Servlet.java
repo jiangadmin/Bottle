@@ -64,7 +64,8 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
         //设置通知时间，默认为系统发出通知的时间，通常不用设置
         //.setWhen(System.currentTimeMillis());
         //通过builder.build()方法生成Notification对象,并发送通知,id=1
-        notifyManager.notify(1, builder.build());
+        notifyManager.notify(Integer.valueOf(timMessage.getSender()), builder.build());
+
 
 
         //直接创建，不需要设置setDataSource

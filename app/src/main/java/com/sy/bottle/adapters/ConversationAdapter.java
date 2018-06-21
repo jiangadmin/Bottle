@@ -66,11 +66,11 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         //判断是c2c聊天
         if (!TextUtils.isEmpty(data.getIdentify())) {
             //判断有没有头像
-//            if (data.getAvatar() != null) {
-//                PicassoUtlis.img(data.getAvatar().contains("http") ? data.getAvatar() : Const.IMG + data.getAvatar(), viewHolder.avatar);
-//            } else {
-                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
-//            }
+            if (data.getAvatar() != null) {
+                PicassoUtlis.img(data.getAvatar().contains("http") ? data.getAvatar() : Const.IMG + data.getAvatar(), viewHolder.avatar);
+            } else {
+//                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
+            }
         } else {
             viewHolder.avatar.setImageResource(data.getAvatarID());
         }

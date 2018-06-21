@@ -1,5 +1,6 @@
 package com.sy.bottle.activity.mian.chat;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -7,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
@@ -24,9 +25,11 @@ import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Friends_Entity;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FileMessage;
-import com.sy.bottle.model.FriendshipInfo;
 import com.sy.bottle.model.GroupInfo;
 import com.sy.bottle.model.ImageMessage;
 import com.sy.bottle.model.Message;
@@ -37,20 +40,19 @@ import com.sy.bottle.model.VideoMessage;
 import com.sy.bottle.model.VoiceMessage;
 import com.sy.bottle.presenter.ChatPresenter;
 import com.sy.bottle.servlet.Gift_For_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.MediaUtil;
 import com.sy.bottle.utils.RecorderUtil;
+import com.sy.bottle.utils.Util;
 import com.sy.bottle.view.ChatInput;
 import com.sy.bottle.view.TabToast;
 import com.sy.bottle.view.VoiceSendingView;
 import com.sy.bottle.viewfeatures.ChatView;
 import com.tencent.imsdk.TIMConversationType;
-import com.tencent.imsdk.TIMFriendshipManager;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageStatus;
-import com.tencent.imsdk.TIMUserProfile;
-import com.tencent.imsdk.TIMValueCallBack;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageExt;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
@@ -84,6 +86,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     private String titleStr;
     private Handler handler = new Handler();
 
+    TextView mesage;
+
     public static void navToChat(Context context, String identify, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("identify", identify);
@@ -101,11 +105,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //移除标记为id的通知 (只是针对当前Context下的所有Notification)
+        notificationManager.cancel(Integer.parseInt(identify));
+
         presenter = new ChatPresenter(this, identify, type);
         input = findViewById(R.id.input_panel);
+        mesage = findViewById(R.id.mesage);
         input.setChatView(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = findViewById(R.id.list);
+
+        Util.startTimer(mesage, 30, 1);
 
         listView.setAdapter(adapter);
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
@@ -145,38 +156,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             case C2C:
                 setMenu(R.drawable.btn_person);
 
+//                如果是好友
                 if (MyApp.friendsbeans != null && MyApp.friendsbeans.size() > 0) {
+                    for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
+                        if (bean.getFriend_id().equals(identify)) {
+                            setRTitle(bean.getNikename());
+                            adapter.setHead(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar());
+                            adapter.notifyDataSetChanged();
 
-                } else {
-
-                }
-
-                //判断是否是好友
-                if (FriendshipInfo.getInstance().isFriend(identify)) {
-                    TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-                    setRTitle(titleStr = profile == null ? identify : profile.getNickName());
-                    if (!TextUtils.isEmpty(profile.getFaceUrl())) {
-                        adapter.setHead(profile.getFaceUrl());
+                        }
                     }
                 } else {
-                    List list = new ArrayList();
-                    list.add(identify);
-                    TIMFriendshipManager.getInstance().getUsersProfile(list, new TIMValueCallBack<List<TIMUserProfile>>() {
-                        @Override
-                        public void onError(int i, String s) {
-                            setRTitle(titleStr = identify);
-                        }
-
-                        @Override
-                        public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                            if (timUserProfiles.size() > 0) {
-                                setRTitle(titleStr = timUserProfiles.get(0).getNickName());
-                                adapter.setHead(timUserProfiles.get(0).getFaceUrl());
-                                adapter.notifyDataSetChanged();
-                                LogUtil.e(TAG, "非好友头像" + timUserProfiles.get(0).getFaceUrl());
-                            }
-                        }
-                    });
+                    new UserInfo_Servlet(this).execute(identify);
                 }
                 break;
             //群聊
@@ -189,6 +180,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         }
         voiceSendingView = findViewById(R.id.voice_sending);
         presenter.start();
+
+    }
+
+    /**
+     * 查询数据返回
+     *
+     * @param bean
+     */
+    public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
+        setRTitle(bean.getNikename());
+        adapter.setHead(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -414,7 +417,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         if (type == TIMConversationType.C2C) {
 
             map.put("give_user_id", identify);
-            map.put("number", "6");
+            map.put("number", "1");
 
             //请求发送礼物
             new Gift_For_Servlet(this).execute(map);
@@ -428,7 +431,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * @param map
      */
     public void CallBack_ForGitf(Map map) {
-        TabToast.makeText("赠送成功");
         Message message = new CustomMessage(CustomMessage.Type.GIFT, map);
         presenter.sendMessage(message.getMessage());
     }

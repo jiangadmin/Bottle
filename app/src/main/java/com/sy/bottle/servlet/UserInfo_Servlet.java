@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.activity.mian.Main_Activity;
+import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
 import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
 import com.sy.bottle.activity.mian.friend.Profile_Activity;
@@ -25,6 +27,9 @@ import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMFriendGenderType;
+import com.tencent.imsdk.TIMFriendshipManager;
 
 /**
  * @author: jiangadmin
@@ -98,6 +103,48 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
         switch (entity.getStatus()) {
             case 200:
+
+                //如果是自己
+                if (entity.getData().getId().equals(SaveUtils.getString(Save_Key.UID))) {
+
+                    //初始化参数，修改昵称为“cat”
+                    TIMFriendshipManager.ModifyUserProfileParam param = new TIMFriendshipManager.ModifyUserProfileParam();
+                    param.setNickname(entity.getData().getNikename());
+                    param.setFaceUrl(entity.getData().getAvatar());
+                    param.setSelfSignature(entity.getData().getSign());
+                    if (entity.getData().getSex().equals("1")) {
+                        param.setGender(TIMFriendGenderType.Male);
+                    } else {
+                        param.setGender(TIMFriendGenderType.Female);
+                    }
+
+                    TIMFriendshipManager.getInstance().modifyProfile(param, new TIMCallBack() {
+                        @Override
+                        public void onError(int code, String desc) {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            LogUtil.e(TAG, "修改成功");
+                        }
+                    });
+                } else {
+                    //如果不是自己
+                    //存储对方昵称
+                    SaveUtils.setString(Save_Key.S_昵称 + entity.getData().getId(), entity.getData().getNikename());
+                    //存储对方头像
+                    SaveUtils.setString(Save_Key.S_头像 + entity.getData().getId(), entity.getData().getAvatar());
+                }
+
+                if (activity instanceof Main_Activity) {
+                    MyApp.mybean = entity.getData();
+                    ((Main_Activity) activity).CallBack_MyInfo();
+                }
+
+                if (activity instanceof ChatActivity) {
+                    ((ChatActivity) activity).Callback_UserInfo(entity.getData());
+                }
                 if (fragment instanceof Mine_Fragment) {
                     ((Mine_Fragment) fragment).initeven(entity.getData());
                 }
@@ -132,7 +179,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 break;
 
             case 400:
-                if (entity.getMessage().equals("无数据")){
+                if (entity.getMessage().equals("无数据")) {
                     if (myDialog != null) {
                         myDialog.CallBack();
                     }

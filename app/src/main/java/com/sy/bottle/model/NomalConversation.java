@@ -5,6 +5,9 @@ import android.text.TextUtils;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
+import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMConversation;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMUserProfile;
@@ -35,12 +38,16 @@ public class NomalConversation extends Conversation {
     public String getAvatar() {
         switch (type) {
             case C2C:
+
                 TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-
                 if (profile != null) {
-
                     faceurl = profile.getFaceUrl();
 
+                    LogUtil.e(TAG, "腾讯云的头像：" + faceurl);
+                }
+                String avatar = SaveUtils.getString(Save_Key.S_头像 + identify);
+                if (!TextUtils.isEmpty(avatar)) {
+                    faceurl = avatar;
                 }
                 break;
             case Group:
@@ -63,6 +70,7 @@ public class NomalConversation extends Conversation {
     @Override
     public void navToDetail(Context context) {
         ChatActivity.navToChat(context, identify, type);
+
     }
 
     /**
@@ -89,22 +97,24 @@ public class NomalConversation extends Conversation {
      */
     @Override
     public String getName() {
-        if (type == TIMConversationType.Group) {
-            name = GroupInfo.getInstance().getGroupName(identify);
-            if (name.equals("")) name = identify;
-        } else {
-            TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+        switch (type) {
+            case C2C:
+                TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+                if (profile != null) {
+                    name = profile.getNickName();
+                }
+                String nickname = SaveUtils.getString(Save_Key.S_昵称 + identify);
+                if (!TextUtils.isEmpty(nickname)) {
+                    name = nickname;
+                }
 
-            if (profile != null) {
-                name = profile.getNickName();
-//                if (!TextUtils.isEmpty(profile.getRemark())) {
-//                    name = profile.getRemark();
-//                } else {
-//
-//                }
-                faceurl = profile.getFaceUrl();
-            }
+                break;
+            case Group:
+                name = GroupInfo.getInstance().getGroupName(identify);
+                if (name.equals("")) name = identify;
+                break;
         }
+
         return name;
     }
 

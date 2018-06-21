@@ -1,6 +1,7 @@
 package com.sy.bottle.utils;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.Button;
 
 import com.sy.bottle.view.TabToast;
@@ -48,6 +49,23 @@ public class Util {
                                   int interval) {
         CountDownButtonHelper timer = new CountDownButtonHelper(button,
                 defaultString, tmpString, max, interval);
+        timer.setOnFinishListener(new CountDownButtonHelper.OnFinishListener() {
+            @Override
+            public void finish() {
+
+            }
+        });
+        timer.start();
+    }
+
+    /**
+     * @param view        按钮控件
+     * @param max           失效时间（单位：s）
+     * @param interval      更新间隔（单位：s）
+     * @function 在按钮上启动一个定时器
+     */
+    public static void startTimer(View view, int max, int interval) {
+        CountDownButtonHelper timer = new CountDownButtonHelper(view, max, interval);
         timer.setOnFinishListener(new CountDownButtonHelper.OnFinishListener() {
             @Override
             public void finish() {

@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.mian.other.NewWebActivity;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.CheckSmsCode_Servlet;
 import com.sy.bottle.servlet.GetSMSCode_Servlet;
@@ -36,7 +38,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
     EditTextWithClearButton nickname, sign, phone, smscode;
 
-    Button getsms,submit;
+    Button getsms, submit;
 
     RadioButton boy, girl;
 
@@ -101,13 +103,14 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
+        String phonenum = phone.getText().toString();
         String code = smscode.getText().toString();
         String name = nickname.getText().toString();
         String sig = sign.getText().toString();
 
         switch (view.getId()) {
             case R.id.agreement:
-
+                NewWebActivity.start(this, Const.API + "agreement.html");
                 break;
             case R.id.register_submit:
 
@@ -134,7 +137,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
                     return;
                 }
 
-                if (!checkBox.isChecked()){
+                if (!checkBox.isChecked()) {
                     TabToast.makeText("请阅读并同意《用户协议》");
                     return;
                 }

@@ -1,8 +1,6 @@
 package com.sy.bottle.event;
 
 
-import android.util.Log;
-
 import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMFriendshipSettings;
 import com.tencent.imsdk.TIMSNSChangeInfo;

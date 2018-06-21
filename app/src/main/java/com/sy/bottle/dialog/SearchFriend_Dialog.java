@@ -70,7 +70,8 @@ public class SearchFriend_Dialog extends MyDialog implements View.OnClickListene
                 }
 
                 if (SaveUtils.getString(Save_Key.UID).equals(id)){
-                    TabToast.makeText("不能添加自己为好友");
+                    message.setVisibility(View.VISIBLE);
+                    message.setText("不能添加自己为好友");
                     input.setText("");
                     return;
                 }

@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
-import com.sy.bottle.dialog.FriendShip_Dialog;
+import com.sy.bottle.activity.mian.other.Help_Activity;
+import com.sy.bottle.activity.mian.other.Web_Activity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
+import com.sy.bottle.servlet.Scores_Get_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
@@ -36,7 +38,8 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     TextView name, id, xx, jf;
     ImageView sex;
 
-    Button mine_mall, mine_setting, mine_friend_Confirm, mine_log;
+    TextView receive_num;
+    Button receive, mine_mall, mine_log, selfhelp, news, setting;
 
     @Nullable
     @Override
@@ -66,23 +69,30 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         name = view.findViewById(R.id.mine_nickname);
         id = view.findViewById(R.id.mine_id);
         sex = view.findViewById(R.id.mine_sex);
-        mine_friend_Confirm = view.findViewById(R.id.mine_friend_Confirm);
+
+        receive = view.findViewById(R.id.mine_receive);
+        receive_num = view.findViewById(R.id.mine_receive_num);
+        mine_mall = view.findViewById(R.id.mine_mall);
+
         mine_log = view.findViewById(R.id.mine_log);
+        selfhelp = view.findViewById(R.id.mine_selfhelp);
+
+        news = view.findViewById(R.id.mine_news);
+        setting = view.findViewById(R.id.mine_setting);
 
         xx = view.findViewById(R.id.mine_xx);
         jf = view.findViewById(R.id.mine_jf);
 
-        mine_mall = view.findViewById(R.id.mine_mall);
-        mine_setting = view.findViewById(R.id.mine_setting);
+        mine_info.setOnClickListener(this);
+
+        receive.setOnClickListener(this);
+        mine_mall.setOnClickListener(this);
 
         mine_log.setOnClickListener(this);
-        mine_mall.setOnClickListener(this);
-        mine_info.setOnClickListener(this);
-        mine_setting.setOnClickListener(this);
-        mine_friend_Confirm.setOnClickListener(this);
-        xx.setOnClickListener(this);
-        jf.setOnClickListener(this);
+        selfhelp.setOnClickListener(this);
 
+        news.setOnClickListener(this);
+        setting.setOnClickListener(this);
     }
 
     UserInfo_Entity.DataBean bean;
@@ -97,9 +107,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
         name.setText(bean.getNikename());
 
-
         PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), head, R.drawable.head_me);
-
 
         id.setText(SaveUtils.getString(Save_Key.UID));
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
@@ -115,10 +123,8 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.mine_xx:
-
-                break;
-            case R.id.mine_jf:
+            case R.id.mine_receive:
+                new Scores_Get_Servlet().execute();
 
                 break;
             case R.id.mine_mall:
@@ -127,13 +133,15 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
             case R.id.mine_log:
                 Log_Activity.start(getActivity());
                 break;
+            case R.id.mine_selfhelp:
+                Help_Activity.start(getActivity());
+                break;
+            case R.id.mine_news:
+                Web_Activity.start(getActivity(),"官方公告","www.baidu.com");
+                break;
             case R.id.mine_info:
                 Mine_Info_Activity.start(getActivity());
                 break;
-            case R.id.mine_friend_Confirm:
-                new FriendShip_Dialog(getActivity());
-                break;
-
             case R.id.mine_setting:
                 Setting_Activity.start(getActivity());
                 break;

@@ -19,6 +19,7 @@ import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMFriendshipManager;
 import com.tencent.imsdk.TIMManager;
 
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
     }
 
     @Override
-    protected void onPostExecute(Login_Entity entity) {
+    protected void onPostExecute(final Login_Entity entity) {
         super.onPostExecute(entity);
         Loading.dismiss();
 
@@ -91,6 +92,10 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                     @Override
                     public void onSuccess() {
                         TabToast.makeText("登录成功");
+
+
+                        //查询个人资料
+                        new UserInfo_Servlet(MyApp.currentActivity()).execute();
 
                         SaveUtils.setBoolean(Save_Key.S_登录, true);
                         Main_Activity.start(MyApp.currentActivity());

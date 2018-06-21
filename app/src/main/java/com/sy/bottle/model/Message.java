@@ -1,17 +1,17 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.servlet.Music_Servlet;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.TimeUtil;
-import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageStatus;
 import com.tencent.imsdk.ext.message.TIMMessageExt;
@@ -62,19 +62,30 @@ public abstract class Message {
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
             viewHolder.rightPanel.setVisibility(View.GONE);
             //群聊显示名称，群名片>个人昵称>identify
-            if (message.getConversation().getType() == TIMConversationType.Group) {
-                viewHolder.sender.setVisibility(View.VISIBLE);
-                String name = "";
-                if (message.getSenderGroupMemberProfile() != null)
-                    name = message.getSenderGroupMemberProfile().getNameCard();
-                if (name.equals("") && message.getSenderProfile() != null)
-                    name = message.getSenderProfile().getNickName();
-                if (name.equals("")) name = message.getSender();
-                viewHolder.sender.setText(name);
-            } else {
-                PicassoUtlis.img(message.getSenderProfile().getFaceUrl(), viewHolder.leftAvatar);
-                viewHolder.sender.setVisibility(View.GONE);
+
+            switch (message.getConversation().getType()) {
+                case C2C:
+                    String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
+                    if (!TextUtils.isEmpty(friendfaceurl)) {
+                        viewHolder.leftAvatar.setImageURI(Uri.parse(friendfaceurl));
+//                        PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+                    }
+                    viewHolder.rightAvatar.setImageURI(Uri.parse(SaveUtils.getString(Save_Key.S_头像)));
+//                    PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+                    viewHolder.sender.setVisibility(View.INVISIBLE);
+                    break;
+                case Group:
+                    viewHolder.sender.setVisibility(View.VISIBLE);
+                    String name = "";
+                    if (message.getSenderGroupMemberProfile() != null)
+                        name = message.getSenderGroupMemberProfile().getNameCard();
+                    if (name.equals("") && message.getSenderProfile() != null)
+                        name = message.getSenderProfile().getNickName();
+                    if (name.equals("")) name = message.getSender();
+                    viewHolder.sender.setText(name);
+                    break;
             }
+
             return viewHolder.leftMessage;
         }
 

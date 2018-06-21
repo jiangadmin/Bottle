@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
@@ -49,6 +50,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * TODO:聊天界面输入控件
  */
@@ -63,6 +66,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
     private ChatView chatView;
     private LinearLayout morePanel, textPanel;
     private TextView voicePanel;
+    private ScrollView emoticonPanel_sl;
     private LinearLayout emoticonPanel;
     private GridView giftPanel;
     private final int REQUEST_CODE_ASK_PERMISSIONS = 100;
@@ -164,6 +168,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
             }
         });
         isSendVisible = editText.getText().length() != 0;
+        emoticonPanel_sl = findViewById(R.id.emoticonPanel_sl);
         emoticonPanel = findViewById(R.id.emoticonPanel);
         giftPanel = findViewById(R.id.giftPanel);
 
@@ -196,6 +201,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 if (!isEmoticonReady) {
                     prepareEmoticon();
                 }
+                emoticonPanel_sl.setVisibility(VISIBLE);
                 emoticonPanel.setVisibility(VISIBLE);
                 break;
             //礼物
@@ -227,6 +233,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 btnKeyboard.setVisibility(GONE);
                 break;
             case EMOTICON:
+                emoticonPanel_sl.setVisibility(GONE);
                 emoticonPanel.setVisibility(GONE);
             case GIFT:
                 giftPanel.setVisibility(GONE);
@@ -406,7 +413,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
      */
     private void prepareEmoticon() {
         if (emoticonPanel == null) return;
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 10; ++i) {
             LinearLayout linearLayout = new LinearLayout(getContext());
             linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1f));
             for (int j = 0; j < 7; ++j) {
@@ -420,9 +427,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
                     matrix.postScale(3.5f, 3.5f);
-                    final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-                            width, height, matrix, true);
-                    ImageView image = new ImageView(getContext());
+                    final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+                    ImageView image = new GifImageView(getContext());
                     image.setImageBitmap(resizedBitmap);
                     image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
                     linearLayout.addView(image);
