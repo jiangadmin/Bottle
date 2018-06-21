@@ -32,6 +32,7 @@
             android:textStyle="bold" />
 
         <Button
+            android:textColor="@color/gray_3"
             android:id="@+id/money"
             android:layout_width="88dp"
             android:layout_height="32dp"

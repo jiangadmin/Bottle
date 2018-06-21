@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.servlet.Notice_Servlet;
 
 /**
  * @author: jiangyao
@@ -41,10 +42,23 @@ public class Help_Activity extends Base_Activity {
 
         initview();
 
+        new Notice_Servlet(this).execute();
+
     }
 
     private void initview() {
         webView = findViewById(R.id.help_web);
         listView = findViewById(R.id.help_list);
+    }
+
+    /**
+     * 网页代码返回
+     * @param s
+     */
+    public void CallBack_WebTxt(String s){
+        //能够的调用JavaScript代码
+        webView.getSettings().setJavaScriptEnabled(true);
+        //加载HTML字符串进行显示
+        webView.loadData(s, "text/html", "utf-8");
     }
 }

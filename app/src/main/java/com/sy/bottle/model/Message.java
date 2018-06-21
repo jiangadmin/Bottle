@@ -65,13 +65,6 @@ public abstract class Message {
 
             switch (message.getConversation().getType()) {
                 case C2C:
-                    String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
-                    if (!TextUtils.isEmpty(friendfaceurl)) {
-                        viewHolder.leftAvatar.setImageURI(Uri.parse(friendfaceurl));
-//                        PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
-                    }
-                    viewHolder.rightAvatar.setImageURI(Uri.parse(SaveUtils.getString(Save_Key.S_头像)));
-//                    PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
                     viewHolder.sender.setVisibility(View.INVISIBLE);
                     break;
                 case Group:

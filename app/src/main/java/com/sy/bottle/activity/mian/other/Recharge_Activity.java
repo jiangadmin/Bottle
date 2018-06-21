@@ -56,7 +56,6 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
 
     Button submit;
 
-
     /**
      * 付款  1 微信 2 支付宝
      */
@@ -164,7 +163,6 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                 keyValues.put("method", "alipay.trade.app.pay");
 
                 keyValues.put("notify_url", "http://api.syplp.com/alipaycallbacks");
-//
 
                 keyValues.put("sign_type", "RSA2");
 
@@ -207,7 +205,6 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
                 request.sign = bean.getSign();
                 MyApp.api.sendReq(request);
 
-
                 break;
 
         }
@@ -244,5 +241,4 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
             }
         }
     };
-
 }

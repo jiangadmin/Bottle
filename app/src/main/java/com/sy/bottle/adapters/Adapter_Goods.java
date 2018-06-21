@@ -71,7 +71,13 @@ public class Adapter_Goods extends android.widget.BaseAdapter {
 
         viewHolder.stars.setText(bean.getStars());
         viewHolder.money.setText("¥ " + bean.getMoney());
-        LogUtil.e(TAG, bean.getMoney());
+        if (bean.isType()){
+            viewHolder.money.setBackground(context.getResources().getDrawable(R.drawable.btn_style));
+            viewHolder.money.setTextColor(context.getResources().getColor(R.color.white));
+        }else {
+            viewHolder.money.setBackground(context.getResources().getDrawable(R.drawable.kuang_gray));
+            viewHolder.money.setTextColor(context.getResources().getColor(R.color.gray_3));
+        }
 
         viewHolder.money.setOnClickListener(new View.OnClickListener() {
             @Override

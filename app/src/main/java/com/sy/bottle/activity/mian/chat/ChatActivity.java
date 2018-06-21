@@ -105,6 +105,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //移除标记为id的通知 (只是针对当前Context下的所有Notification)
         notificationManager.cancel(Integer.parseInt(identify));

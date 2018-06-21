@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
-import com.sy.bottle.activity.mian.other.Recharge_Activity;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.view.TabToast;
 
 /**

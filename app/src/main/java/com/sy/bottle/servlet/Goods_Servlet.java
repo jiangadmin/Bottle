@@ -32,7 +32,7 @@ public class Goods_Servlet extends AsyncTask<String, Integer, Goods_Entity> {
     @Override
     protected Goods_Entity doInBackground(String... strings) {
 
-        String res = HttpUtil.request(HttpUtil.GET, Const.API + "recharges/1", null);
+        String res = HttpUtil.request(HttpUtil.GET, Const.API + "recharges/"+strings[0], null);
         Goods_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Goods_Entity();

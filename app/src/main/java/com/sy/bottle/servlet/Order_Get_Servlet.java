@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
 import com.sy.bottle.activity.mian.other.Recharge_Activity;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
-import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Order_Entity;
 import com.sy.bottle.entity.Save_Key;
@@ -74,6 +74,9 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Order_Entity> 
             case 200:
                 if (activity instanceof Recharge_Activity) {
                     ((Recharge_Activity) activity).CallBack_Order(entity.getData());
+                }
+                if (activity instanceof MyBalance_Activity) {
+                    ((MyBalance_Activity) activity).CallBack_Order(entity.getData());
                 }
                 break;
             case 401:

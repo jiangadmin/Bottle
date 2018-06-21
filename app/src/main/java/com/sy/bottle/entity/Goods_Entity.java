@@ -29,6 +29,15 @@ public class Goods_Entity extends Base_Entity {
 
         private String stars;
         private String money;
+        private boolean type;
+
+        public boolean isType() {
+            return type;
+        }
+
+        public void setType(boolean type) {
+            this.type = type;
+        }
 
         public String getStars() {
             return stars;

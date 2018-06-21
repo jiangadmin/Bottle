@@ -2,6 +2,7 @@ package com.sy.bottle.model;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.MediaUtil;
+import com.sy.bottle.utils.PicassoUtlis;
+import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMSoundElem;
@@ -86,6 +90,12 @@ public class VoiceMessage extends Message {
 
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
+
+        String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
+        if (!TextUtils.isEmpty(friendfaceurl)) {
+            PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+        }
+        PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
 
         clearView(viewHolder);
         getBubbleView(viewHolder).addView(linearLayout);

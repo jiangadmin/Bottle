@@ -1,6 +1,5 @@
 package com.sy.bottle.model;
 
-
 import com.sy.bottle.event.FriendshipEvent;
 import com.sy.bottle.event.RefreshEvent;
 import com.sy.bottle.utils.LogUtil;
@@ -19,6 +18,7 @@ import java.util.Observer;
 /**
  * TODO:好友列表缓存数据结构
  */
+
 public class FriendshipInfo extends Observable implements Observer {
 
     private final String TAG = "FriendshipInfo";
@@ -182,6 +182,4 @@ public class FriendshipInfo extends Observable implements Observer {
         friends.clear();
         instance = null;
     }
-
-
 }

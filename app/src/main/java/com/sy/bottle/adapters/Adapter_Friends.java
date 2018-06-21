@@ -22,7 +22,6 @@ import java.util.List;
  * TODO:查找好友
  */
 
-
 public class Adapter_Friends extends android.widget.BaseAdapter {
     private static final String TAG = "Adapter_Help_1";
     private Context context;

@@ -34,7 +34,7 @@
         <item name="android:windowAnimationStyle">@style/AppTheme.Slide.Animation</item>
 
         <item name="colorAccent">@color/style_color</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/style_color</item>
         <item name="colorPrimaryDark">@color/style_color</item>
 
     </style>

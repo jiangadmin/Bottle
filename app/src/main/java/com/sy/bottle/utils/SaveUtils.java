@@ -40,6 +40,7 @@ public class SaveUtils {
      */
     public static String getString(String key) {
         SharedPreferences settings = MyApp.getInstance().getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+
         return settings.getString(key, null);
     }
 

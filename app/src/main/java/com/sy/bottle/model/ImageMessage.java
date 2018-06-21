@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,8 +15,11 @@ import com.sy.bottle.activity.ImageViewActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.ShowImage_Dialog;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.PicassoUtlis;
+import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMImage;
@@ -64,18 +68,24 @@ public class ImageMessage extends Message {
      */
     @Override
     public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+        clearView(viewHolder);
+        if (checkRevoke(viewHolder)) return;
 
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
 
-        clearView(viewHolder);
-        if (checkRevoke(viewHolder)) return;
         TIMImageElem e = (TIMImageElem) message.getElement(0);
+
+
+        String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
+        if (!TextUtils.isEmpty(friendfaceurl)) {
+            PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+        }
+        PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+
         switch (message.status()) {
             case Sending:
-
                 ImageView imageView = new ImageView(MyApp.getInstance());
-
                 imageView.setImageBitmap(getThumb(e.getPath()));
                 clearView(viewHolder);
                 getBubbleView(viewHolder).addView(imageView);

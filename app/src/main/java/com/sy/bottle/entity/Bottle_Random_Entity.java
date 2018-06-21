@@ -1,7 +1,5 @@
 package com.sy.bottle.entity;
 
-import com.sy.bottle.entity.Base_Entity;
-
 /**
  * @author: jiangyao
  * @date: 2018/6/8

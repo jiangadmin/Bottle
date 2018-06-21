@@ -33,10 +33,11 @@ public class Web_Activity extends Base_Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         setBack(true);
-        setTitle("加载中");
+
         loadurl = getIntent().getStringExtra(URL);
         title = getIntent().getStringExtra(TITLE);
 
+        setTitle(title);
         initView();
     }
 
