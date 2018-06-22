@@ -3,35 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="10dp">
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:text="提取 ￥888.88 到 某某某"
-                    android:id="@+id/item_gift_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/item_gift_time"
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
@@ -39,19 +29,34 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginRight="20dp"
-            android:id="@+id/item_gift_price"
+            android:textSize="10sp"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_balance"
-            android:drawablePadding="5dp"
+            android:layout_marginRight="40dp"
             android:gravity="center" />
 
         <ImageView
+            android:id="@+id/type_bg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_bottom_right_red" />
+
+        <TextView
+            android:id="@+id/type"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="2dp"
+            android:rotation="-45"
+            android:text="进行中"
+            android:textColor="@color/white"
+            android:textSize="9sp" />
 
     </RelativeLayout>
 

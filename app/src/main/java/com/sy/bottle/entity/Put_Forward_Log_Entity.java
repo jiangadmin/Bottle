@@ -37,11 +37,11 @@ public class Put_Forward_Log_Entity extends Base_Entity {
         private String account;
         private int price;
         private String money;
-        private Object connent;
+        private String connent;
         @SerializedName("status")
         private int statusX;
         private String create_time;
-        private Object update_time;
+        private String update_time;
 
         public String getAccount() {
             return account;
@@ -67,11 +67,11 @@ public class Put_Forward_Log_Entity extends Base_Entity {
             this.money = money;
         }
 
-        public Object getConnent() {
+        public String getConnent() {
             return connent;
         }
 
-        public void setConnent(Object connent) {
+        public void setConnent(String connent) {
             this.connent = connent;
         }
 
@@ -91,11 +91,11 @@ public class Put_Forward_Log_Entity extends Base_Entity {
             this.create_time = create_time;
         }
 
-        public Object getUpdate_time() {
+        public String getUpdate_time() {
             return update_time;
         }
 
-        public void setUpdate_time(Object update_time) {
+        public void setUpdate_time(String update_time) {
             this.update_time = update_time;
         }
     }

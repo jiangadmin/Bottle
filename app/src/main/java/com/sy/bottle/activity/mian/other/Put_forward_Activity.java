@@ -88,6 +88,7 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu:
+                Put_forward_Log_Activity.start(this);
                 break;
             case R.id.out_submit:
                 if (TextUtils.isEmpty(balance.getText().toString())) {

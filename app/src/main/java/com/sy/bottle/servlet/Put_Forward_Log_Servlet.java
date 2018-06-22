@@ -41,7 +41,6 @@ public class Put_Forward_Log_Servlet extends AsyncTask<String, Integer, Put_Forw
 
         Put_Forward_Log_Entity entity;
 
-
         if (TextUtils.isEmpty(res)) {
             entity = new Put_Forward_Log_Entity();
             entity.setStatus(-1);
@@ -70,6 +69,7 @@ public class Put_Forward_Log_Servlet extends AsyncTask<String, Integer, Put_Forw
                     ((Put_forward_Log_Activity) activity).CallBack(entity.getData());
                 }
                 break;
+
             case 401:
                 new ReLogin_Dialog();
                 break;

@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'piaoliupin'
             keyPassword 'jiangadmin'
-            storeFile file('/Users/jiangyao/Desktop/Bottle/piaoliupin')
+            storeFile file('C:/Users/jiangadmin/Desktop/Bottle/piaoliupin')
             storePassword 'jiangadmin'
         }
     }

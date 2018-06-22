@@ -177,6 +177,10 @@
             android:name=".activity.mian.other.Help_Activity"
             android:screenOrientation="portrait" />
 
+        <!--提取记录-->
+        <activity android:name=".activity.mian.other.Put_forward_Log_Activity"
+            android:screenOrientation="portrait"/>
+
         <!--搜索好友-->
         <activity
             android:name=".activity.mian.friend.SearchFriend_Activity"

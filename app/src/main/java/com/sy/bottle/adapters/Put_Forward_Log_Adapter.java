@@ -1,13 +1,15 @@
 package com.sy.bottle.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
-import com.sy.bottle.entity.Gift_Get_Log_Entity;
+import com.sy.bottle.entity.Put_Forward_Log_Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.List;
 public class Put_Forward_Log_Adapter extends BaseAdapter {
     private static final String TAG = "Photos_Adapter";
 
-    List<Gift_Get_Log_Entity.DataBean> dataBeans = new ArrayList<>();
+    List<Put_Forward_Log_Entity.DataBean> dataBeans = new ArrayList<>();
 
     private Context context;
 
@@ -30,7 +32,7 @@ public class Put_Forward_Log_Adapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setDataBeans(List<Gift_Get_Log_Entity.DataBean> dataBeans) {
+    public void setDataBeans(List<Put_Forward_Log_Entity.DataBean> dataBeans) {
         this.dataBeans = dataBeans;
     }
 
@@ -54,27 +56,52 @@ public class Put_Forward_Log_Adapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_gift_log, null);
+            convertView = View.inflate(context, R.layout.item_put_forward_log, null);
             holder = new ViewHolder();
-            holder.name = convertView.findViewById(R.id.item_gift_name);
-            holder.time = convertView.findViewById(R.id.item_gift_time);
-            holder.price = convertView.findViewById(R.id.item_gift_price);
+            holder.title = convertView.findViewById(R.id.title);
+            holder.message = convertView.findViewById(R.id.message);
+            holder.time = convertView.findViewById(R.id.time);
+            holder.type = convertView.findViewById(R.id.type);
+            holder.type_bg = convertView.findViewById(R.id.type_bg);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Gift_Get_Log_Entity.DataBean bean = dataBeans.get(position);
+        Put_Forward_Log_Entity.DataBean bean = dataBeans.get(position);
 
-        holder.name.setText(bean.getNikename()+"赠送给我"+bean.getName());
-        holder.price.setText(String.valueOf(bean.getPrice()));
+        holder.title.setText("提取¥" + bean.getMoney() + "/" + bean.getPrice() + "能量至" + bean.getAccount());
+        holder.time.setText(bean.getCreate_time());
+        if (TextUtils.isEmpty(bean.getConnent())) {
+            holder.message.setVisibility(View.GONE);
+        } else {
+            holder.message.setVisibility(View.VISIBLE);
+            holder.message.setText(bean.getConnent());
+        }
+
+        switch (bean.getStatusX()) {
+            case 0:
+                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
+                holder.type.setText("进行中");
+                break;
+            case 1:
+                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
+                holder.type.setText("进行中");
+                break;
+            case 2:
+                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
+                holder.type.setText("进行中");
+                break;
+        }
+
         holder.time.setText(bean.getCreate_time());
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView name,time,price;
+        TextView title, message, time, type;
+        ImageView type_bg;
     }
 
 
