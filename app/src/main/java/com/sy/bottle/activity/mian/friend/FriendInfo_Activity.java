@@ -98,7 +98,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
      */
     public void CallBack(UserInfo_Entity.DataBean bean) {
 
-        PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), head);
+        PicassoUtlis.img( bean.getAvatar(), head);
         name.setText(bean.getNikename());
         sign.setText(bean.getSign());
         address.setContent(bean.getProvince() + "-" + bean.getCity() + "-" + bean.getArea());
@@ -124,8 +124,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         photos.setBeans(dBeans, new ImageCycleView.Listener() {
             @Override
             public void displayImage(String imageURL, ImageView imageView) {
-                LogUtil.e(TAG,"图片 "+Const.IMG + imageURL);
-                PicassoUtlis.img(imageURL.contains("http") ? imageURL : Const.IMG + imageURL, imageView);
+                PicassoUtlis.img(imageURL, imageView);
             }
 
             @Override

@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.lahm.library.EasyProtectorLib;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.app.MyApp;
@@ -16,6 +18,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Login_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
@@ -40,6 +43,7 @@ public class Login_Activity extends Base_Activity implements View.OnClickListene
 
     String loginType;
 
+    TextView textView;
     public static void start(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, Login_Activity.class);
@@ -59,6 +63,8 @@ public class Login_Activity extends Base_Activity implements View.OnClickListene
     }
 
     private void initview() {
+
+        textView = findViewById(R.id.id);
 
         wechat = findViewById(R.id.login_wechat);
         qq = findViewById(R.id.login_qq);

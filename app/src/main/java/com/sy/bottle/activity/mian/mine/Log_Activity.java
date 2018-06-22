@@ -13,12 +13,12 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.adapters.Gift_Get_Log_Adapter;
 import com.sy.bottle.adapters.Gift_Set_Log_Adapter;
+import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Gift_Get_Log_Entity;
 import com.sy.bottle.entity.Gift_Set_Log_Entity;
 import com.sy.bottle.servlet.Gift_Get_Log_Servlet;
 import com.sy.bottle.servlet.Gift_Set_Log_Servlet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +40,6 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
     Gift_Set_Log_Adapter gift_set_log_adapter;
     Gift_Get_Log_Adapter gift_get_log_adapter;
 
-    List<Gift_Set_Log_Entity.DataBean> setbeans = new ArrayList<>();
-    List<Gift_Get_Log_Entity.DataBean> getbeans = new ArrayList<>();
 
     public static void start(Context context) {
         Intent intent = new Intent();
@@ -82,15 +80,16 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
      */
     public void CallBack_Gift_Set(List<Gift_Set_Log_Entity.DataBean> beans) {
 
-        if (setbeans != null && setbeans.size() > 0) {
-            setbeans.clear();
-            setbeans.addAll(beans);
-            listView.setAdapter(gift_set_log_adapter);
+        if (beans != null && beans.size() > 0) {
+
             view_null.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-            gift_set_log_adapter.setDataBeans(setbeans);
-            gift_set_log_adapter.notifyDataSetChanged();
+
+            gift_set_log_adapter.setDataBeans(beans);
+            listView.setAdapter(gift_set_log_adapter);
+
         } else {
+
             view_null.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
         }
@@ -103,44 +102,39 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
      */
     public void CallBack_Gift_Get(List<Gift_Get_Log_Entity.DataBean> beans) {
 
-        if (getbeans != null && getbeans.size() > 0) {
-            getbeans.clear();
-            getbeans.addAll(beans);
-            listView.setAdapter(gift_get_log_adapter);
+        if (beans != null && beans.size() > 0) {
+
             view_null.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-            gift_get_log_adapter.setDataBeans(getbeans);
-            gift_get_log_adapter.notifyDataSetChanged();
+
+            gift_get_log_adapter.setDataBeans(beans);
+            listView.setAdapter(gift_get_log_adapter);
         } else {
             view_null.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
         }
+
     }
 
     @Override
     public void onClick(View view) {
+        Loading.show(this,"请稍后");
         switch (view.getId()) {
             case R.id.log_gifts_get:
                 gifts_get.setTextColor(getResources().getColor(R.color.style_color));
                 gifts_set.setTextColor(getResources().getColor(R.color.gray_6));
                 gifts_get.setEnabled(false);
                 gifts_set.setEnabled(true);
-                if (getbeans.size() > 0) {
-                    CallBack_Gift_Get(getbeans);
-                } else {
-                    new Gift_Get_Log_Servlet(this).execute();
-                }
+
+                new Gift_Get_Log_Servlet(this).execute();
                 break;
             case R.id.log_gifts_set:
                 gifts_get.setTextColor(getResources().getColor(R.color.gray_6));
                 gifts_set.setTextColor(getResources().getColor(R.color.style_color));
                 gifts_get.setEnabled(true);
                 gifts_set.setEnabled(false);
-                if (setbeans.size() > 0) {
-                    CallBack_Gift_Set(setbeans);
-                } else {
-                    new Gift_Set_Log_Servlet(this).execute();
-                }
+
+                new Gift_Set_Log_Servlet(this).execute();
                 break;
 
         }

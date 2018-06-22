@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.alipay.sdk.app.PayTask;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.activity.mian.other.NewWebActivity;
 import com.sy.bottle.activity.mian.other.Put_forward_Activity;
+import com.sy.bottle.activity.mian.other.Success_Activity;
 import com.sy.bottle.adapters.Adapter_Goods;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
@@ -41,6 +43,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +57,6 @@ import java.util.Map;
 public class MyBalance_Activity extends Base_Activity implements View.OnClickListener, Adapter_Goods.Listenner {
     private static final String TAG = "MyBalance_Activity";
 
-    SlidingPaneLayout sl;
 
     TextView num, put_forward, agreement;
 
@@ -96,10 +98,7 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
 
         initview();
 
-        new Goods_Servlet(this).execute(String.valueOf(paytype));
 
-        adapter_goods = new Adapter_Goods(this, this);
-        goods.setAdapter(adapter_goods);
     }
 
     public void CallBack_Goods(List<Goods_Entity.DataBean> dataBeans) {
@@ -113,7 +112,6 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
 
     private void initview() {
 
-        sl = findViewById(R.id.mybalance_sl);
         num = findViewById(R.id.mybalance_num);
         put_forward = findViewById(R.id.mybalance_put_forward);
         goods = findViewById(R.id.goods);
@@ -128,7 +126,7 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
 
         submit = findViewById(R.id.recharge_submit);
 
-        num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_能量)));
+
         rmb_other = findViewById(R.id.mybalance_rmb_other);
 
         rmb_other.setOnClickListener(this);
@@ -140,6 +138,18 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
         submit.setOnClickListener(this);
 
         alipay.setEnabled(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_能量)));
+
+        new Goods_Servlet(this).execute(String.valueOf(paytype));
+
+        adapter_goods = new Adapter_Goods(this, this);
+        goods.setAdapter(adapter_goods);
     }
 
     @Override
@@ -190,6 +200,7 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                         return;
                     }
                     Loading.show(this, "创建订单");
+                    submit.setText("确认充值");
                     for (Goods_Entity.DataBean bean : goodsbean) {
                         if (bean.isType()) {
                             new Order_Get_Servlet(this).execute(String.valueOf(paytype), bean.getMoney(), bean.getStars());
@@ -311,7 +322,11 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        TabToast.makeText("支付成功");
+                        LinkedHashMap map = new LinkedHashMap();
+                        map.put("message", "支付成功");
+                        Main_Activity.UpdateMyInfo();
+                        Success_Activity.start(map);
+
 
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

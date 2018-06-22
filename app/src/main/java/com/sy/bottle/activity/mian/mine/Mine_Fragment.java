@@ -14,7 +14,6 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.activity.mian.other.Help_Activity;
 import com.sy.bottle.dialog.Loading;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Notice_Servlet;
@@ -23,6 +22,7 @@ import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangadmin
@@ -62,6 +62,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         super.onResume();
         //获取个人信息
         new UserInfo_Servlet(this).execute();
+
+        if (SaveUtils.getInt(Save_Key.S_捡星) != 0) {
+            receive_num.setVisibility(View.VISIBLE);
+            receive_num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_捡星)));
+        } else {
+            receive_num.setVisibility(View.GONE);
+        }
     }
 
     private void initview(View view) {
@@ -108,7 +115,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
         name.setText(bean.getNikename());
 
-        PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), head, R.drawable.head_me);
+        PicassoUtlis.img(bean.getAvatar(), head, R.drawable.head_me);
 
         id.setText(SaveUtils.getString(Save_Key.UID));
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
@@ -125,8 +132,16 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.mine_receive:
-                new Scores_Get_Servlet().execute();
+                if (SaveUtils.getInt(Save_Key.S_捡星) != 0) {
+                    receive_num.setVisibility(View.VISIBLE);
+                    receive_num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_捡星)));
+                } else {
+                    TabToast.makeText("今日次数已用完！");
+                    receive_num.setVisibility(View.GONE);
+                    return;
+                }
 
+                new Scores_Get_Servlet().execute();
                 break;
             case R.id.mine_mall:
                 MyBalance_Activity.start(getActivity());
@@ -139,7 +154,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
                 break;
             case R.id.mine_news:
                 Loading.show(getActivity(), "请稍后");
-                new Notice_Servlet(getActivity()).execute();
+                new Notice_Servlet(getActivity()).execute("notice_test");
 
                 break;
             case R.id.mine_info:

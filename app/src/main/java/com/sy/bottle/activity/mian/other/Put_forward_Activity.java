@@ -47,6 +47,7 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         setContentView(R.layout.activity_wallet_turn_out);
 
         setTitle("提取能量");
+        setMenu("记录");
         setBack(true);
 
         alipay = findViewById(R.id.out_alipay);
@@ -79,23 +80,25 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         }
     }
 
-    public void CallBack_Money(String s){
+    public void CallBack_Money(String s) {
         money.setText(s);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
+            case R.id.menu:
+                break;
             case R.id.out_submit:
-                if (TextUtils.isEmpty(balance.getText().toString())){
+                if (TextUtils.isEmpty(balance.getText().toString())) {
                     TabToast.makeText("提取不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(alipay.getText().toString())||TextUtils.isEmpty(alipay_name.getText().toString())){
+                if (TextUtils.isEmpty(alipay.getText().toString()) || TextUtils.isEmpty(alipay_name.getText().toString())) {
                     TabToast.makeText("请完善支付宝信息");
                     return;
                 }
-                Loading.show(this,"申请中");
+                Loading.show(this, "申请中");
                 Put_forward_Servlet.Info info = new Put_forward_Servlet.Info();
                 info.setAccount(alipay.getText().toString());
                 info.setMoney(money.getText().toString());

@@ -3,15 +3,16 @@ package com.sy.bottle.activity.start;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.lahm.library.EasyProtectorLib;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
-import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.app.MyApp;
-import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Login_Servlet;
-import com.sy.bottle.servlet.Register_Servlet;
+import com.sy.bottle.servlet.Update_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 
@@ -30,15 +31,22 @@ public class Welcome_Activity extends Base_Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        //判定是否有登录数据
-        if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.OPENID)) && SaveUtils.getBoolean(Save_Key.S_登录)) {
+        if (EasyProtectorLib.checkIsRunningInEmulator()) {
+            Base_Dialog dialog = new Base_Dialog(this);
+            dialog.setTitle("抱歉");
+            dialog.setMessage("检测到你当前的设备为模拟器,我们无法对您此设备提供服务！");
+            dialog.setOk("确定", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MyApp.AppExit();
+                }
+            });
 
-            LogUtil.e(TAG, "快捷登录");
+        } else {
+            //检测更新
+            new Update_Servlet(this).execute();
 
-            new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
 
-        }else {
-            Login_Activity.start(this);
         }
 
 

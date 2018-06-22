@@ -8,9 +8,11 @@ import com.mob.MobSDK;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
@@ -21,6 +23,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -47,6 +50,28 @@ public class MyApp extends Application {
 
     TIMSdkConfig TIMSdkConfig;
 
+
+    /**
+     * 更新地址
+     */
+    public static String Update_URL;
+    /**
+     * 是否强制更新
+     */
+    public static boolean Update_Type;
+    /**
+     * 是否需要更新
+     */
+    public static boolean Update_Need;
+    /**
+     * 更新地址
+     */
+    public static String Update_Message;
+    /**
+     * 更新地址
+     */
+    public static int Update_Version;
+
     /**
      * 好友列表
      */
@@ -55,12 +80,26 @@ public class MyApp extends Application {
     /**
      * 我的数据
      */
-    public static UserInfo_Entity.DataBean mybean  = new UserInfo_Entity.DataBean();
+    public static UserInfo_Entity.DataBean mybean = new UserInfo_Entity.DataBean();
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
+
+        Calendar calendar = Calendar.getInstance();
+        //获取系统的日期
+        //年
+        int year = calendar.get(Calendar.YEAR);
+        //月
+        int month = calendar.get(Calendar.MONTH) + 1;
+        //日
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        if (SaveUtils.getString(Save_Key.S_日期) == null || !SaveUtils.getString(Save_Key.S_日期).equals(year + "." + month + "." + day)) {
+            SaveUtils.setInt(Save_Key.S_捡星, 10);
+        }
+
         Foreground.init(this);
 
         TIMSdkConfig = new TIMSdkConfig(Const.SDK_APPID);

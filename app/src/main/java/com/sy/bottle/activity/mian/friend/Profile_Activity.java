@@ -110,7 +110,7 @@ public class Profile_Activity extends Base_Activity implements FriendshipManageV
      * @param bean
      */
     public void CallBack(UserInfo_Entity.DataBean bean) {
-        PicassoUtlis.img(Const.IMG + bean.getAvatar(), head);
+        PicassoUtlis.img(bean.getAvatar(), head);
         sign.setText(bean.getSign());
     }
 

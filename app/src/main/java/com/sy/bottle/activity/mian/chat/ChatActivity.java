@@ -25,7 +25,6 @@ import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.model.CustomMessage;
@@ -162,7 +161,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                     for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
                         if (bean.getFriend_id().equals(identify)) {
                             setRTitle(bean.getNikename());
-                            adapter.setHead(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar());
+                            adapter.setHead(bean.getAvatar());
                             adapter.notifyDataSetChanged();
 
                         }
@@ -191,7 +190,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
         setRTitle(bean.getNikename());
-        adapter.setHead(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar());
+        adapter.setHead(bean.getAvatar());
         adapter.notifyDataSetChanged();
     }
 

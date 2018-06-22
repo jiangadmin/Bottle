@@ -61,6 +61,7 @@ public class Adapter_Goods extends android.widget.BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = View.inflate(context, R.layout.item_goods, null);
             viewHolder.stars = convertView.findViewById(R.id.stars);
+            viewHolder.view = convertView.findViewById(R.id.view);
             viewHolder.money = convertView.findViewById(R.id.money);
             convertView.setTag(viewHolder);
         } else {
@@ -79,7 +80,7 @@ public class Adapter_Goods extends android.widget.BaseAdapter {
             viewHolder.money.setTextColor(context.getResources().getColor(R.color.gray_3));
         }
 
-        viewHolder.money.setOnClickListener(new View.OnClickListener() {
+        viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listenner.Good(bean);
@@ -89,6 +90,7 @@ public class Adapter_Goods extends android.widget.BaseAdapter {
     }
 
     class ViewHolder {
+        View view;
         TextView stars;
         Button money;
     }

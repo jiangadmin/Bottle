@@ -10,6 +10,7 @@ import com.sy.bottle.activity.mian.other.Help_Activity;
 import com.sy.bottle.activity.mian.other.Web_Activity;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Webtxt_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
@@ -33,7 +34,7 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
     @Override
     protected Webtxt_Entity doInBackground(String... strings) {
 
-        String res = HttpUtil.request(HttpUtil.GET, "http://s.xhplpz.com/v1/bulletins/6", null);
+        String res = HttpUtil.request(HttpUtil.GET, Const.API + "notices/" + strings[0], null);
 
         Webtxt_Entity entity;
 
@@ -61,11 +62,11 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
 
         switch (entity.getStatus()) {
             case 200:
-                if (activity instanceof Main_Activity){
-                    Web_Activity.start(activity,"官方公告",entity.getData().getContent());
+                if (activity instanceof Main_Activity) {
+                    Web_Activity.start(activity, "官方公告", entity.getData().getContent());
                 }
 
-                if (activity instanceof Help_Activity){
+                if (activity instanceof Help_Activity) {
                     ((Help_Activity) activity).CallBack_WebTxt(entity.getData().getContent());
                 }
                 break;

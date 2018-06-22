@@ -64,7 +64,7 @@ public class Adapter_Friends extends android.widget.BaseAdapter {
         }
 
         Friends_Entity.DataBean bean = listData.get(position);
-        PicassoUtlis.img(bean.getAvatar().contains("http") ? bean.getAvatar() : Const.IMG + bean.getAvatar(), viewHolder.avatar);
+        PicassoUtlis.img( bean.getAvatar(), viewHolder.avatar);
         viewHolder.name.setText(bean.getContent() == null ? bean.getNikename() : bean.getContent());
 
         return convertView;

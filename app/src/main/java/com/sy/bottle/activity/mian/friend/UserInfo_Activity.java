@@ -81,7 +81,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
         chat.setOnClickListener(this);
 
         if (entity != null) {
-            PicassoUtlis.img(entity.getAvatar().contains("http") ? entity.getAvatar() : Const.IMG + entity.getAvatar(), head);
+            PicassoUtlis.img(entity.getAvatar(), head);
             sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
             name.setText(entity.getNikename());
             sign.setText(entity.getSign());
@@ -110,7 +110,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
      */
     public void CallBack_UserInfo(UserInfo_Entity.DataBean entity){
         this.entity = entity;
-        PicassoUtlis.img(entity.getAvatar().contains("http") ? entity.getAvatar() : Const.IMG + entity.getAvatar(), head);
+        PicassoUtlis.img( entity.getAvatar(), head);
         sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
         name.setText(entity.getNikename());
         sign.setText(entity.getSign());

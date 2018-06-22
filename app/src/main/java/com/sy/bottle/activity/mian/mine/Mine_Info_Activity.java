@@ -15,12 +15,11 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Banner_Entity;
-import com.sy.bottle.entity.Const;
-import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.servlet.UserInfo_Servlet;
+import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
@@ -96,11 +95,7 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
         nickname.setText(dataBean.getNikename());
         head.setImageURI(Uri.parse(dataBean.getAvatar()));
 
-        if (dataBean.getAvatar().contains("http")) {
-            PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
-        } else {
-            PicassoUtlis.img(Const.IMG + dataBean.getAvatar(), head, R.drawable.head_me);
-        }
+        PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
 
         sign.setText(dataBean.getSign());
         id.setContent(SaveUtils.getString(Save_Key.UID));

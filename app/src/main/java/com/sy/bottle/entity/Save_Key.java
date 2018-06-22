@@ -72,4 +72,15 @@ public class Save_Key {
      * 能量
      */
     public static String S_能量 = "Province";
+
+    /**
+     * 日期标识
+     */
+    public static String S_日期 = "DAY";
+
+    /**
+     * 捡星
+     */
+    public static String S_捡星 = "GetXINGXING";
+
 }

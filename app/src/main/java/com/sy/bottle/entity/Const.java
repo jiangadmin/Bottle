@@ -11,11 +11,13 @@ public class Const {
 
     public static String API = "http://api.syplp.com/";
 //    public static String API = "http://192.168.1.188/syplp/code/web/api/public/index.php/";
-    public static String IMG = "http://hmc-1256670088.cos.ap-shanghai.myqcloud.com/";
 
+    public static String Channel = "tencent";
 
     //sdk appid 由腾讯分配
     public static final int SDK_APPID = 1400093238;
+
+    public static final String Wechat_AppID = "wx987316d1f1e0eac4";
 
 
     /** 支付宝支付业务：入参app_id */

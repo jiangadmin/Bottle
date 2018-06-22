@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
-        <!--android:roundIcon="@mipmap/ic_launcher_round"-->
+    <!--android:roundIcon="@mipmap/ic_launcher_round"-->
     <application
         android:name=".app.MyApp"
         android:allowBackup="true"
@@ -41,7 +41,8 @@
             </intent-filter>
 
             <!--add static shortcut-->
-            <meta-data android:name="android.app.shortcuts"
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/static_shortcuts" />
 
         </activity>
@@ -79,17 +80,25 @@
             android:windowSoftInputMode="stateHidden" />
 
         <!--图片预览-->
-        <activity android:name=".activity.mian.chat.ImagePreviewActivity"
-            android:screenOrientation="portrait"/>
-        
-        <activity android:name=".activity.ui.TCVideoRecordActivity"
-            android:screenOrientation="portrait"/>
-        
-        <activity android:name=".activity.ui.TCVideoPreviewActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.chat.ImagePreviewActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.mian.other.Web_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ui.TCVideoRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ui.TCVideoPreviewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mian.other.Web_Activity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.mian.other.Success_Activity"
+            android:screenOrientation="portrait" />
 
         <!--图片剪裁-->
         <activity
@@ -117,8 +126,9 @@
             android:screenOrientation="portrait" />
 
         <!--消息提醒-->
-        <activity android:name=".activity.mian.other.MessageNotifySettingActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.MessageNotifySettingActivity"
+            android:screenOrientation="portrait" />
 
         <!--关于-->
         <activity
@@ -136,8 +146,9 @@
             android:screenOrientation="portrait" />
 
         <!--提现-->
-        <activity android:name=".activity.mian.other.Put_forward_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.Put_forward_Activity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.ImageViewActivity"
@@ -148,27 +159,32 @@
             android:name=".activity.mian.chat.ChatActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.mian.friend.UserInfo_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.friend.UserInfo_Activity"
+            android:screenOrientation="portrait" />
 
         <!--投诉-->
-        <activity android:name=".activity.mian.other.Report_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.Report_Activity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.mian.other.NewWebActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.NewWebActivity"
+            android:screenOrientation="portrait" />
 
         <!--帮助-->
-        <activity android:name=".activity.mian.other.Help_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.Help_Activity"
+            android:screenOrientation="portrait" />
 
         <!--搜索好友-->
         <activity
             android:name=".activity.mian.friend.SearchFriend_Activity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.mian.friend.FriendInfo_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.friend.FriendInfo_Activity"
+            android:screenOrientation="portrait" />
 
         <!--添加好友-->
         <activity
@@ -178,8 +194,9 @@
         <activity
             android:name=".activity.Edit_Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.mian.friend.FriendshipManageMessageActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.friend.FriendshipManageMessageActivity"
+            android:screenOrientation="portrait" />
 
         <!-- alipay sdk begin -->
 
@@ -188,20 +205,24 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- alipay sdk end -->
 
-
-
-
+        <!-- 微信回调 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoDisplay" />
 
         <!-- 【必须】消息收发service -->
         <service

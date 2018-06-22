@@ -59,6 +59,7 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         Loading.dismiss();
         switch (entity.getStatus()) {
             case 200:
+                SaveUtils.setInt(Save_Key.S_捡星, SaveUtils.getInt(Save_Key.S_捡星) - 1);
                 TabToast.makeText(entity.getMessage());
                 if (MyApp.currentActivity() instanceof Main_Activity){
                     Main_Activity.UpdateMyInfo();

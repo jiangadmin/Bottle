@@ -129,6 +129,9 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                             LogUtil.e(TAG, "修改成功");
                         }
                     });
+
+                    SaveUtils.setInt(Save_Key.S_积分,entity.getData().getScore());
+                    SaveUtils.setInt(Save_Key.S_能量,entity.getData().getBalance());
                 } else {
                     //如果不是自己
                     //存储对方昵称
@@ -162,7 +165,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 }
                 if (viewHolder != null) {
                     viewHolder.tvName.setText(entity.getData().getNikename());
-                    PicassoUtlis.img(entity.getData().getAvatar().contains("http") ? entity.getData().getAvatar() : Const.IMG + entity.getData().getAvatar(), viewHolder.avatar);
+                    PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);
                 }
                 if (myDialog != null) {
                     myDialog.dismiss();

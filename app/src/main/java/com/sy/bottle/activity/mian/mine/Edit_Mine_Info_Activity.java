@@ -23,7 +23,6 @@ import com.sy.bottle.dialog.ChooseCity_Dialog;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.Photos_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
@@ -171,13 +170,10 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
      */
     public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
         this.dataBean = dataBean;
-        if (dataBean.getAvatar().contains("http")) {
 
-            PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
-        } else {
-            PicassoUtlis.img(Const.IMG + dataBean.getAvatar(), head, R.drawable.head_me);
 
-        }
+        PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
+
         nickname.setText(dataBean.getNikename());
         sign.setText(dataBean.getSign());
         city.setText(dataBean.getProvince() + "-" + dataBean.getCity() + "-" + dataBean.getArea());
@@ -282,7 +278,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                 break;
             case R.id.mine_info_head:
                 isupdatehead = true;
-                new Photos_Dialog(this,tempFile);
+                new Photos_Dialog(this, tempFile);
                 break;
             case R.id.mine_info_city:
                 new ChooseCity_Dialog(this, city).show();
@@ -307,7 +303,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
     public void picurl(String url) {
         if (TextUtils.isEmpty(url)) {
             isupdatehead = false;
-            new Photos_Dialog(this,tempFile);
+            new Photos_Dialog(this, tempFile);
         } else {
             new ShowImage_Dialog(this, url).show();
         }

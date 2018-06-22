@@ -42,7 +42,7 @@ public class Help_Activity extends Base_Activity {
 
         initview();
 
-        new Notice_Servlet(this).execute();
+        new Notice_Servlet(this).execute("notice_test");
 
     }
 

@@ -1,7 +1,5 @@
 package com.sy.bottle.entity;
 
-import android.text.TextUtils;
-
 import java.util.List;
 
 /**
@@ -41,9 +39,7 @@ public class Photos_Entity extends Base_Entity {
         }
 
         public String getPic_url() {
-            if (!TextUtils.isEmpty(pic_url)) {
-                return Const.IMG + pic_url;
-            }
+
             return pic_url;
         }
 

@@ -28,24 +28,10 @@
             android:textSize="16sp" />
 
         <Button
-            android:layout_marginTop="1dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:drawableRight="@drawable/ic_in"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="功能介绍"
-            android:textColor="@color/gray_3"
-            android:textSize="18sp" />
-
-        <Button
-            android:visibility="gone"
-            android:layout_marginTop="1dp"
             android:id="@+id/setting_notify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:background="@color/white"
             android:drawableRight="@drawable/ic_in"
             android:gravity="left|center_vertical"
@@ -53,12 +39,14 @@
             android:paddingRight="16dp"
             android:text="消息提醒"
             android:textColor="@color/gray_3"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <Button
-            android:layout_marginTop="1dp"
+            android:id="@+id/setting_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:background="@color/white"
             android:drawableRight="@drawable/ic_in"
             android:gravity="left|center_vertical"
@@ -71,20 +59,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:drawableRight="@drawable/ic_in"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="隐私政策"
-            android:textColor="@color/gray_3"
-            android:textSize="18sp" />
-
-        <Button
             android:layout_marginTop="1dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:background="@color/white"
             android:drawableRight="@drawable/ic_in"
             android:gravity="left|center_vertical"
@@ -114,16 +89,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:text="Copyright © 2018-2022.All Right Resrrved"
-            android:textColor="@color/gray_9"
-            android:textSize="12sp" />
 
         <Button
             android:id="@+id/setting_out"

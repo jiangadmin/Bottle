@@ -48,6 +48,7 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
         esc = findViewById(R.id.setting_out);
         notify = findViewById(R.id.setting_notify);
 
+        blackList.setOnClickListener(this);
         about.setOnClickListener(this);
         esc.setOnClickListener(this);
         notify.setOnClickListener(this);
