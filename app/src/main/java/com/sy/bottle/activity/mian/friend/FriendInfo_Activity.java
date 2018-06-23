@@ -15,21 +15,21 @@ import com.sy.bottle.activity.mian.other.Report_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.dialog.ReName_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Banner_Entity;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Photos_Entity;
 import com.sy.bottle.entity.UserInfo_Entity;
-import com.sy.bottle.servlet.Friend_Bac_Servlet;
+import com.sy.bottle.servlet.Black_Is_Servlet;
+import com.sy.bottle.servlet.Black_Out_Servlet;
+import com.sy.bottle.servlet.Black_Set_Servlet;
 import com.sy.bottle.servlet.Friend_Del_Servlet;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.CircleImageView;
 import com.sy.bottle.view.ImageCycleView;
 import com.sy.bottle.view.LineControllerView;
-import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMConversationType;
 
 import java.util.ArrayList;
@@ -74,6 +74,9 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
 
         //获取照片墙
         new Photos_Get_Servlet(this).execute(identify);
+
+        //查询是否是黑名单
+        new Black_Is_Servlet(this).execute(identify);
     }
 
     private void initview() {
@@ -87,7 +90,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         black = findViewById(R.id.user_info_blackList);
         address = findViewById(R.id.user_info_address);
 
-        black.setCheckListener(this);
+        remark.setOnClickListener(this);
 
     }
 
@@ -98,11 +101,22 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
      */
     public void CallBack(UserInfo_Entity.DataBean bean) {
 
-        PicassoUtlis.img( bean.getAvatar(), head);
+        PicassoUtlis.img(bean.getAvatar(), head);
         name.setText(bean.getNikename());
+        remark.setContent(bean.getContent());
         sign.setText(bean.getSign());
         address.setContent(bean.getProvince() + "-" + bean.getCity() + "-" + bean.getArea());
 
+    }
+
+    /**
+     * 是否是黑名单
+     *
+     * @param isblack
+     */
+    public void CallBack_IsBlack(boolean isblack) {
+        black.setSwitch(isblack);
+        black.setCheckListener(this);
     }
 
     List<Banner_Entity.DBean> dBeans = new ArrayList<>();
@@ -143,7 +157,10 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu:
-                Report_Activity.start(this,identify);
+                Report_Activity.start(this, identify);
+                break;
+            case R.id.user_info_remark:
+                new ReName_Dialog(this, identify,remark.getContent().toString(),remark);
                 break;
             case R.id.user_info_btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);
@@ -187,13 +204,29 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
             base_dialog.setOk("确定", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new Friend_Bac_Servlet(FriendInfo_Activity.this).execute(identify);
+                    new Black_Set_Servlet(FriendInfo_Activity.this).execute(identify);
                 }
             });
             base_dialog.setEsc("取消", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     black.setSwitch(false);
+                }
+            });
+        } else {
+            Base_Dialog base_dialog = new Base_Dialog(this);
+            base_dialog.setMessage("确定要从黑名单中解除吗？");
+            base_dialog.setOk("确定", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    new Black_Out_Servlet(FriendInfo_Activity.this).execute(identify);
+                }
+            });
+            base_dialog.setEsc("取消", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    black.setSwitch(true);
                 }
             });
         }

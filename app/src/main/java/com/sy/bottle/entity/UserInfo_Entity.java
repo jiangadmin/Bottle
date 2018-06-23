@@ -43,6 +43,7 @@ public class UserInfo_Entity extends Base_Entity {
         private String nikename;
         private String phone;
         private String sex;
+        private String content;
         private long score;
         private long balance;
         private String avatar;
@@ -50,6 +51,14 @@ public class UserInfo_Entity extends Base_Entity {
         private String province;
         private String city;
         private String area;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
 
         public String getId() {
             return id;

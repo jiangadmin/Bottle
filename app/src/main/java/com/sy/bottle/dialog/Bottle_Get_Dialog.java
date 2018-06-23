@@ -14,6 +14,8 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.entity.Bottle_Get_Entity;
 import com.sy.bottle.servlet.Bottle_CallBack_Servlet;
+import com.sy.bottle.utils.PicassoUtlis;
+import com.sy.bottle.view.CircleImageView;
 import com.tencent.imsdk.TIMConversationType;
 
 /**
@@ -34,11 +36,13 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
         show();
     }
 
-    TextView id, message;
+    TextView name, address,message;
 
-    ImageView esc;
+    Button esc;
 
     Button submit;
+
+    CircleImageView avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,12 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
 
         setContentView(R.layout.dialog_bottle_get);
 
-
-        id = findViewById(R.id.dialog_bottle_get_id);
-        message = findViewById(R.id.dialog_bottle_get_content);
         esc = findViewById(R.id.dialog_bottle_get_esc);
+        avatar = findViewById(R.id.dialog_bottle_get_head);
+        name = findViewById(R.id.dialog_bottle_get_name);
+        address = findViewById(R.id.dialog_bottle_get_address);
+        message = findViewById(R.id.dialog_bottle_get_content);
         submit = findViewById(R.id.dialog_bottle_get_submit);
-
 
         esc.setOnClickListener(this);
         submit.setOnClickListener(this);
@@ -64,8 +68,9 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
 
     public void init(Bottle_Get_Entity.DataBean bean) {
         this.bean = bean;
-        id.setText("来自 ID:" + bean.getUser_id() );
-
+        PicassoUtlis.img(bean.getAvatar(),avatar);
+        name.setText(bean.getNikename());
+        address.setText("来自 "+bean.getCity());
         message.setText(bean.getContent());
     }
 
@@ -75,7 +80,7 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
 
             case R.id.dialog_bottle_get_submit:
 
-               new  Bottle_CallBack_Servlet().execute(bean.getId());
+                new Bottle_CallBack_Servlet().execute(String.valueOf(bean.getId()));
 
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("identify", bean.getUser_id());

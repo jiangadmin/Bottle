@@ -10,7 +10,7 @@ package com.sy.bottle.entity;
 public class Webtxt_Entity extends Base_Entity {
 
     /**
-     * data : {"content":"<p style=\"margin-left:0cm;\">\r\n\t1：请不要在相册、头像，上传不健康图片和性暗示图片及广告\r\n<\/p>\r\n<p style=\"margin-left:0cm;text-align:start;\">\r\n\t&nbsp;\r\n<\/p>\r\n<p style=\"margin-left:0cm;\">\r\n\t&nbsp;\r\n<\/p>\r\n<p style=\"margin-left:0cm;text-align:start;\">\r\n\t2：请不要在昵称、签名，出现低俗文字及广告\r\n<\/p>\r\n<p style=\"margin-left:0cm;\">\r\n\t&nbsp;\r\n<\/p>\r\n<p style=\"margin-left:0cm;text-align:start;\">\r\n\t&nbsp;\r\n<\/p>\r\n<p style=\"margin-left:0cm;text-align:start;\">\r\n\t3：请在（帮助与咨询）页面，查看更多信息\r\n<\/p>\r\n<p style=\"margin-left:0cm;text-align:start;\">\r\n\t&nbsp;\r\n<\/p>\r\n<p style=\"text-align:center;margin-left:0cm;\">\r\n\t<span style=\"color:#E53333;\">上述行为，一经发现核实立即做封号处理<\/span>\r\n<\/p>"}
+     * data : {"title":"官方公告","content":"内容","value":"<p style=\"text-align:left;\">\r\n\t<br />\r\n<\/p>\r\n<p style=\"text-align:center;\">\r\n\t<span style=\"color:#000000;\">充值遇到问题或单笔充值更大金额，请联系客服<\/span> \r\n<\/p>"}
      */
 
     private DataBean data;
@@ -25,36 +25,27 @@ public class Webtxt_Entity extends Base_Entity {
 
     public static class DataBean {
         /**
-         * content : <p style="margin-left:0cm;">
-         1：请不要在相册、头像，上传不健康图片和性暗示图片及广告
+         * title : 官方公告
+         * content : 内容
+         * value : <p style="text-align:left;">
+         <br />
          </p>
-         <p style="margin-left:0cm;text-align:start;">
-         &nbsp;
-         </p>
-         <p style="margin-left:0cm;">
-         &nbsp;
-         </p>
-         <p style="margin-left:0cm;text-align:start;">
-         2：请不要在昵称、签名，出现低俗文字及广告
-         </p>
-         <p style="margin-left:0cm;">
-         &nbsp;
-         </p>
-         <p style="margin-left:0cm;text-align:start;">
-         &nbsp;
-         </p>
-         <p style="margin-left:0cm;text-align:start;">
-         3：请在（帮助与咨询）页面，查看更多信息
-         </p>
-         <p style="margin-left:0cm;text-align:start;">
-         &nbsp;
-         </p>
-         <p style="text-align:center;margin-left:0cm;">
-         <span style="color:#E53333;">上述行为，一经发现核实立即做封号处理</span>
+         <p style="text-align:center;">
+         <span style="color:#000000;">充值遇到问题或单笔充值更大金额，请联系客服</span>
          </p>
          */
 
+        private String title;
         private String content;
+        private String value;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
         public String getContent() {
             return content;
@@ -62,6 +53,14 @@ public class Webtxt_Entity extends Base_Entity {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
     }
 }

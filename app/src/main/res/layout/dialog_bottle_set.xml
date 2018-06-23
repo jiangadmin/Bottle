@@ -10,44 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/dialog_bottle_set_esc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_turnoff" />
-
-            <TextView
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="2.5dp"
-                android:background="@drawable/dialog_bottle_title_bg"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="4.6dp"
-                android:text="让随缘帮你寻找你的TA吧"
-                android:textColor="@color/gray_6"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/icon_jwp" />
-
-        </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="260dp"
@@ -62,31 +24,53 @@
                 android:gravity="left|top"
                 android:hint="说点什么吧..."
                 android:lines="3"
+                android:padding="10dp"
                 android:textColor="@color/gray_6" />
 
             <TextView
-                android:padding="5dp"
-                android:gravity="center"
-                android:layout_marginTop="3dp"
                 android:id="@+id/dialog_bottle_set_random"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/dialog_bottle_set_message"
                 android:layout_below="@+id/dialog_bottle_set_message"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/yuanjiao_white_t"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="随机生成内容"
                 android:textColor="@color/gray_9" />
 
-            <Button
-                android:textSize="16sp"
-                android:textColor="@color/gray_6"
-                android:background="@drawable/yuanjiao_white_t1"
-                android:id="@+id/dialog_bottle_set_submit"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="扔 出 去" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/dialog_bottle_set_esc"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/yuanjiao_white_t1"
+                    android:text="取消"
+                    android:textColor="@color/gray_6"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/dialog_bottle_set_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/yuanjiao_white_t1"
+                    android:text="扔出"
+                    android:textColor="@color/gray_6"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 

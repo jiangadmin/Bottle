@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
@@ -41,7 +40,7 @@ public class Bottle_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         map.put("type", strings[0]);
         map.put("content", strings[1]);
 
-        String res = HttpUtil.request(HttpUtil.POST,Const.API + "bottles/" + SaveUtils.getString(Save_Key.UID), map);
+        String res = HttpUtil.request(HttpUtil.POST, Const.API + "bottles/" + SaveUtils.getString(Save_Key.UID), map);
 
         LogUtil.e(TAG, res);
 
@@ -71,7 +70,6 @@ public class Bottle_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
         switch (entity.getStatus()) {
             case 200:
-            case 400:
                 TabToast.makeText("已扔出");
                 dialog.dismiss();
                 break;

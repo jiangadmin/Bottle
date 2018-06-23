@@ -8,11 +8,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.adapters.Text_Adapter;
 import com.sy.bottle.entity.Help_Entity;
 import com.sy.bottle.servlet.Help_Servlet;
 import com.sy.bottle.servlet.Notice_Servlet;
@@ -27,7 +27,7 @@ import java.util.List;
  * @Phone: 186 6120 1018
  * TODO: 帮助与客服
  */
-public class Help_Activity extends Base_Activity {
+public class Help_Activity extends Base_Activity implements AdapterView.OnItemClickListener {
     private static final String TAG = "Help_Activity";
 
     public static void start(Context context) {
@@ -39,17 +39,23 @@ public class Help_Activity extends Base_Activity {
     WebView webView;
     ListView listView;
 
+    Text_Adapter button_adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_help);
 
-        setTitle("会员自助服务");
+        setTitle("咨询与帮助");
 
         setBack(true);
 
         initview();
+
+        button_adapter = new Text_Adapter(this);
+        listView.setAdapter(button_adapter);
+        listView.setOnItemClickListener(this);
 
         new Notice_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "notice_test");
         new Help_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -71,21 +77,26 @@ public class Help_Activity extends Base_Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         //加载HTML字符串进行显示
         webView.loadData(s, "text/html", "utf-8");
+
+        webView.getSettings().setDefaultTextEncodingName("utf-8");
     }
 
     List<String> title;
+    List<Help_Entity.DataBean> dataBeans;
 
     public void CallBack_HelpList(final List<Help_Entity.DataBean> dataBeans) {
+        this.dataBeans = dataBeans;
         title = new ArrayList();
         for (Help_Entity.DataBean bean : dataBeans) {
             title.add(bean.getTitle());
         }
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, title));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Web_Activity.start(Help_Activity.this,title.get(position),dataBeans.get(position).getValue());
-            }
-        });
+        button_adapter.setListData(title);
+        button_adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Web_Activity.start(Help_Activity.this, dataBeans.get(i).getTitle(), dataBeans.get(i).getValue());
     }
 }

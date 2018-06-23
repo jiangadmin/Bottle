@@ -66,7 +66,6 @@ public class ConversationPresenter implements Observer {
                 case DEL:
                     view.removeConversation((String) cmd.data);
                     break;
-
             }
         } else if (observable instanceof RefreshEvent) {
             view.refresh();

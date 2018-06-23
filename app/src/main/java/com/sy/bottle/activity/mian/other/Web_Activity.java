@@ -46,6 +46,8 @@ public class Web_Activity extends Base_Activity {
 
         //能够的调用JavaScript代码
         mWebView.getSettings().setJavaScriptEnabled(true);
+
+        mWebView.getSettings().setDefaultTextEncodingName("utf-8");
         //加载HTML字符串进行显示
         mWebView.loadData(loadurl, "text/html", "utf-8");
 

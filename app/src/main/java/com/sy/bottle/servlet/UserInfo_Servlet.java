@@ -130,12 +130,13 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                         }
                     });
 
-                    SaveUtils.setInt(Save_Key.S_积分,entity.getData().getScore());
-                    SaveUtils.setInt(Save_Key.S_能量,entity.getData().getBalance());
+                    SaveUtils.setInt(Save_Key.S_积分, entity.getData().getScore());
+                    SaveUtils.setInt(Save_Key.S_能量, entity.getData().getBalance());
                 } else {
                     //如果不是自己
                     //存储对方昵称
-                    SaveUtils.setString(Save_Key.S_昵称 + entity.getData().getId(), entity.getData().getNikename());
+                    SaveUtils.setString(Save_Key.S_昵称 + entity.getData().getId(),
+                            TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNikename() : entity.getData().getContent());
                     //存储对方头像
                     SaveUtils.setString(Save_Key.S_头像 + entity.getData().getId(), entity.getData().getAvatar());
                 }

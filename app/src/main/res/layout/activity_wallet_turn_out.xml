@@ -22,7 +22,7 @@
             android:layout_height="@dimen/edit_heigt"
             android:layout_marginTop="10dp"
             android:background="@drawable/yuanjiao_white_t1"
-            android:hint="请输入提现支付宝账户"
+            android:hint="请输入提取支付宝账户"
             android:paddingLeft="10dp" />
 
         <EditText
@@ -34,7 +34,7 @@
             android:layout_height="@dimen/edit_heigt"
             android:layout_marginTop="10dp"
             android:background="@drawable/yuanjiao_white_t1"
-            android:hint="请输入提现支付宝账户姓名"
+            android:hint="请输入提取支付宝账户姓名"
             android:paddingLeft="10dp" />
 
         <EditText

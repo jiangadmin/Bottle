@@ -63,11 +63,11 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
         switch (entity.getStatus()) {
             case 200:
                 if (activity instanceof Main_Activity) {
-                    Web_Activity.start(activity, "官方公告", entity.getData().getContent());
+                    Web_Activity.start(activity, entity.getData().getTitle(), entity.getData().getValue());
                 }
 
                 if (activity instanceof Help_Activity) {
-                    ((Help_Activity) activity).CallBack_WebTxt(entity.getData().getContent());
+                    ((Help_Activity) activity).CallBack_WebTxt(entity.getData().getValue());
                 }
                 break;
             case 401:

@@ -105,11 +105,6 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
                     return;
                 }
 
-                if (TextUtils.isEmpty(message.getText().toString())) {
-                    TabToast.makeText("请详细描述被举报对象的恶意行为");
-                    return;
-                }
-
                 Loading.show(this, "投诉中");
                 if (TextUtils.isEmpty(imageurl)) {
                     new Report_Servlet().execute(id, string[spinner.getSelectedItemPosition()], message.getText().toString());

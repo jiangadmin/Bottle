@@ -43,7 +43,7 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
 
         setTitle(view, "好友列表");
 
-        setMenu(view, R.drawable.ic_add, "添加");
+        setMenu(view, "添加");
 
         friends_List = view.findViewById(R.id.friends);
         view_null = view.findViewById(R.id.view_null);

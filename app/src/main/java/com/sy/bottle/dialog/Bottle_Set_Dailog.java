@@ -26,7 +26,7 @@ import com.sy.bottle.view.TabToast;
 public class Bottle_Set_Dailog extends MyDialog implements View.OnClickListener {
     private static final String TAG = "Bottle_Set_Dailog";
 
-    ImageView esc;
+    Button esc;
 
     EditText message;
 

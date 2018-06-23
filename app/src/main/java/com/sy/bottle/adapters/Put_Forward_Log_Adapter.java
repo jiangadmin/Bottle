@@ -1,6 +1,7 @@
 package com.sy.bottle.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,17 +81,21 @@ public class Put_Forward_Log_Adapter extends BaseAdapter {
         }
 
         switch (bean.getStatusX()) {
-            case 0:
-                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
-                holder.type.setText("进行中");
-                break;
+
             case 1:
-                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
-                holder.type.setText("进行中");
+                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_green);
+                holder.type.setText("成功");
+                holder.type.setTextColor(Color.RED);
                 break;
             case 2:
+                holder.type_bg.setImageResource(R.drawable.ic_bottom_right_yellow);
+                holder.type.setText("处理中");
+                holder.type.setTextColor(Color.RED);
+                break;
+            case 3:
                 holder.type_bg.setImageResource(R.drawable.ic_bottom_right_red);
-                holder.type.setText("进行中");
+                holder.type.setText("失败");
+                holder.type.setTextColor(Color.WHITE);
                 break;
         }
 

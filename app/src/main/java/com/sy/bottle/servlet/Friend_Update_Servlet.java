@@ -1,14 +1,13 @@
 package com.sy.bottle.servlet;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.Main_Activity;
-import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
 import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
@@ -16,6 +15,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,23 +25,31 @@ import java.util.Map;
  * @date: 2018/6/19
  * @Email: www.fangmu@qq.com
  * @Phone: 186 6120 1018
- * TODO: 添加到黑名单
+ * TODO: 修改好友昵称
  */
-public class Friend_Bac_Servlet extends AsyncTask<String, Integer, Base_Entity> {
+public class Friend_Update_Servlet extends AsyncTask<String, Integer, Base_Entity> {
     private static final String TAG = "Friend_Add_Servlet";
 
     Activity activity;
 
-    public Friend_Bac_Servlet(Activity activity) {
+    Dialog dialog;
+
+    public Friend_Update_Servlet(Activity activity) {
         this.activity = activity;
+    }
+
+    public Friend_Update_Servlet(Activity activity, Dialog dialog) {
+        this.activity = activity;
+        this.dialog = dialog;
     }
 
     @Override
     protected Base_Entity doInBackground(String... strings) {
         Map map = new HashMap();
         map.put("friend_id", strings[0]);
+        map.put("content", strings[1]);
 
-        String res = HttpUtil.request(HttpUtil.POST, Const.API + "blacklists/" + SaveUtils.getString(Save_Key.UID), map);
+        String res = HttpUtil.request(HttpUtil.PUT, Const.API + "friends/" + SaveUtils.getString(Save_Key.UID), map);
 
         Base_Entity entity;
 
@@ -61,7 +69,6 @@ public class Friend_Bac_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         return entity;
     }
 
-
     @Override
     protected void onPostExecute(Base_Entity entity) {
         super.onPostExecute(entity);
@@ -69,15 +76,14 @@ public class Friend_Bac_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
         switch (entity.getStatus()) {
             case 200:
+
                 //刷新好友数据
                 Main_Activity.UpdateFriend();
                 if (activity instanceof UserInfo_Activity) {
-                    MyApp.finishActivity(activity);
-
+                    ((UserInfo_Activity) activity).CallBack();
                 }
-                if (activity instanceof FriendInfo_Activity) {
-                    MyApp.finishActivity(activity);
-
+                if (dialog != null) {
+                    dialog.dismiss();
                 }
                 break;
             case 401:

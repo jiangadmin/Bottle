@@ -25,7 +25,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="黑名单"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/setting_notify"
@@ -39,7 +39,7 @@
             android:paddingRight="16dp"
             android:text="消息提醒"
             android:textColor="@color/gray_3"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="gone" />
 
         <Button
@@ -54,7 +54,7 @@
             android:paddingRight="16dp"
             android:text="检测更新"
             android:textColor="@color/gray_3"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <Button
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:paddingRight="16dp"
             android:text="服务条款"
             android:textColor="@color/gray_3"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/setting_about"
@@ -81,7 +81,7 @@
             android:paddingRight="16dp"
             android:text="关于"
             android:textColor="@color/gray_3"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

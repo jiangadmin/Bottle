@@ -1,15 +1,11 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
-import android.net.Uri;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.TimeUtil;
 import com.tencent.imsdk.TIMMessage;
@@ -81,7 +77,6 @@ public abstract class Message {
 
             return viewHolder.leftMessage;
         }
-
     }
 
     /**
@@ -121,7 +116,12 @@ public abstract class Message {
 
     String getRevokeSummary() {
         if (message.status() == TIMMessageStatus.HasRevoked) {
-            return getSender() + "撤回了一条消息";
+            if (getSender().equals(SaveUtils.getString(Save_Key.UID))){
+                return "我 撤回了一条消息";
+            }else {
+                return "TA 撤回了一条消息";
+            }
+
         }
         return null;
     }

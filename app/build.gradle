@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'piaoliupin'
             keyPassword 'jiangadmin'
-            storeFile file('C:/Users/jiangadmin/Desktop/Bottle/piaoliupin')
+            storeFile file('/Users/jiangyao/Desktop/Bottle/piaoliupin')
             storePassword 'jiangadmin'
         }
     }
@@ -99,8 +99,6 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation 'com.github.bumptech.glide:glide:4.3.1'
-
-//    检测虚拟机
+    //    检测虚拟机
     implementation 'com.lahm.library:easy-protector-release:latest.release'
-
 }

@@ -1,8 +1,11 @@
 package com.sy.bottle.presenter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 
-import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
+import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.event.MessageEvent;
 import com.sy.bottle.event.RefreshEvent;
 import com.sy.bottle.utils.LogUtil;
@@ -81,8 +84,38 @@ public class ChatPresenter implements Observer {
                 //错误码code含义请参见错误码表
                 view.onSendMessageFail(code, desc, message);
 
-                TabToast.makeText("错误码："+code);
-                LogUtil.e(TAG,"错误码："+code+desc);
+                switch (code) {
+                    //黑名单
+                    case 123001:
+                        Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
+                        base_dialog.setTitle("抱歉");
+                        base_dialog.setMessage("您已被对方加入黑名单");
+                        base_dialog.setOk("确定", null);
+
+                        break;
+                    //能量不足
+                    case 123002:
+
+                        Base_Dialog base_dialog1 = new Base_Dialog(MyApp.currentActivity());
+                        base_dialog1.setTitle("能量不足");
+                        base_dialog1.setMessage("今日系统签到赠送能量已使用完，请补充能量");
+                        base_dialog1.setOk("去充值", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                MyBalance_Activity.start(MyApp.currentActivity());
+
+                            }
+                        });
+                        base_dialog1.setEsc("明天聊", null);
+
+                        break;
+
+                    default:
+                        TabToast.makeText("错误码：" + code);
+                        LogUtil.e(TAG, "错误码：" + code + desc);
+                        break;
+                }
+
 
             }
 

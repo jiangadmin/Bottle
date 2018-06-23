@@ -46,7 +46,6 @@ public class Welcome_Activity extends Base_Activity {
             //检测更新
             new Update_Servlet(this).execute();
 
-
         }
 
 

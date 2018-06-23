@@ -59,18 +59,11 @@ public class MyApp extends Application {
      * 是否强制更新
      */
     public static boolean Update_Type;
+
     /**
-     * 是否需要更新
+     * 正在聊天人的ID
      */
-    public static boolean Update_Need;
-    /**
-     * 更新地址
-     */
-    public static String Update_Message;
-    /**
-     * 更新地址
-     */
-    public static int Update_Version;
+    public static String ChatId= "";
 
     /**
      * 好友列表
@@ -96,8 +89,12 @@ public class MyApp extends Application {
         //日
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (SaveUtils.getString(Save_Key.S_日期) == null || !SaveUtils.getString(Save_Key.S_日期).equals(year + "." + month + "." + day)) {
+        if (SaveUtils.getString(Save_Key.S_日期) == null) {
             SaveUtils.setInt(Save_Key.S_捡星, 10);
+            SaveUtils.setString(Save_Key.S_日期, year + "." + month + "." + day);
+        } else if (!SaveUtils.getString(Save_Key.S_日期).equals(year + "." + month + "." + day)) {
+            SaveUtils.setInt(Save_Key.S_捡星, 10);
+            SaveUtils.setString(Save_Key.S_日期, year + "." + month + "." + day);
         }
 
         Foreground.init(this);

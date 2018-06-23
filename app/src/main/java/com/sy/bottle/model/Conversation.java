@@ -88,7 +88,6 @@ public abstract class Conversation implements Comparable {
         return result;
     }
 
-
     /**
      * Compares this object to the specified object to determine their relative
      * order.
@@ -101,6 +100,7 @@ public abstract class Conversation implements Comparable {
      * @throws ClassCastException if {@code another} cannot be converted into something
      *                            comparable to {@code this} instance.
      */
+
     @Override
     public int compareTo(Object another) {
         if (another instanceof Conversation){

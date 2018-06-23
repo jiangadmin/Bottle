@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +105,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
+        MyApp.ChatId = identify;
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //移除标记为id的通知 (只是针对当前Context下的所有Notification)
@@ -160,7 +162,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 if (MyApp.friendsbeans != null && MyApp.friendsbeans.size() > 0) {
                     for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
                         if (bean.getFriend_id().equals(identify)) {
-                            setRTitle(bean.getNikename());
+                            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
                             adapter.setHead(bean.getAvatar());
                             adapter.notifyDataSetChanged();
 
@@ -189,7 +191,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * @param bean
      */
     public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
-        setRTitle(bean.getNikename());
+        setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
         adapter.setHead(bean.getAvatar());
         adapter.notifyDataSetChanged();
     }
@@ -212,6 +214,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MyApp.ChatId = "";
         presenter.stop();
     }
 
@@ -239,7 +242,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                             handler.postDelayed(resetTitle, 3000);
                             break;
                         case GIFT:
-                            TabToast.makeText("礼物到了");
                             if (messageList.size() == 0) {
                                 mMessage.setHasTime(null);
                             } else {
@@ -548,6 +550,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 message.save();
                 break;
             case 4:
+                LogUtil.e(TAG, "撤回" + message.getMessage());
                 presenter.revokeMessage(message.getMessage());
                 break;
             default:
@@ -662,6 +665,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                                 return;
                             }
                         }
+
                         UserInfo_Activity.start(this, identify);
 
                         break;

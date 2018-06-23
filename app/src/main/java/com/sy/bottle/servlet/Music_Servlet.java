@@ -1,5 +1,6 @@
 package com.sy.bottle.servlet;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,6 +30,11 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
     @Override
     protected String doInBackground(TIMMessage... messages) {
         TIMMessage timMessage = messages[0];
+
+        //正在聊天 不提示
+        if (MyApp.ChatId.equals(timMessage.getSender())) {
+            return null;
+        }
 
         //获取NotificationManager实例
         NotificationManager notifyManager = (NotificationManager) MyApp.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -64,21 +70,21 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
         //设置通知时间，默认为系统发出通知的时间，通常不用设置
         //.setWhen(System.currentTimeMillis());
         //通过builder.build()方法生成Notification对象,并发送通知,id=1
+        builder.build().defaults = Notification.DEFAULT_SOUND;
+        builder.build().audioStreamType = android.media.AudioManager.ADJUST_LOWER;
         notifyManager.notify(Integer.valueOf(timMessage.getSender()), builder.build());
 
-
-
-        //直接创建，不需要设置setDataSource
-        MediaPlayer mMediaPlayer = MediaPlayer.create(MyApp.getInstance(), R.raw.dudulu);
-        mMediaPlayer.start();
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        });
+//        //直接创建，不需要设置setDataSource
+//        MediaPlayer mMediaPlayer = MediaPlayer.create(MyApp.getInstance(), R.raw.dudulu);
+//        mMediaPlayer.start();
+//        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mediaPlayer) {
+//                mediaPlayer.stop();
+//                mediaPlayer.release();
+//                mediaPlayer = null;
+//            }
+//        });
 
 
         return null;

@@ -98,7 +98,6 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
 
         initview();
 
-
     }
 
     public void CallBack_Goods(List<Goods_Entity.DataBean> dataBeans) {
@@ -125,7 +124,6 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
         agreement = findViewById(R.id.recharge_agreement);
 
         submit = findViewById(R.id.recharge_submit);
-
 
         rmb_other = findViewById(R.id.mybalance_rmb_other);
 
@@ -213,7 +211,7 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                 }
                 break;
             case R.id.recharge_agreement:
-                NewWebActivity.start(this, Const.API + "agreement.html");
+                NewWebActivity.start(this, Const.API + "recharge.html");
                 break;
 
         }

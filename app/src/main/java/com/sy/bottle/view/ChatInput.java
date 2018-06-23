@@ -371,7 +371,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
                 if (SaveUtils.getInt(Save_Key.S_能量) < dataBeans.get(i).getPrice()) {
                     Base_Dialog base_dialog = new Base_Dialog(context);
-                    base_dialog.setTitle("能量余额不足");
+                    base_dialog.setTitle("能量不足");
                     base_dialog.setMessage("今日系统签到赠送能量已使用完，请补充能量");
                     base_dialog.setOk("去充值", new OnClickListener() {
                         @Override
