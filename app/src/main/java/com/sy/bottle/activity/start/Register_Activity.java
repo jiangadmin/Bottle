@@ -110,7 +110,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
 
         switch (view.getId()) {
             case R.id.agreement:
-                NewWebActivity.start(this, Const.API + "agreement.html");
+                NewWebActivity.start(this, Const.API + "User_Agreement.html");
                 break;
             case R.id.register_submit:
 
@@ -141,7 +141,7 @@ public class Register_Activity extends Base_Activity implements View.OnClickList
                     TabToast.makeText("请阅读并同意《用户协议》");
                     return;
                 }
-
+                SaveUtils.setString(Save_Key.S_性别, boy.isChecked() ? "1" : "2");
                 Loading.show(this, "验证中");
                 SaveUtils.setString(Save_Key.S_手机号, phonenum);
                 new CheckSmsCode_Servlet(this).execute(phonenum, code);

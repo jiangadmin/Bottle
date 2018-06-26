@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
-import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Info_Activity;
 import com.sy.bottle.dialog.Loading;
@@ -81,11 +80,8 @@ public class Photos_Get_Servlet extends AsyncTask<String, Integer, Photos_Entity
                     ((Mine_Info_Activity) activity).CallBack_Phtots(entity.getData());
                 }
 
-                if (activity instanceof Profile_Activity) {
-                    ((Profile_Activity) activity).CallBack_Photos(entity.getData());
-                }
 
-                if (activity instanceof FriendInfo_Activity){
+                if (activity instanceof FriendInfo_Activity) {
                     ((FriendInfo_Activity) activity).CallBack_Photos(entity.getData());
                 }
 

@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 
@@ -40,6 +42,9 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
         NotificationManager notifyManager = (NotificationManager) MyApp.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
         //实例化NotificationCompat.Builde并设置相关属性
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MyApp.getInstance());
+
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(uri);
         //设置小图标
         builder.setSmallIcon(R.mipmap.logo);
         //设置通知标题
@@ -70,8 +75,7 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
         //设置通知时间，默认为系统发出通知的时间，通常不用设置
         //.setWhen(System.currentTimeMillis());
         //通过builder.build()方法生成Notification对象,并发送通知,id=1
-        builder.build().defaults = Notification.DEFAULT_SOUND;
-        builder.build().audioStreamType = android.media.AudioManager.ADJUST_LOWER;
+
         notifyManager.notify(Integer.valueOf(timMessage.getSender()), builder.build());
 
 //        //直接创建，不需要设置setDataSource

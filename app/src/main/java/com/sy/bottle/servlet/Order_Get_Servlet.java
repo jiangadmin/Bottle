@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
 import com.sy.bottle.activity.mian.other.Recharge_Activity;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
@@ -15,6 +16,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,6 +83,15 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Order_Entity> 
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+            default:
+                TabToast.makeText(entity.getMessage());
+
+                if (entity.getData().getReturn_msg() != null) {
+                    Base_Dialog base_dialog = new Base_Dialog(activity);
+                    base_dialog.setMessage(entity.getData().getReturn_msg());
+                    base_dialog.setOk("朕已阅", null);
+                }
                 break;
         }
     }

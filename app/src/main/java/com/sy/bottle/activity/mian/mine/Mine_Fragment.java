@@ -136,7 +136,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
                     receive_num.setVisibility(View.VISIBLE);
                     receive_num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_捡星)));
                 } else {
-                    TabToast.makeText("今日次数已用完！");
+                    TabToast.makeText("今日次数已用完,明天再领吧！");
                     receive_num.setVisibility(View.GONE);
                     return;
                 }

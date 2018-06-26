@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.mine.Setting_Activity;
 import com.sy.bottle.activity.start.Login_Activity;
 import com.sy.bottle.activity.start.Welcome_Activity;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
@@ -73,6 +72,8 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
                 if (activity instanceof Setting_Activity) {
                     if (entity.getData() == null) {
                         TabToast.makeText("已是最新版本");
+                    } else {
+                        updat(entity.getData().getUrl());
                     }
                 }
                 if (activity instanceof Welcome_Activity) {
@@ -90,12 +91,9 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
                         }
                     } else {
 
-                        Intent intent = new Intent();
-                        intent.setData(Uri.parse(entity.getData().getUrl()));//Url 就是你要打开的网址
-                        intent.setAction(Intent.ACTION_VIEW);
-                        activity.startActivity(intent); //启动浏览器
+                        updat(entity.getData().getUrl());
 
-                        if (entity.getData().getIs_must().equals("0")){
+                        if (entity.getData().getIs_must().equals("0")) {
                             //判定是否有登录数据
                             if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.OPENID)) && SaveUtils.getBoolean(Save_Key.S_登录)) {
 
@@ -115,6 +113,14 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
                 break;
         }
 
+    }
+
+
+    public void updat(String url) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(url));//Url 就是你要打开的网址
+        intent.setAction(Intent.ACTION_VIEW);
+        activity.startActivity(intent); //启动浏览器
     }
 
 }

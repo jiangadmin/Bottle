@@ -49,14 +49,16 @@ public class Black_Is_Servlet extends AsyncTask<String, Integer, Boolean> {
             }
         }
 
-        if (entity.getData()!=null||entity.getData().size()>0){
-            for (Friends_Entity.DataBean bean:entity.getData()){
-                if (bean.getFriend_id().equals(strings[0])){
-                    return true;
+        if (entity.getData() != null) {
+            if (entity.getData().size() > 0) {
+                for (Friends_Entity.DataBean bean : entity.getData()) {
+                    if (bean.getFriend_id().equals(strings[0])) {
+                        return true;
+                    }
                 }
             }
             return false;
-        }else {
+        } else {
             return false;
         }
 
@@ -68,7 +70,7 @@ public class Black_Is_Servlet extends AsyncTask<String, Integer, Boolean> {
         Loading.dismiss();
 
         if (activity instanceof FriendInfo_Activity) {
-          ((FriendInfo_Activity) activity).CallBack_IsBlack(aBoolean);
+            ((FriendInfo_Activity) activity).CallBack_IsBlack(aBoolean);
         }
     }
 }

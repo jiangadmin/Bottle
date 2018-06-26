@@ -23,6 +23,7 @@ import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMElem;
 import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMFaceElem;
+import com.tencent.imsdk.TIMLocationElem;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMTextElem;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
@@ -36,22 +37,24 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * 文本消息数据
+ * 位置消息数据
  */
-public class TextMessage extends Message {
+public class LoctionMessage extends Message {
 
-    public TextMessage(TIMMessage message) {
+    public LoctionMessage(TIMMessage message) {
         this.message = message;
     }
 
-    public TextMessage(String s) {
+    public LoctionMessage(String s, double longitude, double latitude) {
         message = new TIMMessage();
-        TIMTextElem elem = new TIMTextElem();
-        elem.setText(s);
+        TIMLocationElem elem = new TIMLocationElem();
+        elem.setDesc(s);
+        elem.setLongitude(longitude);//经度
+        elem.setLatitude(latitude);//维度
         message.addElement(elem);
     }
 
-    public TextMessage(TIMMessageDraft draft) {
+    public LoctionMessage(TIMMessageDraft draft) {
         message = new TIMMessage();
         for (TIMElem elem : draft.getElems()) {
             message.addElement(elem);
@@ -73,7 +76,7 @@ public class TextMessage extends Message {
         return sortList;
     }
 
-    public TextMessage(Editable s) {
+    public LoctionMessage(Editable s) {
         message = new TIMMessage();
         ImageSpan[] spans = s.getSpans(0, s.length(), ImageSpan.class);
         List<ImageSpan> listSpans = sortByIndex(s, spans);
@@ -129,7 +132,7 @@ public class TextMessage extends Message {
         List<TIMElem> elems = new ArrayList<>();
         for (int i = 0; i < message.getElementCount(); ++i) {
             elems.add(message.getElement(i));
-            if (message.getElement(i).getType() == TIMElemType.Text) {
+            if (message.getElement(i).getType() == TIMElemType.Location) {
                 hasText = true;
             }
         }

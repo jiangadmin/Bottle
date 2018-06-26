@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
+import com.sy.bottle.activity.mian.other.Report_Activity;
 import com.sy.bottle.app.MyApp;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Friend_Add_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
@@ -89,7 +89,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
 
         }
 
-        if (id!=null){
+        if (id != null) {
 
             //获取用户信息
             new UserInfo_Servlet(this).execute(id);
@@ -106,11 +106,12 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
 
     /**
      * 好友数据返回
+     *
      * @param entity
      */
-    public void CallBack_UserInfo(UserInfo_Entity.DataBean entity){
+    public void CallBack_UserInfo(UserInfo_Entity.DataBean entity) {
         this.entity = entity;
-        PicassoUtlis.img( entity.getAvatar(), head);
+        PicassoUtlis.img(entity.getAvatar(), head);
         sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
         name.setText(entity.getNikename());
         sign.setText(entity.getSign());
@@ -121,6 +122,9 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
     public void onClick(View view) {
 
         switch (view.getId()) {
+            case R.id.menu:
+                Report_Activity.start(this, entity.getId());
+                break;
             case R.id.btnAdd:
                 //添加好友
                 if (!TextUtils.isEmpty(remark.getText().toString())) {

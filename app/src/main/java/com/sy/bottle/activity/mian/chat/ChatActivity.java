@@ -51,6 +51,7 @@ import com.sy.bottle.view.TabToast;
 import com.sy.bottle.view.VoiceSendingView;
 import com.sy.bottle.viewfeatures.ChatView;
 import com.tencent.imsdk.TIMConversationType;
+import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageStatus;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
@@ -525,7 +526,9 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         if (message.isSendFail()) {
             menu.add(0, 2, Menu.NONE, "重新发送");
         } else if (message.getMessage().isSelf()) {
-            menu.add(0, 4, Menu.NONE, "撤回");
+            if (message.getMessage().getElement(0).getType() != TIMElemType.Custom) {
+                menu.add(0, 4, Menu.NONE, "撤回");
+            }
         }
         if (message instanceof ImageMessage || message instanceof FileMessage) {
             menu.add(0, 3, Menu.NONE, "保存");

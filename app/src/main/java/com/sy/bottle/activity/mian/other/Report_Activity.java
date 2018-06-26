@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
@@ -45,6 +46,7 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
     EditText message;
     ImageView photos, photos_clean;
     Button submit;
+    TextView report_info;
 
     /**
      * 请求相册
@@ -56,7 +58,6 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
     private ArrayAdapter<String> adapter;
 
     String id, imageurl;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
         photos = findViewById(R.id.report_photo);
         photos_clean = findViewById(R.id.report_photo_clear);
         submit = findViewById(R.id.report_submit);
+        report_info = findViewById(R.id.report_info);
 
         //将可选内容与ArrayAdapter连接起来
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, string);
@@ -93,11 +95,15 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
         submit.setOnClickListener(this);
         photos.setOnClickListener(this);
         photos_clean.setOnClickListener(this);
+        report_info.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.waiter:
+                Report_Info_Activity.start(this);
+                break;
             case R.id.report_submit:
 
                 if (spinner.getSelectedItemPosition() == 0) {
@@ -125,6 +131,9 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
                 photos_clean.setVisibility(View.GONE);
                 imageurl = null;
                 break;
+            case R.id.report_info:
+                Report_Info_Activity.start(this);
+                break;
         }
     }
 
@@ -139,7 +148,6 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
         PicassoUtlis.img(url, photos);
         photos_clean.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {

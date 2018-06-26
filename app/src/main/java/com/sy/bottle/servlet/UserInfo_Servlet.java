@@ -10,7 +10,6 @@ import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
 import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
-import com.sy.bottle.activity.mian.friend.Profile_Activity;
 import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.activity.mian.mine.Edit_Mine_Info_Activity;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
@@ -161,9 +160,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 if (activity instanceof AddFriend_Activity) {
                     ((AddFriend_Activity) activity).CallBack(entity.getData());
                 }
-                if (activity instanceof Profile_Activity) {
-                    ((Profile_Activity) activity).CallBack(entity.getData());
-                }
+
                 if (viewHolder != null) {
                     viewHolder.tvName.setText(entity.getData().getNikename());
                     PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);

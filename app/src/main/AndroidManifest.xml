@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <!--android:roundIcon="@mipmap/ic_launcher_round"-->
     <application
         android:name=".app.MyApp"
@@ -167,6 +166,10 @@
         <activity
             android:name=".activity.mian.other.Report_Activity"
             android:screenOrientation="portrait" />
+
+        <!--投诉须知-->
+        <activity android:name=".activity.mian.other.Report_Info_Activity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.mian.other.NewWebActivity"

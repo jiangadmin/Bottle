@@ -11,13 +11,18 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.mian.other.NewWebActivity;
+import com.sy.bottle.activity.mian.other.Put_forward_Activity;
 import com.sy.bottle.adapters.Gift_Get_Log_Adapter;
 import com.sy.bottle.adapters.Gift_Set_Log_Adapter;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Gift_Get_Log_Entity;
 import com.sy.bottle.entity.Gift_Set_Log_Entity;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Gift_Get_Log_Servlet;
 import com.sy.bottle.servlet.Gift_Set_Log_Servlet;
+import com.sy.bottle.utils.SaveUtils;
 
 import java.util.List;
 
@@ -35,7 +40,7 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
 
     LinearLayout view_null;
 
-    TextView gifts_get, gifts_set;
+    TextView gifts_get, gifts_set, put_forward, ml, gift_agreement;
 
     Gift_Set_Log_Adapter gift_set_log_adapter;
     Gift_Get_Log_Adapter gift_get_log_adapter;
@@ -60,11 +65,17 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
         view_null = findViewById(R.id.view_null);
         gifts_set = findViewById(R.id.log_gifts_set);
         gifts_get = findViewById(R.id.log_gifts_get);
+        put_forward = findViewById(R.id.mybalance_put_forward);
+        gift_agreement = findViewById(R.id.gift_agreement);
+        ml = findViewById(R.id.ml);
         gift_get_log_adapter = new Gift_Get_Log_Adapter(this);
         gift_set_log_adapter = new Gift_Set_Log_Adapter(this);
 
         gifts_get.setOnClickListener(this);
         gifts_set.setOnClickListener(this);
+        put_forward.setOnClickListener(this);
+        gift_agreement.setOnClickListener(this);
+        ml.setText("能量：" + SaveUtils.getInt(Save_Key.S_能量));
 
         new Gift_Get_Log_Servlet(this).execute();
         gifts_get.setEnabled(false);
@@ -118,9 +129,17 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        Loading.show(this,"请稍后");
+
         switch (view.getId()) {
+            case R.id.mybalance_put_forward:
+                Loading.show(this, "请稍后");
+                Put_forward_Activity.start(this);
+                break;
+            case R.id.gift_agreement:
+                NewWebActivity.start(this, Const.API + "Gift_Agreement.html");
+                break;
             case R.id.log_gifts_get:
+                Loading.show(this, "请稍后");
                 gifts_get.setTextColor(getResources().getColor(R.color.style_color));
                 gifts_set.setTextColor(getResources().getColor(R.color.gray_6));
                 gifts_get.setEnabled(false);
@@ -129,6 +148,7 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
                 new Gift_Get_Log_Servlet(this).execute();
                 break;
             case R.id.log_gifts_set:
+                Loading.show(this, "请稍后");
                 gifts_get.setTextColor(getResources().getColor(R.color.gray_6));
                 gifts_set.setTextColor(getResources().getColor(R.color.style_color));
                 gifts_get.setEnabled(true);

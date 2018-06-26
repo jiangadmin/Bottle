@@ -92,7 +92,7 @@ public class Adapter_Goods extends android.widget.BaseAdapter {
     class ViewHolder {
         View view;
         TextView stars;
-        Button money;
+        TextView money;
     }
 
     public interface Listenner {

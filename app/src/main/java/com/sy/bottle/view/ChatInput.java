@@ -9,6 +9,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -50,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -386,6 +388,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
                     Base_Dialog base_dialog = new Base_Dialog(context);
                     base_dialog.setTitle("确认送出" + dataBeans.get(i).getName() + "?");
+                    base_dialog.setMessage("本次消费，你需要支付" + dataBeans.get(i).getPrice() + "能量确认支付吗?");
                     base_dialog.setOk("确认", new OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -422,14 +425,16 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     AssetManager am = getContext().getAssets();
                     final int index = 7 * i + j;
                     InputStream is = am.open(String.format("emoticon/%d.gif", index));
+
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     Matrix matrix = new Matrix();
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
                     matrix.postScale(3.5f, 3.5f);
                     final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-                    ImageView image = new GifImageView(getContext());
-                    image.setImageBitmap(resizedBitmap);
+                    GifImageView image = new GifImageView(getContext());
+                    image.setImageURI(Uri.parse(String.format("emoticon/%d.gif", index)));
+//                    image.setImageBitmap(resizedBitmap);
                     image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
                     linearLayout.addView(image);
                     image.setOnClickListener(new OnClickListener() {

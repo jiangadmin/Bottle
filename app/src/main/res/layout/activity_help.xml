@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="@color/background"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar"/>
+    <include layout="@layout/view_title_bar" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <WebView
             android:id="@+id/help_web"
@@ -22,10 +22,20 @@
         <ListView
             android:id="@+id/help_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/help_web">
 
         </ListView>
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/waiter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_help" />
+
+    </RelativeLayout>
 
 </LinearLayout>

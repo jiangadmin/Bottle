@@ -2,9 +2,11 @@ package com.sy.bottle.servlet;
 
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Base_Entity;
@@ -64,8 +66,14 @@ public class Report_Servlet extends AsyncTask<String, Integer, Base_Entity> {
 
         switch (entity.getStatus()) {
             case 200:
-                TabToast.makeText("投诉成功，感谢您的支持");
-                MyApp.finishActivity();
+                Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
+                base_dialog.setMessage("平台作为中立服务者，会按照相关法律规定，判断并根据实际情况进行处理，12小时内通过系统消息反馈结果给你");
+                base_dialog.setOk("我知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MyApp.finishActivity();
+                    }
+                });
                 break;
             case 401:
                 new ReLogin_Dialog();

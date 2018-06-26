@@ -1,20 +1,16 @@
 package com.sy.bottle.activity.start;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 
-import com.lahm.library.EasyProtectorLib;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
-import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.servlet.Login_Servlet;
 import com.sy.bottle.servlet.Update_Servlet;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.SaveUtils;
 
 /**
  * @author: jiangadmin
@@ -30,8 +26,27 @@ public class Welcome_Activity extends Base_Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        PackageManager pm = getPackageManager();
+        // 获取是否支持电话
+        boolean telephony = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+        // 是否支持GSM
+        boolean gsm = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY_GSM);
+        boolean wifi = pm.hasSystemFeature(PackageManager.FEATURE_WIFI);
+        boolean cam = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        boolean gyr = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
+        boolean light = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT);
 
-        if (EasyProtectorLib.checkIsRunningInEmulator()) {
+        LogUtil.e(TAG, "电话：" + telephony);
+        LogUtil.e(TAG, "GSM：" + gsm);
+        LogUtil.e(TAG, "WIFI：" + wifi);
+        LogUtil.e(TAG, "相机：" + cam);
+        LogUtil.e(TAG, "陀螺仪：" + gyr);
+        LogUtil.e(TAG, "光线：" + light);
+
+        if (telephony && gsm && wifi && cam && gyr && light) {
+            //检测更新
+            new Update_Servlet(this).execute();
+        } else {
             Base_Dialog dialog = new Base_Dialog(this);
             dialog.setTitle("抱歉");
             dialog.setMessage("检测到你当前的设备为模拟器,我们无法对您此设备提供服务！");
@@ -41,11 +56,6 @@ public class Welcome_Activity extends Base_Activity {
                     MyApp.AppExit();
                 }
             });
-
-        } else {
-            //检测更新
-            new Update_Servlet(this).execute();
-
         }
 
 

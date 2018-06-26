@@ -43,6 +43,7 @@ public class Order_Entity extends Base_Entity {
         private String timestamp;
         private String sign;
         private String order_id;
+        private String return_msg;
 
         /**
          * 支付宝使用
@@ -56,6 +57,14 @@ public class Order_Entity extends Base_Entity {
         private String total_fee;
         private String out_trade_no;
         private long time;
+
+        public String getReturn_msg() {
+            return return_msg;
+        }
+
+        public void setReturn_msg(String return_msg) {
+            this.return_msg = return_msg;
+        }
 
         public String getPrepayid() {
             return prepayid;

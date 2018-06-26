@@ -1,6 +1,6 @@
 package com.sy.bottle.activity.mian.friend;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.other.Report_Activity;
 import com.sy.bottle.app.MyApp;
@@ -50,9 +51,12 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
     ImageCycleView photos;
     CircleImageView head;
 
-    public static void start(Context context, String identify) {
+    static Activity activity;
+
+    public static void start(Activity context, String identify) {
         Intent intent = new Intent(context, FriendInfo_Activity.class);
         intent.putExtra(IDentify, identify);
+        activity = context;
         context.startActivity(intent);
     }
 
@@ -91,6 +95,11 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         address = findViewById(R.id.user_info_address);
 
         remark.setOnClickListener(this);
+
+        if (activity instanceof Main_Activity ||activity instanceof ChatActivity) {
+
+            address.setCanNav(false);
+        }
 
     }
 
@@ -160,7 +169,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
                 Report_Activity.start(this, identify);
                 break;
             case R.id.user_info_remark:
-                new ReName_Dialog(this, identify,remark.getContent().toString(),remark);
+                new ReName_Dialog(this, identify, remark.getContent().toString(), remark);
                 break;
             case R.id.user_info_btnChat:
                 Intent intent = new Intent(this, ChatActivity.class);

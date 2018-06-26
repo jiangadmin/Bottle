@@ -7,10 +7,18 @@
 
     <include layout="@layout/view_title_bar" />
 
-    <LinearLayout
-        android:layout_marginBottom="1dp"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_heigt">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:text="礼物一经送出，不可找回"
+        android:textColor="@color/gray_6" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_heigt"
+        android:layout_marginBottom="1dp">
 
         <TextView
             android:id="@+id/log_gifts_get"
@@ -39,7 +47,8 @@
     <LinearLayout
         android:id="@+id/view_null"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -61,8 +70,44 @@
     <ListView
         android:id="@+id/gift_log_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     </ListView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/ml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/gray_6" />
+
+        <TextView
+            android:id="@+id/gift_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="《礼物协议》"
+            android:textColor="@color/style_color" />
+
+        <TextView
+            android:id="@+id/mybalance_put_forward"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/style_color"
+            android:gravity="center"
+            android:text="提取"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -298,7 +298,6 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                 MyApp.api.sendReq(request);
 
                 break;
-
         }
     }
 
@@ -324,7 +323,6 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                         map.put("message", "支付成功");
                         Main_Activity.UpdateMyInfo();
                         Success_Activity.start(map);
-
 
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

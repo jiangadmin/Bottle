@@ -43,6 +43,33 @@
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/setting_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:drawableRight="@drawable/ic_in"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="隐私政策"
+            android:textColor="@color/gray_3"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/setting_user_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:drawableRight="@drawable/ic_in"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="用户协议"
+            android:textColor="@color/gray_3"
+            android:textSize="14sp" />
+        <Button
             android:id="@+id/setting_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,19 +80,6 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="检测更新"
-            android:textColor="@color/gray_3"
-            android:textSize="14sp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            android:drawableRight="@drawable/ic_in"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="服务条款"
             android:textColor="@color/gray_3"
             android:textSize="14sp" />
 

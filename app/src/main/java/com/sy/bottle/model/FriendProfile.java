@@ -5,8 +5,6 @@ import android.content.Intent;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
-import com.sy.bottle.activity.mian.friend.Profile_Activity;
-import com.sy.bottle.utils.LogUtil;
 import com.tencent.imsdk.TIMUserProfile;
 import com.tencent.imsdk.TIMValueCallBack;
 import com.tencent.imsdk.ext.sns.TIMFriendshipManagerExt;
@@ -85,14 +83,11 @@ public class FriendProfile implements ProfileSummary {
             }
         });
 
-        if (FriendshipInfo.getInstance().isFriend(profile.getIdentifier())) {
-            Profile_Activity.start(context, profile.getIdentifier());
-        } else {
-            Intent person = new Intent(context, AddFriend_Activity.class);
-            person.putExtra("id", profile.getIdentifier());
-            person.putExtra("name", getName());
-            context.startActivity(person);
-        }
+        Intent person = new Intent(context, AddFriend_Activity.class);
+        person.putExtra("id", profile.getIdentifier());
+        person.putExtra("name", getName());
+        context.startActivity(person);
+
     }
 
     public boolean isSelected() {

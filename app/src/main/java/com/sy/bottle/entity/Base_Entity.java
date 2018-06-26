@@ -32,4 +32,5 @@ public class Base_Entity {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

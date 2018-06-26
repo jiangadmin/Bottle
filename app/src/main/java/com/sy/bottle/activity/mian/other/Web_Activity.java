@@ -49,7 +49,8 @@ public class Web_Activity extends Base_Activity {
 
         mWebView.getSettings().setDefaultTextEncodingName("utf-8");
         //加载HTML字符串进行显示
-        mWebView.loadData(loadurl, "text/html", "utf-8");
+        mWebView.loadData(loadurl, "text/html; charset=UTF-8", null);//这种写法可以正确解码
+
 
 
     }

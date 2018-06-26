@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="投诉须知"
+            android:textColor="@color/gray_6"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp"
+            android:text="\t你应保证你的投诉行为基于善意，并代表你本人真实意思。随缘漂流瓶作为中立的平台服务者，收到你投诉后，会尽快按照相关法律法规的规定独立判断并进行处理。随缘漂流瓶将会采取合理的措施保护你的个人信息;除法律法规规定的情形外，未经用户许可随缘漂流瓶不会向第三方公开、透露你的个人信息." />
+
+    </LinearLayout>
+
+</LinearLayout>

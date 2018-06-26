@@ -12,7 +12,6 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 
 /**
@@ -61,8 +60,16 @@ public class Friends_Servlet extends AsyncTask<String, Integer, Friends_Entity> 
         switch (entity.getStatus()) {
             case 200:
                 MyApp.friendsbeans.clear();
-                MyApp.friendsbeans.addAll(entity.getData());
+                if (entity.getData() != null) {
+                    MyApp.friendsbeans.addAll(entity.getData());
+                }
                 activity.CallBack_Friend();
+                break;
+            case 400:
+                if (entity.getMessage().equals("暂无好友")) {
+                    MyApp.friendsbeans.clear();
+                    activity.CallBack_Friend();
+                }
                 break;
             case 401:
                 new ReLogin_Dialog();
