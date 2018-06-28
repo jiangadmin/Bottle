@@ -11,6 +11,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 
 /**
@@ -33,6 +34,8 @@ public class Black_Is_Servlet extends AsyncTask<String, Integer, Boolean> {
     protected Boolean doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "blacklists/" + SaveUtils.getString(Save_Key.UID), null);
+
+        LogUtil.e(TAG,res);
 
         Friends_Entity entity;
         if (TextUtils.isEmpty(res)) {

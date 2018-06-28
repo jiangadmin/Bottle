@@ -1,5 +1,6 @@
 package com.sy.bottle.activity.mian.mine;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -61,7 +62,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
         //获取个人信息
-        new UserInfo_Servlet(this).execute();
+        new UserInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         if (SaveUtils.getInt(Save_Key.S_捡星) != 0) {
             receive_num.setVisibility(View.VISIBLE);
@@ -113,6 +114,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     public void initeven(UserInfo_Entity.DataBean bean) {
         this.bean = bean;
 
+        if (SaveUtils.getInt(Save_Key.S_捡星) != 0) {
+            receive_num.setVisibility(View.VISIBLE);
+            receive_num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_捡星)));
+        } else {
+            receive_num.setVisibility(View.GONE);
+        }
+
         name.setText(bean.getNikename());
 
         PicassoUtlis.img(bean.getAvatar(), head, R.drawable.head_me);
@@ -133,15 +141,12 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.mine_receive:
                 if (SaveUtils.getInt(Save_Key.S_捡星) != 0) {
-                    receive_num.setVisibility(View.VISIBLE);
-                    receive_num.setText(String.valueOf(SaveUtils.getInt(Save_Key.S_捡星)));
+                    new Scores_Get_Servlet().execute();
                 } else {
                     TabToast.makeText("今日次数已用完,明天再领吧！");
-                    receive_num.setVisibility(View.GONE);
                     return;
                 }
 
-                new Scores_Get_Servlet().execute();
                 break;
             case R.id.mine_mall:
                 MyBalance_Activity.start(getActivity());

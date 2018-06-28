@@ -1,11 +1,9 @@
 package com.sy.bottle.dialog;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Window;
 
@@ -36,17 +34,17 @@ public class ShowImage_Dialog extends MyDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Window window  = getWindow();
+        Window window = getWindow();
         window.setGravity(Gravity.CENTER);
 
         setContentView(R.layout.dialog_image);
         imageView = findViewById(R.id.dialog_image);
 
-        if (img instanceof  Bitmap){
+        if (img instanceof Bitmap) {
             imageView.setImageBitmap((Bitmap) img);
         }
 
-        if (img instanceof String){
+        if (img instanceof String) {
             PicassoUtlis.img(String.valueOf(img), imageView, R.drawable.loading);
         }
 

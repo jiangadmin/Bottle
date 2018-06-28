@@ -12,9 +12,9 @@ import android.widget.ImageView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.ImageViewActivity;
+import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
-import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
@@ -76,7 +76,6 @@ public class ImageMessage extends Message {
 
         TIMImageElem e = (TIMImageElem) message.getElement(0);
 
-
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
         if (!TextUtils.isEmpty(friendfaceurl)) {
             PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
@@ -120,7 +119,10 @@ public class ImageMessage extends Message {
                             public void onClick(View v) {
                                 LogUtil.e(TAG, "图片地址 " + image.getUrl());
                                 try {
-                                    new ShowImage_Dialog(MyApp.currentActivity(), image.getUrl()).show();
+                                    android.os.Message message = android.os.Message.obtain();
+                                    message.obj = image.getUrl();
+                                    message.what = 1;
+                                    ChatActivity.mHandler.sendMessage(message);
 
                                 } catch (Exception e) {
                                     LogUtil.e(TAG, e.getMessage());

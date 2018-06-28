@@ -3,14 +3,16 @@ package com.sy.bottle.dialog;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.servlet.Friend_Update_Servlet;
-import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.view.LineControllerView;
 
 /**
@@ -28,6 +30,7 @@ public class ReName_Dialog extends MyDialog implements View.OnClickListener {
     EditText rename;
     Button submit;
     String id, name;
+    TextView dialog_message;
     LineControllerView lineControllerView;
 
     public ReName_Dialog(@NonNull Activity activity, String id, String name, LineControllerView view) {
@@ -51,10 +54,34 @@ public class ReName_Dialog extends MyDialog implements View.OnClickListener {
     private void initview() {
         rename = findViewById(R.id.rename);
         submit = findViewById(R.id.submit);
+        dialog_message = findViewById(R.id.dialog_message);
 
         rename.setText(name);
 
+        rename.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                dialog_message.setText("");
+                dialog_message.setVisibility(View.GONE);
+            }
+        });
+
         submit.setOnClickListener(this);
+    }
+
+    public void message(String m) {
+        dialog_message.setVisibility(View.VISIBLE);
+        dialog_message.setText(m);
     }
 
     @Override
@@ -66,7 +93,7 @@ public class ReName_Dialog extends MyDialog implements View.OnClickListener {
                     name = "";
                 }
                 lineControllerView.setContent(name);
-                Loading.show(activity,"修改中");
+                Loading.show(activity, "修改中");
                 new Friend_Update_Servlet(activity, this).execute(id, name);
                 break;
         }

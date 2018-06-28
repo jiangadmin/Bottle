@@ -3,7 +3,6 @@ package com.sy.bottle.activity.mian.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -153,14 +152,14 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
      * 加载个人信息
      */
     public void initinfo() {
-        new UserInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new UserInfo_Servlet(this).execute();
     }
 
     /**
      * 加载网络照片墙
      */
     public void initphotos() {
-        new Photos_Get_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, SaveUtils.getString(Save_Key.UID));
+        new Photos_Get_Servlet(this).execute(SaveUtils.getString(Save_Key.UID));
     }
 
     /**

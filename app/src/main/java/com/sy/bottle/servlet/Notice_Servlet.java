@@ -14,6 +14,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Webtxt_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangadmin
@@ -35,7 +36,7 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
     protected Webtxt_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "notices/" + strings[0], null);
-
+        LogUtil.e(TAG,res);
         Webtxt_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -72,6 +73,10 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

@@ -13,6 +13,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class Bottle_CallBack_Servlet extends AsyncTask<String, Integer, Bottle_G
         map.put("bottle_id", strings[0]);
 
         String res = HttpUtil.request(HttpUtil.PUT, Const.API + "bottles/" + SaveUtils.getString(Save_Key.UID), map);
+
+        LogUtil.e(TAG,res);
 
         Bottle_Get_Entity entity;
 
@@ -66,8 +69,9 @@ public class Bottle_CallBack_Servlet extends AsyncTask<String, Integer, Bottle_G
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
-                LogUtil.e(TAG, entity.getMessage());
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

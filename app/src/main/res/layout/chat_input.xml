@@ -203,6 +203,28 @@
                     android:textColor="@color/gray" />
             </LinearLayout>
 
+            <!--文件-->
+            <LinearLayout
+                android:id="@+id/btn_position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_file" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="位置"
+                    android:textColor="@color/gray" />
+            </LinearLayout>
+
             <!--礼物-->
             <LinearLayout
                 android:id="@+id/btn_gift"

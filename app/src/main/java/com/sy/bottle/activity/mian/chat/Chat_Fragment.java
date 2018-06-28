@@ -2,6 +2,7 @@ package com.sy.bottle.activity.mian.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.sy.bottle.model.NomalConversation;
 import com.sy.bottle.presenter.ConversationPresenter;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
 import com.sy.bottle.presenter.GroupManagerPresenter;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.ConversationView;
 import com.sy.bottle.viewfeatures.FriendshipMessageView;
@@ -81,7 +83,9 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
 
         listView = view.findViewById(R.id.chat_list);
         viewnull = view.findViewById(R.id.view_null);
+
         adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -147,6 +151,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
             }
 
         }
+
         NomalConversation conversation = new NomalConversation(message.getConversation());
         Iterator<Conversation> iterator = conversationList.iterator();
         while (iterator.hasNext()) {
@@ -158,8 +163,10 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
             }
         }
         conversation.setLastMessage(MessageFactory.getMessage(message));
+
         conversationList.add(conversation);
         Collections.sort(conversationList);
+
         refresh();
     }
 
@@ -209,7 +216,7 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
      */
     @Override
     public void refresh() {
-        LogUtil.e(TAG,"刷新");
+        LogUtil.e(TAG, "刷新");
         Collections.sort(conversationList);
         updateview();
         if (getActivity() instanceof Main_Activity)

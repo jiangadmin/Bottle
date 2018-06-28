@@ -169,8 +169,6 @@ public class HttpUtil {
 
         String res = stringBuffer.toString();
 
-        LogUtil.e(TAG, "HTTP返回:" + res);
-
         return res;
     }
 
@@ -191,6 +189,7 @@ public class HttpUtil {
         try {
             URL url = new URL(uploadUrl);
             HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+
             urlConn.setDoInput(true);
             urlConn.setDoOutput(true);
             urlConn.setUseCaches(false);

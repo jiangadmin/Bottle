@@ -12,6 +12,7 @@ import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
@@ -33,7 +34,7 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
     protected Base_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.PUT, Const.API + "scores/" + SaveUtils.getString(Save_Key.UID), null);
-
+        LogUtil.e(TAG,res);
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -65,6 +66,14 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
                     Main_Activity.UpdateMyInfo();
                 }
                 SaveUtils.setInt(Save_Key.S_积分, SaveUtils.getInt(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
+                break;
+            case 400:
+                if (entity.getMessage().equals("哎呀!今日次数已用完,明天再来吧")){
+                    SaveUtils.setInt(Save_Key.S_捡星, 0);
+                    if (MyApp.currentActivity() instanceof Main_Activity){
+                        Main_Activity.UpdateMyInfo();
+                    }
+                }
                 break;
             case 401:
                 new ReLogin_Dialog();

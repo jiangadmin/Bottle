@@ -102,7 +102,7 @@ public class TabToast {
                 if (text.length() > 20) {
                     text = text.substring(0, 20) + "\n" + text.substring(20, text.length());
                 }
-                makeText(MyApp.getInstance(), text, Toast.LENGTH_SHORT);
+                makeText(MyApp.getInstance(), text, Toast.LENGTH_LONG);
             }
         }
     }

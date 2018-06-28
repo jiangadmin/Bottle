@@ -13,7 +13,9 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Report_Photo_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangadmin
@@ -35,7 +37,7 @@ public class Report_Photo_Servlet extends AsyncTask<String, Integer, Report_Phot
     protected Report_Photo_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.uploadFile(Const.API + "complaint_photos/" + SaveUtils.getString(Save_Key.UID), strings[0]);
-
+        LogUtil.e(TAG,res);
         Report_Photo_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -70,7 +72,9 @@ public class Report_Photo_Servlet extends AsyncTask<String, Integer, Report_Phot
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

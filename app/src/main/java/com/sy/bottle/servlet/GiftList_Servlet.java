@@ -37,7 +37,7 @@ public class GiftList_Servlet extends AsyncTask<String, Integer, Gift_Entity> {
     protected Gift_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "presents/" + SaveUtils.getString(Save_Key.UID), null);
-
+        LogUtil.e(TAG,res);
         Gift_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Gift_Entity();

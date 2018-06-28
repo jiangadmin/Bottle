@@ -12,6 +12,7 @@ import com.sy.bottle.entity.Avatars_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
@@ -37,7 +38,7 @@ public class Head_Set_Servlet extends AsyncTask<String, Integer, Avatars_Entity>
     protected Avatars_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.uploadFile(Const.API + "avatars/" + SaveUtils.getString(Save_Key.UID), strings[0]);
-
+        LogUtil.e(TAG,res);
         Avatars_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -88,8 +89,11 @@ public class Head_Set_Servlet extends AsyncTask<String, Integer, Avatars_Entity>
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
+                TabToast.makeText(entity.getMessage());
                 break;
+
         }
     }
 }

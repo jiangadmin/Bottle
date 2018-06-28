@@ -5,12 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.activity.mian.other.Success_Activity;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.view.TabToast;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -48,16 +47,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+        LogUtil.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            switch (resp.errCode){
+            switch (resp.errCode) {
                 case 0:
                     LinkedHashMap map = new LinkedHashMap();
                     map.put("message", "支付成功");
                     Main_Activity.UpdateMyInfo();
                     Success_Activity.start(map);
-
                     break;
                 case -1:
                     TabToast.makeText("支付失败");

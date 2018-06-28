@@ -2,6 +2,7 @@ package com.sy.bottle.activity.mian.friend;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -53,6 +54,8 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
 
     static Activity activity;
 
+    boolean isrun = true;
+
     public static void start(Activity context, String identify) {
         Intent intent = new Intent(context, FriendInfo_Activity.class);
         intent.putExtra(IDentify, identify);
@@ -74,13 +77,13 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         identify = getIntent().getStringExtra(IDentify);
 
         //获取用户信息
-        new UserInfo_Servlet(this).execute(identify);
+        new UserInfo_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, identify);
 
         //获取照片墙
-        new Photos_Get_Servlet(this).execute(identify);
+        new Photos_Get_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, identify);
 
         //查询是否是黑名单
-        new Black_Is_Servlet(this).execute(identify);
+        new Black_Is_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, identify);
     }
 
     private void initview() {
@@ -96,7 +99,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
 
         remark.setOnClickListener(this);
 
-        if (activity instanceof Main_Activity ||activity instanceof ChatActivity) {
+        if (activity instanceof Main_Activity || activity instanceof ChatActivity) {
 
             address.setCanNav(false);
         }
@@ -207,37 +210,43 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (b) {
-            Base_Dialog base_dialog = new Base_Dialog(this);
-            base_dialog.setMessage("好友将解除，并进入您的黑名单中");
-            base_dialog.setOk("确定", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    new Black_Set_Servlet(FriendInfo_Activity.this).execute(identify);
-                }
-            });
-            base_dialog.setEsc("取消", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    black.setSwitch(false);
-                }
-            });
-        } else {
-            Base_Dialog base_dialog = new Base_Dialog(this);
-            base_dialog.setMessage("确定要从黑名单中解除吗？");
-            base_dialog.setOk("确定", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        if (isrun) {
+            if (b) {
+                Base_Dialog base_dialog = new Base_Dialog(this);
+                base_dialog.setMessage("好友将解除，并进入您的黑名单中");
+                base_dialog.setOk("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new Black_Set_Servlet(FriendInfo_Activity.this).execute(identify);
+                    }
+                });
+                base_dialog.setEsc("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isrun = false;
+                        black.setSwitch(false);
+                    }
+                });
+            } else {
+                Base_Dialog base_dialog = new Base_Dialog(this);
+                base_dialog.setMessage("确定要从黑名单中解除吗？");
+                base_dialog.setOk("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                    new Black_Out_Servlet(FriendInfo_Activity.this).execute(identify);
-                }
-            });
-            base_dialog.setEsc("取消", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    black.setSwitch(true);
-                }
-            });
+                        new Black_Out_Servlet(FriendInfo_Activity.this).execute(identify);
+                    }
+                });
+                base_dialog.setEsc("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isrun = false;
+                        black.setSwitch(true);
+                    }
+                });
+            }
+        } else {
+            isrun = true;
         }
     }
 }

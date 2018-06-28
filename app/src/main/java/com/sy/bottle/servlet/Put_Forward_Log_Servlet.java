@@ -14,7 +14,9 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Put_Forward_Log_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class Put_Forward_Log_Servlet extends AsyncTask<String, Integer, Put_Forw
     protected Put_Forward_Log_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "withdraws/" + SaveUtils.getString(Save_Key.UID), null);
-
+        LogUtil.e(TAG,res);
         Put_Forward_Log_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -72,6 +74,11 @@ public class Put_Forward_Log_Servlet extends AsyncTask<String, Integer, Put_Forw
 
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

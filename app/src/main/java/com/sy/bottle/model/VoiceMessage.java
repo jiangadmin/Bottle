@@ -25,6 +25,7 @@ import com.tencent.imsdk.TIMSoundElem;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * 语音消息数据
@@ -138,8 +139,9 @@ public class VoiceMessage extends Message {
 
             @Override
             public void onSuccess() {
+                FileInputStream fis = null;
                 try {
-                    FileInputStream fis = new FileInputStream(tempAudio);
+                    fis = new FileInputStream(tempAudio);
                     MediaUtil.getInstance().play(fis);
                     frameAnimatio.start();
                     MediaUtil.getInstance().setEventListener(new MediaUtil.EventListener() {
@@ -149,10 +151,18 @@ public class VoiceMessage extends Message {
                             frameAnimatio.selectDrawable(0);
                         }
                     });
+                    fis.close();
                 } catch (Exception e) {
 
+                } finally {
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-
             }
         });
 

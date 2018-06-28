@@ -58,7 +58,7 @@ public class ToolUtils {
             Iterator<String> keyIter = jsonObject.keys();
             String key;
             String value;
-            Map<String, String> valueMap = new HashMap<String, String>();
+            Map<String, String> valueMap = new HashMap<>();
             while (keyIter.hasNext()) {
                 key = keyIter.next();
                 value = jsonObject.get(key).toString();
@@ -98,7 +98,6 @@ public class ToolUtils {
 
         return jsonObject;
     }
-
 
     /**
      * map转String
@@ -145,11 +144,12 @@ public class ToolUtils {
      * @param mobiles 手机号
      * @return 是为true
      */
+    static Pattern p = Pattern.compile("^1[34578]\\d(?!(\\d)\\\\1{7})\\d{8}?");
+
     public static boolean isMobileNO(String mobiles) {
         if (TextUtils.isEmpty(mobiles)) {
             return false;
         }
-        Pattern p = Pattern.compile("^1[34578]\\d(?!(\\d)\\\\1{7})\\d{8}?");
         Matcher m = p.matcher(mobiles);
         return m.matches();
     }
@@ -196,7 +196,6 @@ public class ToolUtils {
         return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
     }
 
-
     /**
      * 验证是否包含 字母和数字  并验证8-16位
      *
@@ -224,7 +223,6 @@ public class ToolUtils {
         }
 
     }
-
 
     /**
      * 验证身份证号
@@ -281,7 +279,6 @@ public class ToolUtils {
     public static String getVersionName() {
         return getPackageInfo().versionName;
     }
-
 
     /**
      * 版本号
@@ -352,7 +349,6 @@ public class ToolUtils {
         return statusHeight;
     }
 
-
     /**
      * 判断 程序是否存在
      *
@@ -372,7 +368,6 @@ public class ToolUtils {
         }
     }
 
-
     /**
      * 复制到系统粘贴板
      */
@@ -389,7 +384,6 @@ public class ToolUtils {
             TabToast.makeText("复制内容为空");
         }
     }
-
 
     /**
      * 获取设备UUID
@@ -432,7 +426,6 @@ public class ToolUtils {
         return paramStr.toString();
     }
 
-
     /**
      * 保留两位小数
      *
@@ -463,7 +456,6 @@ public class ToolUtils {
 
         return true;
     }
-
 
     /**
      * 获得String中的数字

@@ -13,6 +13,7 @@ import com.sy.bottle.entity.Bottle_Random_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -33,7 +34,6 @@ public class Bottle_Random_Servlet extends AsyncTask<String, Integer, Bottle_Ran
     @Override
     protected Bottle_Random_Entity doInBackground(String... strings) {
         String res = HttpUtil.request(HttpUtil.GET,Const.API + "random_bottles/" + SaveUtils.getString(Save_Key.UID),null);
-
         LogUtil.e(TAG,res);
         Bottle_Random_Entity entity;
 
@@ -66,8 +66,9 @@ public class Bottle_Random_Servlet extends AsyncTask<String, Integer, Bottle_Ran
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
-                LogUtil.e(TAG,entity.getMessage());
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

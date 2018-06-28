@@ -9,7 +9,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -27,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -43,6 +41,7 @@ import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.viewfeatures.ChatView;
+import com.tencent.imsdk.TIMLocationElem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +50,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -115,6 +113,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         //礼物
         LinearLayout btnGift = findViewById(R.id.btn_gift);
         btnGift.setOnClickListener(this);
+        //位置
+        LinearLayout btnPosition = findViewById(R.id.btn_position);
+        btnPosition.setOnClickListener(this);
 
         setSendBtn();
         btnKeyboard = findViewById(R.id.btn_keyboard);
@@ -374,7 +375,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 if (SaveUtils.getInt(Save_Key.S_能量) < dataBeans.get(i).getPrice()) {
                     Base_Dialog base_dialog = new Base_Dialog(context);
                     base_dialog.setTitle("能量不足");
-                    base_dialog.setMessage("今日系统签到赠送能量已使用完，请补充能量");
+                    base_dialog.setMessage("请在设置页面领取今天赠送能量、当日赠送能量消耗完，请补充能量或明天聊");
                     base_dialog.setOk("去充值", new OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -382,7 +383,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
 
                         }
                     });
-                    base_dialog.setEsc("明天聊", null);
+                    base_dialog.setEsc("再想想", null);
 
                 } else {
 
@@ -424,17 +425,16 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 try {
                     AssetManager am = getContext().getAssets();
                     final int index = 7 * i + j;
-                    InputStream is = am.open(String.format("emoticon/%d.gif", index));
+                    InputStream is = am.open(String.format("emoticon/%d.png", index));
 
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     Matrix matrix = new Matrix();
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
-                    matrix.postScale(3.5f, 3.5f);
+                    matrix.postScale(1.8f, 1.8f);
                     final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
                     GifImageView image = new GifImageView(getContext());
-                    image.setImageURI(Uri.parse(String.format("emoticon/%d.gif", index)));
-//                    image.setImageBitmap(resizedBitmap);
+                    image.setImageBitmap(resizedBitmap);
                     image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
                     linearLayout.addView(image);
                     image.setOnClickListener(new OnClickListener() {
@@ -457,6 +457,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         }
         isEmoticonReady = true;
     }
+
 
     /**
      * Called when a view has been clicked.
@@ -492,6 +493,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
             case R.id.btn_keyboard:
                 updateView(InputMode.TEXT);
                 break;
+            //视频
             case R.id.btn_video:
                 if (getContext() instanceof FragmentActivity) {
                     FragmentActivity fragmentActivity = (FragmentActivity) getContext();
@@ -505,14 +507,21 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     }
                 }
                 break;
+            //表情
             case R.id.btnEmoticon:
                 updateView(inputMode == InputMode.EMOTICON ? InputMode.TEXT : InputMode.EMOTICON);
                 break;
+            //文件
             case R.id.btn_file:
                 chatView.sendFile();
                 break;
+            //礼物
             case R.id.btn_gift:
                 updateView(InputMode.GIFT);
+                break;
+            //位置
+            case R.id.btn_position:
+                chatView.sendLocation();
                 break;
         }
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -199,12 +198,16 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
                     }
                     Loading.show(this, "创建订单");
                     submit.setText("确认充值");
-                    for (Goods_Entity.DataBean bean : goodsbean) {
-                        if (bean.isType()) {
-                            new Order_Get_Servlet(this).execute(String.valueOf(paytype), bean.getMoney(), bean.getStars());
+                    for (int i = 0; i < goodsbean.size(); i++) {
+                        if (goodsbean.get(i).isType()) {
+                            new Order_Get_Servlet(this).execute(String.valueOf(paytype), goodsbean.get(i).getMoney(), goodsbean.get(i).getStars());
+                            goodsbean.get(i).setType(false);
+                            adapter_goods.setListData(goodsbean);
+                            adapter_goods.notifyDataSetChanged();
                             return;
                         }
                     }
+
 
                 } else {
                     TabToast.makeText("请阅读并同意《充值协议》");

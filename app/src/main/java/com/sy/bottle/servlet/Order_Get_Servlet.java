@@ -44,11 +44,8 @@ public class Order_Get_Servlet extends AsyncTask<String, Integer, Order_Entity> 
         map.put("money", strings[1]);
         map.put("price", strings[2]);
 
-        LogUtil.e(TAG, String.valueOf(map.get("type")));
-        LogUtil.e(TAG, String.valueOf(map.get("money")));
-        LogUtil.e(TAG, String.valueOf(map.get("price")));
-
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "recharges/" + SaveUtils.getString(Save_Key.UID), map);
+        LogUtil.e(TAG,res);
 
         Order_Entity entity;
         if (TextUtils.isEmpty(res)) {

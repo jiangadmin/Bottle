@@ -9,11 +9,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.sy.bottle.utils.LogUtil;
 
 
-public class TouchImageView extends AppCompatImageView {
+public class TouchImageView extends ImageView {
 
     Matrix matrix;
 
@@ -36,7 +37,6 @@ public class TouchImageView extends AppCompatImageView {
     float saveScale = 1f;
     protected float origWidth, origHeight;
     int oldMeasuredWidth, oldMeasuredHeight;
-
 
     ScaleGestureDetector mScaleDetector;
 

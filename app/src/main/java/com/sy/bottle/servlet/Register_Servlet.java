@@ -50,7 +50,7 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
         map.put("device_id", ToolUtils.getMyUUID());
 
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "tokens", map);
-
+        LogUtil.e(TAG,res);
         Login_Entity entity;
 
         if (TextUtils.isEmpty(res)) {

@@ -14,6 +14,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -35,7 +36,7 @@ public class Gift_Set_Log_Servlet extends AsyncTask<String, Integer, Gift_Set_Lo
     protected Gift_Set_Log_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "present_records/" + SaveUtils.getString(Save_Key.UID), null);
-
+        LogUtil.e(TAG,res);
         Gift_Set_Log_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Gift_Set_Log_Entity();
@@ -78,7 +79,9 @@ public class Gift_Set_Log_Servlet extends AsyncTask<String, Integer, Gift_Set_Lo
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

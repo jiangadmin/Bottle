@@ -26,6 +26,7 @@ import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMFriendGenderType;
 import com.tencent.imsdk.TIMFriendshipManager;
@@ -51,7 +52,6 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
     public UserInfo_Servlet(SearchFriend_Dialog myDialog) {
         this.myDialog = myDialog;
     }
-
 
     public UserInfo_Servlet(Fragment fragment) {
         this.fragment = fragment;
@@ -83,7 +83,6 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
             entity.setMessage("连接服务器失败！");
         } else {
             try {
-                LogUtil.e(TAG, res);
                 entity = new Gson().fromJson(res, UserInfo_Entity.class);
             } catch (Exception e) {
                 entity = new UserInfo_Entity();
@@ -162,7 +161,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 }
 
                 if (viewHolder != null) {
-                    viewHolder.tvName.setText(entity.getData().getNikename());
+                    viewHolder.tvName.setText(TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNikename() : entity.getData().getContent());
                     PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);
                 }
                 if (myDialog != null) {
@@ -180,6 +179,9 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 break;
 
             case 400:
+                if (activity instanceof ChatActivity) {
+                    ((ChatActivity) activity).Callback_UserInfo(null);
+                }
                 if (entity.getMessage().equals("无数据")) {
                     if (myDialog != null) {
                         myDialog.CallBack();
@@ -190,7 +192,9 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

@@ -12,6 +12,8 @@ import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Ratio_Entity;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -33,7 +35,7 @@ public class Ratio_Serlvet extends AsyncTask<String,Integer,Ratio_Entity> {
     protected Ratio_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API+"moneys/"+strings[0],null);
-
+        LogUtil.e(TAG,res);
         Ratio_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -65,6 +67,11 @@ public class Ratio_Serlvet extends AsyncTask<String,Integer,Ratio_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

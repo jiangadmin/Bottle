@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
@@ -34,8 +33,8 @@ public class GetSMSCode_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         Map map = new HashMap();
         phone = strings[0];
         map.put("phone", phone);
-        String res = HttpUtil.request(HttpUtil.POST,Const.API + "codes", map);
-
+        String res = HttpUtil.request(HttpUtil.POST, Const.API + "codes", map);
+        LogUtil.e(TAG,res);
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -59,11 +58,15 @@ public class GetSMSCode_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         super.onPostExecute(entity);
         Loading.dismiss();
 
-        if (entity.getStatus() == 200) {
-            SaveUtils.setString(Save_Key.S_手机号,phone);
+        switch (entity.getStatus()) {
+            case 200:
+                SaveUtils.setString(Save_Key.S_手机号, phone);
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
+                break;
         }
 
-        LogUtil.e(TAG, entity.getMessage());
-        TabToast.makeText(entity.getMessage());
     }
 }

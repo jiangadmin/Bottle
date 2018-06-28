@@ -67,6 +67,18 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:text="查无此人"
+            android:textColor="@color/style_text_color"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </LinearLayout>

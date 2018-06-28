@@ -70,7 +70,7 @@ public class Bottle_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> 
 
         switch (entity.getStatus()) {
             case 200:
-                TabToast.makeText("已扔出");
+                TabToast.makeText("您的瓶子已漂向远方");
                 dialog.dismiss();
                 break;
             case 401:

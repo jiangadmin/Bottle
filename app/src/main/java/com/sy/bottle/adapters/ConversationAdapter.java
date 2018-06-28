@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.model.Conversation;
+import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.TimeUtil;
@@ -67,7 +68,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             if (data.getAvatar() != null) {
                 PicassoUtlis.img(data.getAvatar(), viewHolder.avatar);
             } else {
-//                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
+                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
             }
         } else {
             viewHolder.avatar.setImageResource(data.getAvatarID());

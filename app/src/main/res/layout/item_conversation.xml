@@ -8,7 +8,6 @@
     android:paddingTop="8dp">
 
     <com.sy.bottle.view.CircleImageView
-
         android:id="@id/avatar"
         android:layout_width="45dp"
         android:layout_height="45dp" />

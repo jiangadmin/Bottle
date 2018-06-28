@@ -20,12 +20,12 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_marginRight="70dp"
             android:id="@+id/leftPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="70dp"
             android:layout_marginTop="10dp">
 
             <com.sy.bottle.view.CircleImageView
@@ -69,20 +69,20 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginLeft="70dp"
             android:id="@+id/rightPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="70dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp">
 
             <com.sy.bottle.view.CircleImageView
-                android:layout_alignParentBottom="true"
                 android:id="@+id/rightAvatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/head_me" />
 
@@ -112,11 +112,11 @@
                 android:visibility="gone" />
 
             <RelativeLayout
-                android:layout_marginRight="5dp"
                 android:id="@+id/sendStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/rightMessage">
 
                 <ProgressBar

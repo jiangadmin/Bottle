@@ -98,7 +98,7 @@ public class ChatPresenter implements Observer {
 
                         Base_Dialog base_dialog1 = new Base_Dialog(MyApp.currentActivity());
                         base_dialog1.setTitle("能量不足");
-                        base_dialog1.setMessage("今日系统签到赠送能量已使用完，请补充能量");
+                        base_dialog1.setMessage("请在设置页面领取今天赠送能量、当日赠送能量消耗完，请补充能量或明天聊");
                         base_dialog1.setOk("去充值", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -106,7 +106,7 @@ public class ChatPresenter implements Observer {
 
                             }
                         });
-                        base_dialog1.setEsc("明天聊", null);
+                        base_dialog1.setEsc("再想想", null);
 
                         break;
 

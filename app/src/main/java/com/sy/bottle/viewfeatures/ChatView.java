@@ -76,6 +76,11 @@ public interface ChatView extends MvpView {
     void sendFile();
 
     /**
+     * 发送位置
+     */
+    void sendLocation();
+
+    /**
      * 发送礼物
      */
     void sendGift(Map map);

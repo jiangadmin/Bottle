@@ -1,40 +1,25 @@
 package com.sy.bottle.model;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.amap.api.maps2d.MapView;
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.other.Map_Activity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Save_Key;
-import com.sy.bottle.utils.EmoticonUtil;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
-import com.tencent.imsdk.TIMElem;
-import com.tencent.imsdk.TIMElemType;
-import com.tencent.imsdk.TIMFaceElem;
 import com.tencent.imsdk.TIMLocationElem;
 import com.tencent.imsdk.TIMMessage;
-import com.tencent.imsdk.TIMTextElem;
-import com.tencent.imsdk.ext.message.TIMMessageDraft;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * 位置消息数据
@@ -54,57 +39,6 @@ public class LoctionMessage extends Message {
         message.addElement(elem);
     }
 
-    public LoctionMessage(TIMMessageDraft draft) {
-        message = new TIMMessage();
-        for (TIMElem elem : draft.getElems()) {
-            message.addElement(elem);
-        }
-    }
-
-    private List<ImageSpan> sortByIndex(final Editable editInput, ImageSpan[] array) {
-        ArrayList<ImageSpan> sortList = new ArrayList<>();
-        for (ImageSpan span : array) {
-            sortList.add(span);
-        }
-        Collections.sort(sortList, new Comparator<ImageSpan>() {
-            @Override
-            public int compare(ImageSpan lhs, ImageSpan rhs) {
-                return editInput.getSpanStart(lhs) - editInput.getSpanStart(rhs);
-            }
-        });
-
-        return sortList;
-    }
-
-    public LoctionMessage(Editable s) {
-        message = new TIMMessage();
-        ImageSpan[] spans = s.getSpans(0, s.length(), ImageSpan.class);
-        List<ImageSpan> listSpans = sortByIndex(s, spans);
-        int currentIndex = 0;
-        for (ImageSpan span : listSpans) {
-            int startIndex = s.getSpanStart(span);
-            int endIndex = s.getSpanEnd(span);
-            if (currentIndex < startIndex) {
-                TIMTextElem textElem = new TIMTextElem();
-                textElem.setText(s.subSequence(currentIndex, startIndex).toString());
-                message.addElement(textElem);
-            }
-            TIMFaceElem faceElem = new TIMFaceElem();
-            int index = Integer.parseInt(s.subSequence(startIndex, endIndex).toString());
-            faceElem.setIndex(index);
-            if (index < EmoticonUtil.emoticonData.length) {
-                faceElem.setData(EmoticonUtil.emoticonData[index].getBytes(Charset.forName("UTF-8")));
-            }
-            message.addElement(faceElem);
-            currentIndex = endIndex;
-        }
-        if (currentIndex < s.length()) {
-            TIMTextElem textElem = new TIMTextElem();
-            textElem.setText(s.subSequence(currentIndex, s.length()).toString());
-            message.addElement(textElem);
-        }
-    }
-
     /**
      * 在聊天界面显示消息
      *
@@ -112,7 +46,7 @@ public class LoctionMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context) {
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 
@@ -125,25 +59,79 @@ public class LoctionMessage extends Message {
         }
         PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
 
-        boolean hasText = false;
-        TextView tv = new TextView(MyApp.getInstance());
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-        tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
-        List<TIMElem> elems = new ArrayList<>();
-        for (int i = 0; i < message.getElementCount(); ++i) {
-            elems.add(message.getElement(i));
-            if (message.getElement(i).getType() == TIMElemType.Location) {
-                hasText = true;
-            }
-        }
-        SpannableStringBuilder stringBuilder = getString(elems, context);
-        if (!hasText) {
-            stringBuilder.insert(0, " ");
-        }
-        tv.setText(stringBuilder);
+        final TIMLocationElem locationElem = (TIMLocationElem) message.getElement(0);
 
-        getBubbleView(viewHolder).addView(tv);
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        ImageView imageView = null;
+        MapView mapView = null;
+
+        Bitmap bitmap = null;
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(480, 270);
+
+//        try {
+//            Activity activity = (Activity) context;
+//            if (activity instanceof ChatActivity) {
+//                mapView = new MapView(context);
+//                mapView.setLayoutParams(params);
+//                mapView.onCreate(((ChatActivity) activity).bundle);// 此方法必须重写
+//                //地图模式可选类型：MAP_TYPE_NORMAL,MAP_TYPE_SATELLITE,MAP_TYPE_NIGHT
+//                AMap aMap = mapView.getMap();
+//                aMap.getUiSettings().setZoomControlsEnabled(false);
+//                aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+//                //参数依次是：视角调整区域的中心点坐标、希望调整到的缩放级别、俯仰角0°~45°（垂直与地图时为0）、偏航角 0~360° (正北方为0)
+//                CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(
+//                        new CameraPosition(new LatLng(locationElem.getLatitude(), locationElem.getLongitude()), 17, 30, 0));
+//                aMap.moveCamera(mCameraUpdate);
+//                LatLng latLng = new LatLng(locationElem.getLatitude(), locationElem.getLongitude());
+//                aMap.addMarker(new MarkerOptions().position(latLng).title(locationElem.getDesc()));
+//
+//                bitmap = mapView.getDrawingCache();
+//
+//            }
+//
+//        } catch (Exception e) {
+        imageView = new ImageView(context);
+        imageView.setImageResource(R.mipmap.icon_map);
+        imageView.setLayoutParams(params);
+//        }
+
+        //标识
+        TextView title = new TextView(context);
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        title.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+        title.setText("位置");
+
+        //内容
+        TextView address = new TextView(context);
+        address.setLines(2);
+        address.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        address.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+        address.setText(locationElem.getDesc());
+
+        if (imageView != null) {
+            linearLayout.addView(imageView);
+        }
+        if (mapView != null) {
+            linearLayout.addView(mapView);
+        }
+
+        linearLayout.addView(title);
+        linearLayout.addView(address);
+
+        getBubbleView(viewHolder).addView(linearLayout);
+
         showStatus(viewHolder);
+
+
+        getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map_Activity.start(context, locationElem);
+            }
+        });
     }
 
     /**
@@ -153,24 +141,8 @@ public class LoctionMessage extends Message {
     public String getSummary() {
         String str = getRevokeSummary();
         if (str != null) return str;
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < message.getElementCount(); ++i) {
-            switch (message.getElement(i).getType()) {
-                case Face:
-                    TIMFaceElem faceElem = (TIMFaceElem) message.getElement(i);
-                    byte[] data = faceElem.getData();
-                    if (data != null) {
-                        result.append(new String(data, Charset.forName("UTF-8")));
-                    }
-                    break;
-                case Text:
-                    TIMTextElem textElem = (TIMTextElem) message.getElement(i);
-                    result.append(textElem.getText());
-                    break;
-            }
+        return "[位置]";
 
-        }
-        return result.toString();
     }
 
     /**
@@ -179,45 +151,6 @@ public class LoctionMessage extends Message {
     @Override
     public void save() {
 
-    }
-
-    private static int getNumLength(int n) {
-        return String.valueOf(n).length();
-    }
-
-    public static SpannableStringBuilder getString(List<TIMElem> elems, Context context) {
-        SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-        for (int i = 0; i < elems.size(); ++i) {
-            switch (elems.get(i).getType()) {
-                case Face:
-                    TIMFaceElem faceElem = (TIMFaceElem) elems.get(i);
-                    int startIndex = stringBuilder.length();
-                    try {
-                        AssetManager am = context.getAssets();
-                        InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
-                        if (is == null) continue;
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Matrix matrix = new Matrix();
-                        int width = bitmap.getWidth();
-                        int height = bitmap.getHeight();
-                        matrix.postScale(2, 2);
-                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-                        ImageSpan span = new ImageSpan(context, resizedBitmap, ImageSpan.ALIGN_BASELINE);
-                        stringBuilder.append(String.valueOf(faceElem.getIndex()));
-                        stringBuilder.setSpan(span, startIndex, startIndex + getNumLength(faceElem.getIndex()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        is.close();
-                    } catch (IOException e) {
-
-                    }
-                    break;
-                case Text:
-                    TIMTextElem textElem = (TIMTextElem) elems.get(i);
-                    stringBuilder.append(textElem.getText());
-                    break;
-            }
-
-        }
-        return stringBuilder;
     }
 
 }

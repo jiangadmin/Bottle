@@ -48,7 +48,7 @@ public class Gift_For_Servlet extends AsyncTask<Map, Integer, Base_Entity> {
         map1.put("number", String.valueOf(this.map.get("number")));
 
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "presents/" + SaveUtils.getString(Save_Key.UID), map1);
-
+        LogUtil.e(TAG,res);
         Base_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Base_Entity();

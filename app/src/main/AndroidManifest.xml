@@ -2,22 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sy.bottle">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序访问摄像头进行拍照-->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--允许程序振动-->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!--网络权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许程序在手机屏幕关闭后后台进程仍然运行-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--允许程序录制声音通过手机或耳机的麦克-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--允许程序访问电话状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序改变网络状态,如是否联网-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!--允许程序获取网络信息状态，如当前的网络连接是否有效-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--程序可以读取设备外部存储空间-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--允许程序修改声音设置信息-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!--允许程序写入外部存储,如SD卡上写文件-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--运行程序开机自动运行-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--<uses-permission android:name="android.permission.GET_TASKS" />-->
+    <!--<uses-permission android:name="android.permission.READ_LOGS" />-->
 
     <!--android:roundIcon="@mipmap/ic_launcher_round"-->
     <application
@@ -104,9 +116,9 @@
             android:name=".activity.ClipImageActivity"
             android:screenOrientation="portrait" />
 
-        <!--好友资料-->
+        <!--位置-->
         <activity
-            android:name=".activity.mian.friend.Profile_Activity"
+            android:name=".activity.mian.other.Map_Activity"
             android:screenOrientation="portrait" />
 
         <!--设置-->
@@ -156,6 +168,7 @@
         <!--聊天-->
         <activity
             android:name=".activity.mian.chat.ChatActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -168,8 +181,9 @@
             android:screenOrientation="portrait" />
 
         <!--投诉须知-->
-        <activity android:name=".activity.mian.other.Report_Info_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.Report_Info_Activity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.mian.other.NewWebActivity"
@@ -181,8 +195,9 @@
             android:screenOrientation="portrait" />
 
         <!--提取记录-->
-        <activity android:name=".activity.mian.other.Put_forward_Log_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.mian.other.Put_forward_Log_Activity"
+            android:screenOrientation="portrait" />
 
         <!--搜索好友-->
         <activity
@@ -270,6 +285,8 @@
                 <action android:name="com.tencent.qalsdk.service.TASK_REMOVED" />
             </intent-filter>
         </receiver>
+
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="b1cb8f9b970e9af6ff59c326aac17e96"/>
 
     </application>
 

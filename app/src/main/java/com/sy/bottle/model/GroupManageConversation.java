@@ -8,6 +8,7 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.GroupManageMessageActivity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.presenter.GroupManagerPresenter;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.ext.group.TIMGroupPendencyItem;
@@ -56,12 +57,12 @@ public class GroupManageConversation extends Conversation {
         GroupManagerPresenter.readGroupManageMessage(Calendar.getInstance().getTimeInMillis(), new TIMCallBack() {
             @Override
             public void onError(int i, String s) {
-                Log.i(TAG, "read all message error,code " + i);
+                LogUtil.i(TAG, "read all message error,code " + i);
             }
 
             @Override
             public void onSuccess() {
-                Log.i(TAG, "read all message succeed");
+                LogUtil.i(TAG, "read all message succeed");
             }
         });
     }

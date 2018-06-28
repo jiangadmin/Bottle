@@ -13,6 +13,7 @@ import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 
@@ -39,7 +40,7 @@ public class Report_Servlet extends AsyncTask<String, Integer, Base_Entity> {
             map.put("pic_urls", strings[3]);
 
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "complaints/" + SaveUtils.getString(Save_Key.UID), map);
-
+        LogUtil.e(TAG, res);
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -67,7 +68,7 @@ public class Report_Servlet extends AsyncTask<String, Integer, Base_Entity> {
         switch (entity.getStatus()) {
             case 200:
                 Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
-                base_dialog.setMessage("平台作为中立服务者，会按照相关法律规定，判断并根据实际情况进行处理，12小时内通过系统消息反馈结果给你");
+                base_dialog.setMessage("提交成功,平台作为中立服务者，会按照相关法律规定，判断并根据实际情况进行处理，12小时内通过系统消息反馈结果给你");
                 base_dialog.setOk("我知道了", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -77,6 +78,11 @@ public class Report_Servlet extends AsyncTask<String, Integer, Base_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

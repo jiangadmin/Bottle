@@ -72,13 +72,14 @@ public class FileUtil {
      * @param bitmap 图片
      */
     public static String createFile(Bitmap bitmap, String filename) {
+        FileOutputStream fos = null;
         File f = new File(cacheDir, filename);
         try {
             if (f.createNewFile()) {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
                 byte[] bitmapdata = bos.toByteArray();
-                FileOutputStream fos = new FileOutputStream(f);
+                fos = new FileOutputStream(f);
                 fos.write(bitmapdata);
                 fos.flush();
                 fos.close();
@@ -86,6 +87,7 @@ public class FileUtil {
         } catch (IOException e) {
             LogUtil.e(TAG, "create bitmap file error" + e);
         }
+
         if (f.exists()) {
             return f.getAbsolutePath();
         }

@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
@@ -16,6 +15,7 @@ import com.sy.bottle.entity.Bottle_Get_Entity;
 import com.sy.bottle.servlet.Bottle_CallBack_Servlet;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.CircleImageView;
+import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMConversationType;
 
 /**
@@ -36,7 +36,7 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
         show();
     }
 
-    TextView name, address,message;
+    TextView name, address, message;
 
     Button esc;
 
@@ -68,9 +68,9 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
 
     public void init(Bottle_Get_Entity.DataBean bean) {
         this.bean = bean;
-        PicassoUtlis.img(bean.getAvatar(),avatar);
+        PicassoUtlis.img(bean.getAvatar(), avatar);
         name.setText(bean.getNikename());
-        address.setText("来自 "+bean.getCity());
+        address.setText("来自 " + bean.getCity());
         message.setText(bean.getContent());
     }
 
@@ -87,6 +87,10 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
                 intent.putExtra("type", TIMConversationType.C2C);
                 context.startActivity(intent);
 
+                break;
+
+            case R.id.dialog_bottle_get_esc:
+                TabToast.makeText("您的瓶子已扔回大海");
                 break;
         }
         dismiss();

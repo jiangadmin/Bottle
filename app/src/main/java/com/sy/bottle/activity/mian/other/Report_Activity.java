@@ -53,7 +53,7 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
      */
     private static final int REQUEST_PICK = 201;
 
-    String string[] = {"请选择举报理由", "该账号发布色情/违法等不良信息", "该账号存在欺诈骗钱行为", "该账号对我进行骚扰", "该账号存在其他违规行为"};
+    String[] string = {"请选择举报理由", "扔瓶子内容（违规）", "色情低俗（文字/图片/语音）", "广告/垃圾信息", "欺诈信息","发送政治/违法/恐怖内容","其他违规行为"};
 
     private ArrayAdapter<String> adapter;
 
@@ -112,11 +112,12 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
                 }
 
                 Loading.show(this, "投诉中");
-                if (TextUtils.isEmpty(imageurl)) {
-                    new Report_Servlet().execute(id, string[spinner.getSelectedItemPosition()], message.getText().toString());
 
+                String text = message.getText().toString();
+                if (TextUtils.isEmpty(imageurl)) {
+                    new Report_Servlet().execute(id, string[spinner.getSelectedItemPosition()], TextUtils.isEmpty(text) ? "无" : text);
                 } else {
-                    new Report_Servlet().execute(id, string[spinner.getSelectedItemPosition()], message.getText().toString(), imageurl);
+                    new Report_Servlet().execute(id, string[spinner.getSelectedItemPosition()], TextUtils.isEmpty(text) ? "无" : text, imageurl);
                 }
 
                 break;

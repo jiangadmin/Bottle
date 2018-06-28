@@ -16,6 +16,7 @@
     <include layout="@layout/view_title_bar" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/buttonPanel"
         android:layout_width="match_parent"
         android:layout_height="50dp"

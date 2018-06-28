@@ -14,6 +14,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Photos_Set_Servlet extends AsyncTask<String, Integer, Photos_Set_Se
     protected Entity doInBackground(String... strings) {
 
         String res = HttpUtil.uploadFile(Const.API + "photos/" + SaveUtils.getString(Save_Key.UID), strings[0]);
+        LogUtil.e(TAG,res);
         Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -71,6 +73,11 @@ public class Photos_Set_Servlet extends AsyncTask<String, Integer, Photos_Set_Se
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

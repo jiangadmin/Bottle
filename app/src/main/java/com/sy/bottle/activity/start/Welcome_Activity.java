@@ -36,13 +36,6 @@ public class Welcome_Activity extends Base_Activity {
         boolean gyr = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
         boolean light = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT);
 
-        LogUtil.e(TAG, "电话：" + telephony);
-        LogUtil.e(TAG, "GSM：" + gsm);
-        LogUtil.e(TAG, "WIFI：" + wifi);
-        LogUtil.e(TAG, "相机：" + cam);
-        LogUtil.e(TAG, "陀螺仪：" + gyr);
-        LogUtil.e(TAG, "光线：" + light);
-
         if (telephony && gsm && wifi && cam && gyr && light) {
             //检测更新
             new Update_Servlet(this).execute();

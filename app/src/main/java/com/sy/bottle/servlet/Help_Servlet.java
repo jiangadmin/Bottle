@@ -11,6 +11,8 @@ import com.sy.bottle.dialog.ReLogin_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Help_Entity;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangadmin
@@ -31,7 +33,7 @@ public class Help_Servlet extends AsyncTask<String,Integer,Help_Entity> {
     @Override
     protected Help_Entity doInBackground(String... strings) {
         String res = HttpUtil.request(HttpUtil.GET, Const.API+"faq",null);
-
+        LogUtil.e(TAG,res);
         Help_Entity entity;
 
         if (TextUtils.isEmpty(res)){
@@ -63,6 +65,10 @@ public class Help_Servlet extends AsyncTask<String,Integer,Help_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

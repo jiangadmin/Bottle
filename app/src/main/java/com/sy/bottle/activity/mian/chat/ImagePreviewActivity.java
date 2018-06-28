@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.view.TabToast;
 
 import java.io.File;
@@ -96,6 +97,7 @@ public class ImagePreviewActivity extends Base_Activity implements View.OnClickL
                 }
                 ImageView imageView = findViewById(R.id.image);
                 imageView.setImageBitmap(Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true));
+                bitmap = null;
             } catch (IOException e) {
                 TabToast.makeText("图片加载失败");
             }
@@ -125,7 +127,7 @@ public class ImagePreviewActivity extends Base_Activity implements View.OnClickL
                 intent.putExtra("path", path);
                 intent.putExtra("isOri", isOri.isChecked());
                 setResult(RESULT_OK, intent);
-                finish();
+                MyApp.finishActivity();
                 break;
         }
     }

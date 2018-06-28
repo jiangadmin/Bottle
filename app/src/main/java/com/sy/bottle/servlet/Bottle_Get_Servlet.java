@@ -16,6 +16,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -37,6 +38,7 @@ public class Bottle_Get_Servlet extends AsyncTask<String, Integer, Bottle_Get_En
     protected Bottle_Get_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET,Const.API + "bottles/" + SaveUtils.getString(Save_Key.UID),null);
+        LogUtil.e(TAG,res);
 
         Bottle_Get_Entity entity;
 
@@ -77,8 +79,9 @@ public class Bottle_Get_Servlet extends AsyncTask<String, Integer, Bottle_Get_En
             case 401:
                 new ReLogin_Dialog();
                 break;
+
             default:
-                LogUtil.e(TAG, entity.getMessage());
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

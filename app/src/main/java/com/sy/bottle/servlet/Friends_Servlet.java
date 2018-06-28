@@ -12,7 +12,9 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -34,6 +36,7 @@ public class Friends_Servlet extends AsyncTask<String, Integer, Friends_Entity> 
     protected Friends_Entity doInBackground(String... strings) {
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "friends/" + SaveUtils.getString(Save_Key.UID), null);
 
+        LogUtil.e(TAG, res);
         Friends_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -66,13 +69,17 @@ public class Friends_Servlet extends AsyncTask<String, Integer, Friends_Entity> 
                 activity.CallBack_Friend();
                 break;
             case 400:
-                if (entity.getMessage().equals("暂无好友")) {
-                    MyApp.friendsbeans.clear();
-                    activity.CallBack_Friend();
-                }
+
+                MyApp.friendsbeans.clear();
+                activity.CallBack_Friend();
+
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

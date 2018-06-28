@@ -82,6 +82,7 @@ public class ConversationPresenter implements Observer {
             conversationExt.getMessage(1, null, new TIMValueCallBack<List<TIMMessage>>() {
                 @Override
                 public void onError(int i, String s) {
+
                     LogUtil.e(TAG, "get message error" + s);
                 }
 

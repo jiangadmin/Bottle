@@ -13,6 +13,7 @@ import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 
@@ -41,7 +42,7 @@ public class Photos_Del_Servlet extends AsyncTask<String, Integer, Base_Entity> 
         Map map = new HashMap();
         map.put("photo_id", strings[0]);
         String res = HttpUtil.request(HttpUtil.DEL, Const.API + "photos/" + SaveUtils.getString(Save_Key.UID), map);
-
+        LogUtil.e(TAG,res);
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {

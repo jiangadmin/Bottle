@@ -1,5 +1,6 @@
 package com.sy.bottle.activity.mian.chat;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -23,15 +24,19 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
 import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
+import com.sy.bottle.activity.mian.other.Map_Activity;
 import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Base_Dialog;
+import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FileMessage;
 import com.sy.bottle.model.GroupInfo;
 import com.sy.bottle.model.ImageMessage;
+import com.sy.bottle.model.LoctionMessage;
 import com.sy.bottle.model.Message;
 import com.sy.bottle.model.MessageFactory;
 import com.sy.bottle.model.TextMessage;
@@ -79,6 +84,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     private static final int FILE_CODE = 300;               //文件
     private static final int IMAGE_PREVIEW = 400;           //图片
     private static final int VIDEO_RECORD = 500;            //视频
+    private static final int LOCATION_RECORD = 600;         //定位
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -88,6 +94,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     private Handler handler = new Handler();
 
     TextView mesage;
+
+    static Activity activity;
+
+    public Bundle bundle;
 
     public static void navToChat(Context context, String identify, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -99,13 +109,14 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bundle = savedInstanceState;
         setContentView(R.layout.activity_chat);
-
+        activity = this;
         setBack(true);
 
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
-
+        //记录当前正在聊天的人
         MyApp.ChatId = identify;
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -119,6 +130,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = findViewById(R.id.list);
 
+        //定时器
         Util.startTimer(mesage, 30, 1);
 
         listView.setAdapter(adapter);
@@ -159,6 +171,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             case C2C:
                 setMenu(R.drawable.btn_person);
 
+                boolean isfriend = false;
 //                如果是好友
                 if (MyApp.friendsbeans != null && MyApp.friendsbeans.size() > 0) {
                     for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
@@ -166,10 +179,13 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                             setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
                             adapter.setHead(bean.getAvatar());
                             adapter.notifyDataSetChanged();
-
+                            isfriend = true;
+                            break;
                         }
                     }
-                } else {
+                }
+
+                if (!isfriend) {
                     new UserInfo_Servlet(this).execute(identify);
                 }
                 break;
@@ -192,9 +208,22 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * @param bean
      */
     public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
-        setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
-        adapter.setHead(bean.getAvatar());
-        adapter.notifyDataSetChanged();
+        if (bean != null) {
+            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
+            adapter.setHead(bean.getAvatar());
+            adapter.notifyDataSetChanged();
+        } else {
+            Base_Dialog base_dialog = new Base_Dialog(this);
+            base_dialog.setTitle("抱歉");
+            base_dialog.setCancelable(false);
+            base_dialog.setMessage("这个人凭空消失了");
+            base_dialog.setOk("朕已阅", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MyApp.finishActivity();
+                }
+            });
+        }
     }
 
     @Override
@@ -413,6 +442,16 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     }
 
     /**
+     * 发送位置
+     */
+    @Override
+    public void sendLocation() {
+        Intent intent = new Intent();
+        intent.setClass(this, Map_Activity.class);
+        startActivityForResult(intent, LOCATION_RECORD);
+    }
+
+    /**
      * 发送礼物
      */
     @Override
@@ -609,6 +648,15 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 Message message = new UGCMessage(videoPath, coverPath, duration);
                 presenter.sendMessage(message.getMessage());
             }
+        } else if (requestCode == LOCATION_RECORD) {
+            if (resultCode == RESULT_OK) {
+                double Longitude = data.getDoubleExtra("Longitude", 0);
+                double Latitude = data.getDoubleExtra("Latitude", 0);
+                String Desc = data.getStringExtra("Desc");
+
+                Message message = new LoctionMessage(Desc, Longitude, Latitude);
+                presenter.sendMessage(message.getMessage());
+            }
         }
     }
 
@@ -686,4 +734,20 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 break;
         }
     }
+
+
+    public static Handler mHandler = new Handler() {
+        /**
+         * handleMessage接收消息后进行相应的处理
+         * @param msg
+         */
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                LogUtil.e(TAG, "图片显示");
+                new ShowImage_Dialog(activity, msg.obj).show();
+            }
+        }
+    };
 }

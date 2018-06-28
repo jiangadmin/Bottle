@@ -101,7 +101,7 @@ public class NomalConversation extends Conversation {
             case C2C:
                 TIMUserProfile profile = FriendshipInfo.getInstance().getProfile(identify);
                 if (profile != null) {
-                    name = profile.getNickName();
+                    name = TextUtils.isEmpty(profile.getRemark()) ? profile.getNickName() : profile.getRemark();
                 }
                 String nickname = SaveUtils.getString(Save_Key.S_昵称 + identify);
                 if (!TextUtils.isEmpty(nickname)) {

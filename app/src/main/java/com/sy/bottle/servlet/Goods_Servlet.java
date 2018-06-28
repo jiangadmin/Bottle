@@ -12,6 +12,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Goods_Entity;
 import com.sy.bottle.utils.HttpUtil;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangadmin
@@ -33,6 +34,7 @@ public class Goods_Servlet extends AsyncTask<String, Integer, Goods_Entity> {
     protected Goods_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "recharges/"+strings[0], null);
+        LogUtil.e(TAG,res);
         Goods_Entity entity;
         if (TextUtils.isEmpty(res)) {
             entity = new Goods_Entity();
@@ -65,6 +67,10 @@ public class Goods_Servlet extends AsyncTask<String, Integer, Goods_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }

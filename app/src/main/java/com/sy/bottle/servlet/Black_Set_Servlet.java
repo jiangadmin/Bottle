@@ -15,7 +15,9 @@ import com.sy.bottle.entity.Base_Entity;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.HttpUtil;
+import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,8 @@ public class Black_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> {
         map.put("friend_id", strings[0]);
 
         String res = HttpUtil.request(HttpUtil.POST, Const.API + "blacklists/" + SaveUtils.getString(Save_Key.UID), map);
+
+        LogUtil.e(TAG,res);
 
         Base_Entity entity;
 
@@ -80,6 +84,10 @@ public class Black_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> {
                 break;
             case 401:
                 new ReLogin_Dialog();
+                break;
+
+            default:
+                TabToast.makeText(entity.getMessage());
                 break;
         }
     }
