@@ -85,6 +85,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                             MyApp.finishActivity(Welcome_Activity.class);
 
                         }else {
+                            LogUtil.e(TAG,s);
                             TabToast.makeText("登录失败，请稍后重试");
                         }
                     }

@@ -84,7 +84,7 @@ public class Black_Activity extends Base_Activity  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 Base_Dialog base_dialog = new Base_Dialog(Black_Activity.this);
-                base_dialog.setMessage("将"+dataBeans.get(i).getNikename()+"移出黑名单?");
+                base_dialog.setMessage("将"+dataBeans.get(i).getNickname()+"移出黑名单?");
                 base_dialog.setOk("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

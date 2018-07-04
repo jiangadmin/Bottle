@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Gift_Get_Log_Entity;
-import com.sy.bottle.entity.Gift_Set_Log_Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class Gift_Get_Log_Adapter extends BaseAdapter {
 
         Gift_Get_Log_Entity.DataBean bean = dataBeans.get(position);
 
-        holder.name.setText(bean.getNikename()+"赠送给我"+bean.getName());
+        holder.name.setText(bean.getNickname() + "赠送给我" + bean.getName());
         holder.price.setText(String.valueOf(bean.getPrice()));
         holder.time.setText(bean.getCreate_time());
 
@@ -75,8 +74,7 @@ public class Gift_Get_Log_Adapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        TextView name,time,price;
+        TextView name, time, price;
     }
-
 
 }

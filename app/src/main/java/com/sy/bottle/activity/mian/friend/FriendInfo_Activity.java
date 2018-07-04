@@ -47,6 +47,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
 
     private String identify;
 
+    ImageView sex;
     TextView name, sign;
     LineControllerView id, remark, category, black, address;
     ImageCycleView photos;
@@ -96,6 +97,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         category = findViewById(R.id.user_info_group);
         black = findViewById(R.id.user_info_blackList);
         address = findViewById(R.id.user_info_address);
+        sex = findViewById(R.id.user_info_sex);
 
         remark.setOnClickListener(this);
 
@@ -114,7 +116,8 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
     public void CallBack(UserInfo_Entity.DataBean bean) {
 
         PicassoUtlis.img(bean.getAvatar(), head);
-        name.setText(bean.getNikename());
+        name.setText(bean.getNickname());
+        sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
         remark.setContent(bean.getContent());
         sign.setText(bean.getSign());
         address.setContent(bean.getProvince() + "-" + bean.getCity() + "-" + bean.getArea());

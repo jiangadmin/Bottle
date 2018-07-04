@@ -107,7 +107,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
                     //初始化参数，修改昵称为“cat”
                     TIMFriendshipManager.ModifyUserProfileParam param = new TIMFriendshipManager.ModifyUserProfileParam();
-                    param.setNickname(entity.getData().getNikename());
+                    param.setNickname(entity.getData().getNickname());
                     param.setFaceUrl(entity.getData().getAvatar());
                     param.setSelfSignature(entity.getData().getSign());
                     if (entity.getData().getSex().equals("1")) {
@@ -134,7 +134,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                     //如果不是自己
                     //存储对方昵称
                     SaveUtils.setString(Save_Key.S_昵称 + entity.getData().getId(),
-                            TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNikename() : entity.getData().getContent());
+                            TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNickname() : entity.getData().getContent());
                     //存储对方头像
                     SaveUtils.setString(Save_Key.S_头像 + entity.getData().getId(), entity.getData().getAvatar());
                 }
@@ -161,7 +161,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 }
 
                 if (viewHolder != null) {
-                    viewHolder.tvName.setText(TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNikename() : entity.getData().getContent());
+                    viewHolder.tvName.setText(TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNickname() : entity.getData().getContent());
                     PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);
                 }
                 if (myDialog != null) {

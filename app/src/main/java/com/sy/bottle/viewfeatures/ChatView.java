@@ -5,9 +5,6 @@ import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +55,10 @@ public interface ChatView extends MvpView {
      */
     void sendImage();
 
+    /**
+     * 发送阅后即焚
+     */
+    void sendReadDes();
 
     /**
      * 发送照片消息

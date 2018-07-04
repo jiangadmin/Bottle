@@ -47,6 +47,7 @@ public class Black_Set_Servlet extends AsyncTask<String, Integer, Base_Entity> {
 
         LogUtil.e(TAG,res);
 
+
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {

@@ -11,7 +11,7 @@ public class Bottle_Get_Entity extends Base_Entity {
 
 
     /**
-     * data : {"id":28,"user_id":"1000009","nikename":"一个人心潮澎湃。","avatar":"http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJafX8ibIBv9lYh4sxwhIfls0KKBbpexPcJqUzINAibW0VYvQBy2V7ahLx52eC9ibl3VYsRJBmT1Cmew/132","province":"江苏省","city":"连云港市","area":"","type":"1","content":"小么小二郎","difference":59}
+     * data : {"id":28,"user_id":"1000009","nickname":"一个人心潮澎湃。","avatar":"http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJafX8ibIBv9lYh4sxwhIfls0KKBbpexPcJqUzINAibW0VYvQBy2V7ahLx52eC9ibl3VYsRJBmT1Cmew/132","province":"江苏省","city":"连云港市","area":"","type":"1","content":"小么小二郎","difference":59}
      */
 
     private DataBean data;
@@ -28,7 +28,7 @@ public class Bottle_Get_Entity extends Base_Entity {
         /**
          * id : 28
          * user_id : 1000009
-         * nikename : 一个人心潮澎湃。
+         * nickname : 一个人心潮澎湃。
          * avatar : http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJafX8ibIBv9lYh4sxwhIfls0KKBbpexPcJqUzINAibW0VYvQBy2V7ahLx52eC9ibl3VYsRJBmT1Cmew/132
          * province : 江苏省
          * city : 连云港市
@@ -40,7 +40,7 @@ public class Bottle_Get_Entity extends Base_Entity {
 
         private int id;
         private String user_id;
-        private String nikename;
+        private String nickname;
         private String avatar;
         private String province;
         private String city;
@@ -65,12 +65,12 @@ public class Bottle_Get_Entity extends Base_Entity {
             this.user_id = user_id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getAvatar() {

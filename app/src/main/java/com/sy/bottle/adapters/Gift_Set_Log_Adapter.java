@@ -66,7 +66,7 @@ public class Gift_Set_Log_Adapter extends BaseAdapter {
 
         Gift_Set_Log_Entity.DataBean bean = dataBeans.get(position);
 
-        holder.name.setText("赠送 " + bean.getName() + "给" + bean.getNikename());
+        holder.name.setText("赠送 " + bean.getName() + "给" + bean.getNickname());
         holder.price.setText(String.valueOf(bean.getPrice()));
         holder.time.setText(bean.getCreate_time());
 

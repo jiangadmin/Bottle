@@ -43,7 +43,7 @@ public class ImageMessage extends Message {
     }
 
     public ImageMessage(String path) {
-        this(path, false);
+        this(path, 1);
     }
 
     /**
@@ -52,11 +52,11 @@ public class ImageMessage extends Message {
      * @param path  图片路径
      * @param isOri 是否原图发送
      */
-    public ImageMessage(String path, boolean isOri) {
+    public ImageMessage(String path, int isOri) {
         message = new TIMMessage();
         TIMImageElem elem = new TIMImageElem();
         elem.setPath(path);
-        elem.setLevel(isOri ? 0 : 1);
+        elem.setLevel(isOri);
         message.addElement(elem);
     }
 
@@ -121,6 +121,7 @@ public class ImageMessage extends Message {
                                 try {
                                     android.os.Message message = android.os.Message.obtain();
                                     message.obj = image.getUrl();
+                                    LogUtil.e(TAG,image.getType().toString());
                                     message.what = 1;
                                     ChatActivity.mHandler.sendMessage(message);
 
@@ -158,11 +159,11 @@ public class ImageMessage extends Message {
         for (TIMImage image : e.getImageList()) {
             if (image.getType() == TIMImageType.Original) {
                 final String uuid = image.getUuid();
-                if (FileUtil.isCacheFileExist(uuid + ".jpg")) {
+                if (FileUtil.isCacheImgExist(uuid + ".jpg")) {
                     TabToast.makeText("文件已存在");
                     return;
                 }
-                image.getImage(FileUtil.getCacheFilePath(uuid + ".jpg"), new TIMCallBack() {
+                image.getImage(FileUtil.file_path + (uuid + ".jpg"), new TIMCallBack() {
                     @Override
                     public void onError(int i, String s) {
                         LogUtil.e(TAG, "getFile failed. code: " + i + " errmsg: " + s);
@@ -170,6 +171,7 @@ public class ImageMessage extends Message {
 
                     @Override
                     public void onSuccess() {
+
                         TabToast.makeText("保存成功");
                     }
                 });

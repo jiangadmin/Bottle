@@ -25,7 +25,7 @@ public class Gift_Set_Log_Entity extends Base_Entity {
         /**
          * price : 88
          * give_user_id : 1000024
-         * nikename : 走流程3
+         * nickname : 走流程3
          * name : 小花花
          * pic_url : 礼物地址
          * create_time : 2018-05-24 05:26:59
@@ -33,7 +33,7 @@ public class Gift_Set_Log_Entity extends Base_Entity {
 
         private int price;
         private String give_user_id;
-        private String nikename;
+        private String nickname;
         private String name;
         private String pic_url;
         private String create_time;
@@ -54,12 +54,12 @@ public class Gift_Set_Log_Entity extends Base_Entity {
             this.give_user_id = give_user_id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getName() {

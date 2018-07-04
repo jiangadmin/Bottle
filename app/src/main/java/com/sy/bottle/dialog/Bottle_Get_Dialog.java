@@ -69,7 +69,7 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
     public void init(Bottle_Get_Entity.DataBean bean) {
         this.bean = bean;
         PicassoUtlis.img(bean.getAvatar(), avatar);
-        name.setText(bean.getNikename());
+        name.setText(bean.getNickname());
         address.setText("来自 " + bean.getCity());
         message.setText(bean.getContent());
     }

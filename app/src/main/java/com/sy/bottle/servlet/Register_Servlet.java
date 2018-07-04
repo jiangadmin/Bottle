@@ -40,7 +40,7 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
     protected Login_Entity doInBackground(String... strings) {
         Map map = new HashMap();
         map.put("type", "1");
-        map.put("nikename", SaveUtils.getString(Save_Key.S_昵称));
+        map.put("nickname", SaveUtils.getString(Save_Key.S_昵称));
         map.put("sex", SaveUtils.getString(Save_Key.S_性别));
         map.put("phone", SaveUtils.getString(Save_Key.S_手机号));
         map.put("avatar", SaveUtils.getString(Save_Key.S_头像));
@@ -109,7 +109,6 @@ public class Register_Servlet extends AsyncTask<String, Integer, Login_Entity> {
 
                             }
                         });
-
 
                         SaveUtils.setBoolean(Save_Key.S_登录, true);
                         Main_Activity.start(MyApp.currentActivity());

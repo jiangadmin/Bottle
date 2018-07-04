@@ -92,7 +92,7 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
      * @param dataBean
      */
     public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
-        nickname.setText(dataBean.getNikename());
+        nickname.setText(dataBean.getNickname());
         head.setImageURI(Uri.parse(dataBean.getAvatar()));
 
         PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);

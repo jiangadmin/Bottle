@@ -125,7 +125,7 @@ public class ImagePreviewActivity extends Base_Activity implements View.OnClickL
             case R.id.menu:
                 Intent intent = new Intent();
                 intent.putExtra("path", path);
-                intent.putExtra("isOri", isOri.isChecked());
+                intent.putExtra("isOri", isOri.isChecked() ? 0 : 1);
                 setResult(RESULT_OK, intent);
                 MyApp.finishActivity();
                 break;

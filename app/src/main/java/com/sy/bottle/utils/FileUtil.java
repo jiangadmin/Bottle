@@ -26,12 +26,12 @@ public class FileUtil {
     private static final String TAG = "FileUtil";
     private static String pathDiv = "/";
     private static File cacheDir = !isExternalStorageWritable() ? MyApp.getInstance().getFilesDir() : MyApp.getInstance().getExternalCacheDir();
+    public static String file_path=  Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/";
 
     private FileUtil() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
-
 
     /**
      * 创建临时文件
@@ -62,6 +62,14 @@ public class FileUtil {
      */
     public static boolean isCacheFileExist(String fileName) {
         File file = new File(getCacheFilePath(fileName));
+        return file.exists();
+    }
+
+    /**
+     * 判断缓存文件是否存在
+     */
+    public static boolean isCacheImgExist(String fileName) {
+        File file = new File(file_path + fileName);
         return file.exists();
     }
 

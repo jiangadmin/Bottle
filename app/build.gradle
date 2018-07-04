@@ -104,4 +104,6 @@ dependencies {
 
     //高德2d地图
     implementation 'com.amap.api:map2d:latest.integration'
+
+
 }

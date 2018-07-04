@@ -26,7 +26,7 @@ public class Friends_Entity extends Base_Entity {
          * id : 3
          * user_id : 1000003
          * friend_id : 1000001
-         * nikename : 伟大领袖姜主席
+         * nickname : 伟大领袖姜主席
          * avatar : syplp/1000001/15292030725450.jpeg
          * sign : 这个人很懒，什么都没有留下
          * content : null
@@ -35,7 +35,7 @@ public class Friends_Entity extends Base_Entity {
         private String id;
         private String user_id;
         private String friend_id;
-        private String nikename;
+        private String nickname;
         private String avatar;
         private String sign;
         private String content;
@@ -64,12 +64,12 @@ public class Friends_Entity extends Base_Entity {
             this.friend_id = friend_id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getAvatar() {

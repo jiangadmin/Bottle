@@ -121,7 +121,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
             receive_num.setVisibility(View.GONE);
         }
 
-        name.setText(bean.getNikename());
+        name.setText(bean.getNickname());
 
         PicassoUtlis.img(bean.getAvatar(), head, R.drawable.head_me);
 

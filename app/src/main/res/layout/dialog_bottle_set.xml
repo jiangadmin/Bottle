@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="230dp"
             android:background="@drawable/dialog_bottle_bg"
             android:padding="10dp">
 
@@ -31,15 +31,13 @@
                 android:id="@+id/dialog_bottle_set_random"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/dialog_bottle_set_message"
-                android:layout_below="@+id/dialog_bottle_set_message"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/yuanjiao_white_t"
+                android:layout_alignBottom="@+id/dialog_bottle_set_message"
+                android:layout_alignEnd="@+id/dialog_bottle_set_message"
+                android:background="@drawable/yuanjiao_white"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="随机生成内容"
                 android:textColor="@color/gray_9" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"

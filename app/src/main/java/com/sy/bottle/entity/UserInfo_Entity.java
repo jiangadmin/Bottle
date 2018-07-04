@@ -9,9 +9,8 @@ package com.sy.bottle.entity;
  */
 public class UserInfo_Entity extends Base_Entity {
 
-
     /**
-     * data : {"id":1000001,"nikename":"伟大领袖姜主席","phone":"18661201018","sex":"1","score":"75988557","balance":"88992060","avatar":"syplp/1000001/15292030725450.jpeg","sign":"这个人很懒，什么都没有留下","province":"北京","city":"北京市","area":"东城区"}
+     * data : {"id":1000001,"nickname":"伟大领袖姜主席","phone":"18661201018","sex":"1","score":"75988557","balance":"88992060","avatar":"syplp/1000001/15292030725450.jpeg","sign":"这个人很懒，什么都没有留下","province":"北京","city":"北京市","area":"东城区"}
      */
 
     private DataBean data;
@@ -27,7 +26,7 @@ public class UserInfo_Entity extends Base_Entity {
     public static class DataBean {
         /**
          * id : 1000001
-         * nikename : 伟大领袖姜主席
+         * nickname : 伟大领袖姜主席
          * phone : 18661201018
          * sex : 1
          * score : 75988557
@@ -40,7 +39,7 @@ public class UserInfo_Entity extends Base_Entity {
          */
 
         private String id;
-        private String nikename;
+        private String nickname;
         private String phone;
         private String sex;
         private String content;
@@ -68,12 +67,12 @@ public class UserInfo_Entity extends Base_Entity {
             this.id = id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getPhone() {

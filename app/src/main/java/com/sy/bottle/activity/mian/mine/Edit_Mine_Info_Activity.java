@@ -173,7 +173,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
 
         PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
 
-        nickname.setText(dataBean.getNikename());
+        nickname.setText(dataBean.getNickname());
         sign.setText(dataBean.getSign());
         city.setText(dataBean.getProvince() + "-" + dataBean.getCity() + "-" + dataBean.getArea());
     }
@@ -243,7 +243,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
                     return;
                 }
 
-                if (new_nickname.equals(dataBean.getNikename())
+                if (new_nickname.equals(dataBean.getNickname())
                         && new_sign.equals(dataBean.getSign())
                         && new_city.equals(dataBean.getProvince() + "-" + dataBean.getCity() + "-" + dataBean.getArea())) {
 

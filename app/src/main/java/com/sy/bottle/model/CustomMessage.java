@@ -146,9 +146,7 @@ public class CustomMessage extends Message {
 
             actionParam = actionParam.replaceAll(" ", "");
 
-
             JSONObject gift = new JSONObject(actionParam);
-
 
             final String gifturl = gift.getString("Pic_url");
 

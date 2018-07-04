@@ -51,7 +51,7 @@ import java.util.List;
  * @Phone: 186 6120 1018
  * TODO: 消息
  */
-public class Chat_Fragment extends Base_Fragment implements ConversationView, FriendshipMessageView, GroupManageMessageView {
+public class Chat_Fragment extends Base_Fragment implements  ConversationView, FriendshipMessageView, GroupManageMessageView {
     private static final String TAG = "Chat_Fragment";
 
     private List<Conversation> conversationList = new LinkedList<>();
@@ -209,6 +209,12 @@ public class Chat_Fragment extends Base_Fragment implements ConversationView, Fr
                 return;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     /**

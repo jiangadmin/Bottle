@@ -26,7 +26,7 @@ public class Black_Entity extends Base_Entity {
          * id : 1
          * user_id : 1000003
          * friend_id : 1000005
-         * nikename : 一个人心潮澎湃。
+         * nickname : 一个人心潮澎湃。
          * avatar : http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJafX8ibIBv9lYh4sxwhIfls0KKBbpexPcJqUzINAibW0VYvQBy2V7ahLx52eC9ibl3VYsRJBmT1Cmew/132
          * sign : 这个人很懒，什么都没有留下
          * content : null
@@ -35,7 +35,7 @@ public class Black_Entity extends Base_Entity {
         private int id;
         private String user_id;
         private String friend_id;
-        private String nikename;
+        private String nickname;
         private String avatar;
         private String sign;
         private Object content;
@@ -64,12 +64,12 @@ public class Black_Entity extends Base_Entity {
             this.friend_id = friend_id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getAvatar() {

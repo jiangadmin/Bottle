@@ -41,7 +41,6 @@ import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.viewfeatures.ChatView;
-import com.tencent.imsdk.TIMLocationElem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,6 +56,7 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class ChatInput extends RelativeLayout implements TextWatcher, View.OnClickListener {
     private static final String TAG = "ChatInput";
+
     Button btnSend;
     private ImageButton btnAdd, btnVoice, btnKeyboard, btnEmotion;
     private EditText editText;
@@ -116,6 +116,9 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         //位置
         LinearLayout btnPosition = findViewById(R.id.btn_position);
         btnPosition.setOnClickListener(this);
+        //阅后即焚
+        LinearLayout btnReadDes = findViewById(R.id.btn_readdes);
+        btnReadDes.setOnClickListener(this);
 
         setSendBtn();
         btnKeyboard = findViewById(R.id.btn_keyboard);
@@ -481,6 +484,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 }
                 break;
             case R.id.btn_image:
+                if (activity != null && requestStorage(activity)) {
+                    chatView.sendImage();
+                }
+                break;
+            case R.id.btn_readdes:
                 if (activity != null && requestStorage(activity)) {
                     chatView.sendImage();
                 }

@@ -67,14 +67,18 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
      * 刷新好友页面
      */
     public void CallBack_Friend() {
-        friend_fragment.onResume();
+        if (friend_fragment != null) {
+            friend_fragment.onResume();
+        }
     }
 
     /**
      * 刷新我的页面
      */
     public void CallBack_MyInfo() {
-        mine_fragment.onResume();
+        if (mine_fragment != null) {
+            mine_fragment.onResume();
+        }
     }
 
     private void initview() {
@@ -188,6 +192,9 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
     protected void onResume() {
         if (friend_fragment != null) {
             friend_fragment.onResume();
+        }
+        if (chat_fragment != null) {
+            chat_fragment.onResume();
         }
         super.onResume();
 

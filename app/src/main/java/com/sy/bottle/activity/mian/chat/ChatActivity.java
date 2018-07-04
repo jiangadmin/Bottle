@@ -85,6 +85,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     private static final int IMAGE_PREVIEW = 400;           //图片
     private static final int VIDEO_RECORD = 500;            //视频
     private static final int LOCATION_RECORD = 600;         //定位
+    private static final int IMAGE_READDES = 700;           //阅后即焚
     private Uri fileUri;
     private VoiceSendingView voiceSendingView;
     private String identify;
@@ -176,7 +177,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 if (MyApp.friendsbeans != null && MyApp.friendsbeans.size() > 0) {
                     for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
                         if (bean.getFriend_id().equals(identify)) {
-                            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
+                            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNickname() : bean.getContent());
                             adapter.setHead(bean.getAvatar());
                             adapter.notifyDataSetChanged();
                             isfriend = true;
@@ -209,7 +210,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
         if (bean != null) {
-            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNikename() : bean.getContent());
+            setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNickname() : bean.getContent());
             adapter.setHead(bean.getAvatar());
             adapter.notifyDataSetChanged();
         } else {
@@ -405,6 +406,16 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     }
 
     /**
+     * 发送阅后即焚
+     */
+    @Override
+    public void sendReadDes() {
+        Intent intent_album = new Intent("android.intent.action.GET_CONTENT");
+        intent_album.setType("image/*");
+        startActivityForResult(intent_album, IMAGE_READDES);
+    }
+
+    /**
      * 发送照片消息
      */
     @Override
@@ -569,9 +580,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 menu.add(0, 4, Menu.NONE, "撤回");
             }
         }
-        if (message instanceof ImageMessage || message instanceof FileMessage) {
-            menu.add(0, 3, Menu.NONE, "保存");
-        }
+        //去掉保存
+//        if (message instanceof ImageMessage || message instanceof FileMessage) {
+//            menu.add(0, 3, Menu.NONE, "保存");
+//        }
     }
 
     @Override
@@ -607,6 +619,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             if (resultCode == RESULT_OK && fileUri != null) {
                 showImagePreview(fileUri.getPath());
             }
+            //礼物
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK && data != null) {
                 showImagePreview(FileUtil.getFilePath(this, data.getData()));
@@ -616,9 +629,15 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
             if (resultCode == RESULT_OK) {
                 sendFile(FileUtil.getFilePath(this, data.getData()));
             }
-        } else if (requestCode == IMAGE_PREVIEW) {
+        } else if (requestCode == IMAGE_PREVIEW || requestCode == IMAGE_READDES) {
             if (resultCode == RESULT_OK) {
-                boolean isOri = data.getBooleanExtra("isOri", false);
+                int isOri;
+                if (requestCode == IMAGE_READDES) {
+                    isOri = -1;
+                } else {
+                    isOri = data.getIntExtra("isOri", 1);
+
+                }
                 String path = data.getStringExtra("path");
                 File file = new File(path);
                 if (file.exists()) {
@@ -744,10 +763,18 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            if (msg.what == 1) {
-                LogUtil.e(TAG, "图片显示");
-                new ShowImage_Dialog(activity, msg.obj).show();
+
+            switch (msg.what){
+                case 1:
+                    LogUtil.e(TAG, "图片显示");
+                    new ShowImage_Dialog(activity, msg.obj).show();
+                    break;
+
+                case -1:
+                    LogUtil.e(TAG, "阅后即焚");
+                    break;
             }
+
         }
     };
 }

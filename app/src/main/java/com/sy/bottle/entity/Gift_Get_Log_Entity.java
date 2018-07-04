@@ -26,7 +26,7 @@ public class Gift_Get_Log_Entity extends Base_Entity {
         /**
          * price : 68
          * user_id : 1000001
-         * nikename : 伟大领袖姜主席
+         * nickname : 伟大领袖姜主席
          * name : 玫瑰花
          * pic_url : https://syplp-1256717985.cos.ap-shanghai.myqcloud.com/app_img/1-%E7%8E%AB%E7%91%B0%E8%8A%B1.png
          * create_time : 2018-06-16 03:11:55
@@ -34,7 +34,7 @@ public class Gift_Get_Log_Entity extends Base_Entity {
 
         private String price;
         private String user_id;
-        private String nikename;
+        private String nickname;
         private String name;
         private String pic_url;
         private String create_time;
@@ -55,12 +55,12 @@ public class Gift_Get_Log_Entity extends Base_Entity {
             this.user_id = user_id;
         }
 
-        public String getNikename() {
-            return nikename;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setNikename(String nikename) {
-            this.nikename = nikename;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getName() {

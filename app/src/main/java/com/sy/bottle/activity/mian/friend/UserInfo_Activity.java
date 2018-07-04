@@ -83,7 +83,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
         if (entity != null) {
             PicassoUtlis.img(entity.getAvatar(), head);
             sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
-            name.setText(entity.getNikename());
+            name.setText(entity.getNickname());
             sign.setText(entity.getSign());
             address.setContent(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getArea());
 
@@ -113,7 +113,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
         this.entity = entity;
         PicassoUtlis.img(entity.getAvatar(), head);
         sex.setImageResource(entity.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
-        name.setText(entity.getNikename());
+        name.setText(entity.getNickname());
         sign.setText(entity.getSign());
         address.setContent(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getArea());
     }

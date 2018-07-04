@@ -15,7 +15,7 @@ public class Const {
     public static String Channel = "tencent";
 
     //sdk appid 由腾讯分配
-    public static final int SDK_APPID = 1400093238;
+    public static final int SDK_APPID = 1400109203;
 
     public static final String Wechat_AppID = "wx987316d1f1e0eac4";
 
