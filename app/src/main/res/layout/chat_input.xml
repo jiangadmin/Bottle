@@ -11,7 +11,6 @@
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -104,7 +103,8 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         android:orientation="vertical"
-        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:visibility="visible">
 
         <LinearLayout
@@ -122,8 +122,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_photo" />
 
                 <TextView
@@ -144,8 +144,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_image" />
 
                 <TextView
@@ -190,8 +190,8 @@
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_file" />
 
                 <TextView
@@ -209,11 +209,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_yhjf" />
 
                 <TextView
@@ -224,8 +225,7 @@
                     android:textColor="@color/gray" />
             </LinearLayout>
 
-
-            <!--文件-->
+            <!--位置-->
             <LinearLayout
                 android:id="@+id/btn_position"
                 android:layout_width="0dp"
@@ -235,8 +235,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_address" />
 
                 <TextView
@@ -257,8 +257,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_gift" />
 
                 <TextView

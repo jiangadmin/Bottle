@@ -13,6 +13,7 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.adapters.Adapter_Friends;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.Move_Dialog;
 import com.sy.bottle.dialog.SearchFriend_Dialog;
 
 /**
@@ -43,7 +44,7 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
 
         setTitle(view, "好友列表");
 
-        setMenu(view, "添加");
+        setMenu(view,"添加");
 
         friends_List = view.findViewById(R.id.friends);
         view_null = view.findViewById(R.id.view_null);
@@ -74,6 +75,8 @@ public class Friend_Fragment extends Base_Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu:
+
+//                new Move_Dialog(getActivity());
 
                 //查找好友
                 new SearchFriend_Dialog(getActivity());

@@ -41,7 +41,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
     ImageView sex;
 
     TextView receive_num;
-    Button receive, mine_mall, mine_log, selfhelp, news, setting;
+    Button receive, mine_mall, mine_log, selfhelp, news,task_agreement, setting;
 
     @Nullable
     @Override
@@ -88,11 +88,13 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
         news = view.findViewById(R.id.mine_news);
         setting = view.findViewById(R.id.mine_setting);
+        task_agreement = view.findViewById(R.id.mine_taskagreement);
 
         xx = view.findViewById(R.id.mine_xx);
         jf = view.findViewById(R.id.mine_jf);
 
         mine_info.setOnClickListener(this);
+        task_agreement.setOnClickListener(this);
 
         receive.setOnClickListener(this);
         mine_mall.setOnClickListener(this);
@@ -159,8 +161,11 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
                 break;
             case R.id.mine_news:
                 Loading.show(getActivity(), "请稍后");
-                new Notice_Servlet(getActivity()).execute("notice_test");
-
+                new Notice_Servlet(getActivity()).execute("notice_official");
+                break;
+            case R.id.mine_taskagreement:
+                Loading.show(getActivity(), "请稍后");
+                new Notice_Servlet(getActivity()).execute("bounty_task");
                 break;
             case R.id.mine_info:
                 Mine_Info_Activity.start(getActivity());

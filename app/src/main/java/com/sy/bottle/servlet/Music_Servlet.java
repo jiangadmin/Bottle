@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,7 +12,9 @@ import android.support.v4.app.NotificationCompat;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMConversationType;
 import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMMessage;
@@ -42,8 +43,10 @@ public class Music_Servlet extends AsyncTask<TIMMessage, Integer, String> {
         //实例化NotificationCompat.Builde并设置相关属性
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MyApp.getInstance());
 
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        builder.setSound(uri);
+        if (!SaveUtils.getBoolean(Save_Key.S_铃声)) {
+            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            builder.setSound(uri);
+        }
         //设置小图标
         builder.setSmallIcon(R.mipmap.logo);
         //设置通知标题

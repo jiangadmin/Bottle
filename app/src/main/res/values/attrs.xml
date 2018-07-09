@@ -12,6 +12,7 @@
         <attr name="canNav" format="boolean"/>
         <!-- 是否是开关 -->
         <attr name="isSwitch" format="boolean"/>
+
     </declare-styleable>
 
     <!-- 标题模板自定义属性 -->

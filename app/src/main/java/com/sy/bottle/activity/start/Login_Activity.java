@@ -17,6 +17,7 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Login_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.view.EditTextWithClearButton;
 import com.sy.bottle.view.TabToast;
 
 import java.util.HashMap;
@@ -41,7 +42,8 @@ public class Login_Activity extends Base_Activity implements View.OnClickListene
 
     String loginType;
 
-    TextView textView;
+    EditTextWithClearButton phone,password;
+
     public static void start(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, Login_Activity.class);
@@ -62,8 +64,8 @@ public class Login_Activity extends Base_Activity implements View.OnClickListene
 
     private void initview() {
 
-        textView = findViewById(R.id.id);
-
+        phone = findViewById(R.id.login_phone);
+        password = findViewById(R.id.login_password);
         wechat = findViewById(R.id.login_wechat);
         qq = findViewById(R.id.login_qq);
 

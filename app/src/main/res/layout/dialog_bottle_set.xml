@@ -6,24 +6,23 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="260dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="280dp"
             android:background="@drawable/dialog_bottle_bg"
             android:padding="10dp">
 
             <EditText
                 android:id="@+id/dialog_bottle_set_message"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="210dp"
                 android:background="@drawable/xz_bg"
                 android:gravity="left|top"
                 android:hint="说点什么吧..."
-                android:lines="3"
                 android:padding="10dp"
                 android:textColor="@color/gray_6" />
 
@@ -33,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/dialog_bottle_set_message"
                 android:layout_alignEnd="@+id/dialog_bottle_set_message"
+                android:layout_margin="10dp"
                 android:background="@drawable/yuanjiao_white"
                 android:gravity="center"
                 android:padding="5dp"
@@ -47,22 +47,22 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
                     android:id="@+id/dialog_bottle_set_esc"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
                     android:background="@drawable/yuanjiao_white_t1"
                     android:text="取消"
                     android:textColor="@color/gray_6"
                     android:textSize="16sp" />
 
                 <Button
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
                     android:id="@+id/dialog_bottle_set_submit"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:background="@drawable/yuanjiao_white_t1"
                     android:text="扔出"
                     android:textColor="@color/gray_6"

@@ -12,7 +12,17 @@ public class Const {
     public static String API = "http://api.syplp.com/";
 //    public static String API = "http://192.168.1.188/syplp/code/web/api/public/index.php/";
 
-    public static String Channel = "tencent";
+//    public static String Channel = "wandoujia";
+//    public static String Channel = "360";
+//    public static String Channel = "yingyongbao";
+//    public static String Channel = "mi";
+//    public static String Channel = "huawei";
+//    public static String Channel = "vivo";
+//    public static String Channel = "oppo";
+//    public static String Channel = "meizu";
+//    public static String Channel = "baidu";
+    public static String Channel = "other";
+
 
     //sdk appid 由腾讯分配
     public static final int SDK_APPID = 1400109203;

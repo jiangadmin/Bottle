@@ -66,6 +66,8 @@ public class LineControllerView extends LinearLayout {
         tvContent.setText(substance);
     }
 
+
+
     /**
      * 获取内容
      */

@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.view.TabToast;
@@ -499,6 +500,17 @@ public class ToolUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
+    public static int pixcl_width() {
+        DisplayMetrics dm = MyApp.getInstance().getResources().getDisplayMetrics();
+       return dm.widthPixels;
+//        int screenHeight = dm.heightPixels;
+
     }
 
     /**

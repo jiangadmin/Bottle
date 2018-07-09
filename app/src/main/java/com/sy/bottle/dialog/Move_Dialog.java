@@ -11,7 +11,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.sy.bottle.R;
-import com.sy.bottle.activity.mian.friend.SearchFriend_Activity;
+import com.sy.bottle.activity.mian.Main_Activity;
+import com.sy.bottle.activity.mian.friend.Friend_Online_Activity;
 
 /**
  * @author: jiangyao
@@ -23,7 +24,7 @@ import com.sy.bottle.activity.mian.friend.SearchFriend_Activity;
 public class Move_Dialog extends Dialog implements View.OnClickListener {
     private static final String TAG = "Move_Dialog";
 
-    Button dismiss, add_friend, add_group, manager_group;
+    Button dismiss, add_friend, add_group, manager_group, add_new;
 
     Context con;
 
@@ -54,11 +55,13 @@ public class Move_Dialog extends Dialog implements View.OnClickListener {
         add_friend = findViewById(R.id.add_friend);
         add_group = findViewById(R.id.add_group);
         manager_group = findViewById(R.id.manager_group);
+        add_new = findViewById(R.id.add_new);
 
         dismiss.setOnClickListener(this);
         add_friend.setOnClickListener(this);
         add_group.setOnClickListener(this);
         manager_group.setOnClickListener(this);
+        add_new.setOnClickListener(this);
     }
 
     @Override
@@ -67,8 +70,13 @@ public class Move_Dialog extends Dialog implements View.OnClickListener {
             case R.id.more_dismiss:
                 dismiss();
                 break;
+            case R.id.add_new:
+                Friend_Online_Activity.start(con);
+
+                break;
             case R.id.add_friend:
-                SearchFriend_Activity.start(con);
+                new SearchFriend_Dialog((Main_Activity) con);
+//                SearchFriend_Activity.start(con);
                 break;
             case R.id.add_group:
 //                SearchGroupActivity.start(con);

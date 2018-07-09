@@ -62,7 +62,7 @@ public class Help_Activity extends Base_Activity implements AdapterView.OnItemCl
         listView.setOnItemClickListener(this);
 
         //获取公告头
-        new Notice_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "notice_test");
+        new Notice_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "help_head");
         //获取列表
         new Help_Servlet(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -114,7 +114,7 @@ public class Help_Activity extends Base_Activity implements AdapterView.OnItemCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.waiter:
-                ChatActivity.navToChat(this, "1000001", TIMConversationType.C2C);
+                ChatActivity.navToChat(this, "100001", TIMConversationType.C2C);
                 break;
         }
     }

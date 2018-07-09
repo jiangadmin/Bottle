@@ -100,6 +100,11 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     public Bundle bundle;
 
+    /**
+     * 阅后即焚
+     */
+    public boolean IsReadDes = false;
+
     public static void navToChat(Context context, String identify, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("identify", identify);
@@ -764,7 +769,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
 
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     LogUtil.e(TAG, "图片显示");
                     new ShowImage_Dialog(activity, msg.obj).show();

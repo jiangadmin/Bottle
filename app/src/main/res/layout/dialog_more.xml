@@ -8,15 +8,15 @@
 
     <Button
         android:id="@+id/more_dismiss"
-        android:background="@color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="45dp" />
+        android:layout_height="45dp"
+        android:background="@color/transparent" />
 
     <LinearLayout
-        android:background="@drawable/floating_layer"
-        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/floating_layer"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/add_friend"
@@ -35,6 +35,18 @@
             android:background="@color/gray_cd" />
 
         <Button
+            android:id="@+id/add_new"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:text="有缘人"
+            android:textColor="@color/white" />
+
+
+        <Button
             android:id="@+id/add_group"
             android:layout_width="100dp"
             android:layout_height="40dp"
@@ -42,12 +54,8 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:text="添加群组"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_cd" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/manager_group"
@@ -57,7 +65,8 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:text="管理分组"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
     </LinearLayout>
 

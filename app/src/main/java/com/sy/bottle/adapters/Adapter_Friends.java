@@ -1,13 +1,13 @@
 package com.sy.bottle.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
-import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.utils.PicassoUtlis;
 
@@ -58,20 +58,27 @@ public class Adapter_Friends extends android.widget.BaseAdapter {
             convertView = View.inflate(context, R.layout.item_profile_summary, null);
             viewHolder.avatar = convertView.findViewById(R.id.avatar);
             viewHolder.name = convertView.findViewById(R.id.name);
+            viewHolder.description = convertView.findViewById(R.id.description);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Friends_Entity.DataBean bean = listData.get(position);
-        PicassoUtlis.img( bean.getAvatar(), viewHolder.avatar);
+        PicassoUtlis.img(bean.getAvatar(), viewHolder.avatar);
         viewHolder.name.setText(bean.getContent() == null ? bean.getNickname() : bean.getContent());
+        if (TextUtils.isEmpty(bean.getSign())) {
+            viewHolder.description.setVisibility(View.GONE);
+        } else {
+            viewHolder.description.setVisibility(View.VISIBLE);
+            viewHolder.description.setText(bean.getSign());
+        }
 
         return convertView;
     }
 
     class ViewHolder {
         ImageView avatar;
-        TextView name;
+        TextView name, description;
     }
 }

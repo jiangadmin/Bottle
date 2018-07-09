@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
@@ -13,7 +15,9 @@ import com.sy.bottle.activity.mian.other.MessageNotifySettingActivity;
 import com.sy.bottle.activity.mian.other.NewWebActivity;
 import com.sy.bottle.dialog.Esc_Dialog;
 import com.sy.bottle.entity.Const;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Update_Servlet;
+import com.sy.bottle.utils.SaveUtils;
 
 /**
  * @author: jiangyao
@@ -26,6 +30,9 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
     private static final String TAG = "Setting_Servlet";
 
     Button blackList, about, esc, notify, privacy, update, setting_user_agreement;
+
+
+    Switch ringtone;
 
     public static void start(Context context) {
         Intent intent = new Intent();
@@ -52,6 +59,7 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
         esc = findViewById(R.id.setting_out);
         notify = findViewById(R.id.setting_notify);
         privacy = findViewById(R.id.setting_privacy);
+        ringtone = findViewById(R.id.setting_ringtone);
         setting_user_agreement = findViewById(R.id.setting_user_agreement);
 
         update.setOnClickListener(this);
@@ -61,6 +69,14 @@ public class Setting_Activity extends Base_Activity implements View.OnClickListe
         notify.setOnClickListener(this);
         privacy.setOnClickListener(this);
         setting_user_agreement.setOnClickListener(this);
+
+        ringtone.setChecked(!SaveUtils.getBoolean(Save_Key.S_铃声));
+        ringtone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                SaveUtils.setBoolean(Save_Key.S_铃声, !b);
+            }
+        });
     }
 
     @Override

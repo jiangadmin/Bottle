@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Put_forward_Servlet;
 import com.sy.bottle.servlet.Ratio_Serlvet;
+import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 
 /**
@@ -59,6 +61,15 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         balance.addTextChangedListener(this);
         submit.setOnClickListener(this);
 
+
+        if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.S_ALINAME))) {
+            alipay_name.setText(SaveUtils.getString(Save_Key.S_ALINAME));
+        }
+
+        if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.S_ALIPHONE))) {
+            alipay.setText(SaveUtils.getString(Save_Key.S_ALIPHONE));
+        }
+
     }
 
     @Override
@@ -100,6 +111,10 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
                     return;
                 }
                 Loading.show(this, "申请中");
+
+                SaveUtils.setString(Save_Key.S_ALINAME, alipay_name.getText().toString());
+                SaveUtils.setString(Save_Key.S_ALIPHONE, alipay.getText().toString());
+
                 Put_forward_Servlet.Info info = new Put_forward_Servlet.Info();
                 info.setAccount(alipay.getText().toString());
                 info.setMoney(money.getText().toString());

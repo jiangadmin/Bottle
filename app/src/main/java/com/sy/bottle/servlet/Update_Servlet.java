@@ -41,7 +41,7 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
     @Override
     protected Update_Entity doInBackground(String... strings) {
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "versions/" + ToolUtils.getVersionName() + "/" + Const.Channel, null);
-        LogUtil.e(TAG,res);
+        LogUtil.e(TAG, res);
         Update_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -80,7 +80,7 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
                 if (activity instanceof Welcome_Activity) {
 
                     if (entity.getData() == null) {
-                        LogUtil.e(TAG,"没有更新数据");
+                        LogUtil.e(TAG, "没有更新数据");
                         //判定是否有登录数据
                         if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.OPENID)) && SaveUtils.getBoolean(Save_Key.S_登录)) {
 
@@ -89,11 +89,11 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
                             new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
 
                         } else {
-                            LogUtil.e(TAG,"启动到登录");
+                            LogUtil.e(TAG, "启动到登录");
                             Login_Activity.start(activity);
                         }
                     } else {
-                        LogUtil.e(TAG,"有更新数据");
+                        LogUtil.e(TAG, "有更新数据");
                         updat(entity.getData().getUrl());
 
                         if (entity.getData().getIs_must().equals("0")) {
@@ -120,12 +120,18 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
 
     }
 
-
     public void updat(String url) {
-        Intent intent = new Intent();
-        intent.setData(Uri.parse(url));//Url 就是你要打开的网址
-        intent.setAction(Intent.ACTION_VIEW);
-        activity.startActivity(intent); //启动浏览器
+
+//        new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
+        try {
+            Intent intent = new Intent();
+            intent.setData(Uri.parse(url));//Url 就是你要打开的网址
+            intent.setAction(Intent.ACTION_VIEW);
+            activity.startActivity(intent); //启动浏览器
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+        }
+
     }
 
 }

@@ -59,14 +59,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                     break;
                 case -1:
                     TabToast.makeText("支付失败");
+                    LogUtil.e(TAG,resp.errStr);
                     break;
                 case -2:
                     TabToast.makeText("取消支付");
                     break;
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(String.valueOf(resp.errCode));
-            builder.show();
+            finish();
         }
     }
 }

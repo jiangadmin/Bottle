@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.mob.sdk'
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'piaoliupin'
@@ -10,13 +11,14 @@ android {
             storePassword 'jiangadmin'
         }
     }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.sy.bottle"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
@@ -44,12 +46,23 @@ android {
             }
         }
     }
+
     productFlavors {
+//        随缘漂流瓶 {
+//            applicationId "com.sy.bottle"
+//            versionCode 1
+//            versionName "1.0.0"
+//            signingConfig signingConfigs.config
+//
+//        }
+//
+//        星梦漂流 {
+//            applicationId "com.xm.bottle"
+//            versionCode 1
+//            versionName "1.0.0"
+//        }
     }
-
-
 }
-
 
 MobSDK {
     appKey "25e56ce23ee18"
@@ -103,7 +116,6 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
 
     //高德2d地图
-    implementation 'com.amap.api:map2d:latest.integration'
-
+    implementation 'com.amap.api:map2d:5.2.0'
 
 }

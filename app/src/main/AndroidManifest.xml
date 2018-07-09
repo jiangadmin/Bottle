@@ -37,7 +37,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:supportsRtl="true"
+        android:resizeableActivity="true"
         android:theme="@style/MyTheme">
 
         <!--欢迎页-->
@@ -165,6 +165,11 @@
             android:name=".activity.ImageViewActivity"
             android:screenOrientation="portrait" />
 
+        <!--有缘人-->
+        <activity
+            android:name=".activity.mian.friend.Friend_Online_Activity"
+            android:screenOrientation="portrait" />
+
         <!--聊天-->
         <activity
             android:name=".activity.mian.chat.ChatActivity"
@@ -244,7 +249,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 【必须】消息收发service -->
         <service
@@ -286,7 +291,9 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="b1cb8f9b970e9af6ff59c326aac17e96"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="b1cb8f9b970e9af6ff59c326aac17e96" />
 
     </application>
 

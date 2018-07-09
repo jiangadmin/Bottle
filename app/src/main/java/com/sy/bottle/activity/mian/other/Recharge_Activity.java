@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -34,7 +33,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: jiangyao
@@ -155,8 +153,8 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
 
                 keyValues.put("biz_content",
                         "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\"," +
-                                "\"total_amount\":\""+bean.getTotal_fee()+"\",\"subject\":\""+bean.getBody()+"\"," +
-                                "\"body\":\""+bean.getBody()+"\",\"out_trade_no\":\"" + bean.getOut_trade_no() + "\"}");
+                                "\"total_amount\":\"" + bean.getTotal_fee() + "\",\"subject\":\"" + bean.getBody() + "\"," +
+                                "\"body\":\"" + bean.getBody() + "\",\"out_trade_no\":\"" + bean.getOut_trade_no() + "\"}");
 
                 keyValues.put("charset", "utf-8");
 
@@ -195,15 +193,15 @@ public class Recharge_Activity extends Base_Activity implements View.OnClickList
             //微信
             case 1:
 
-                PayReq request = new PayReq();
-                request.appId =bean.getAppid() ;
-                request.partnerId = bean.getPartnerid();
-                request.prepayId = bean.getPrepayid();
-                request.packageValue = "Sign=WXPay";
-                request.nonceStr = bean.getNoncestr();
-                request.timeStamp = bean.getTimestamp();
-                request.sign = bean.getSign();
-                MyApp.api.sendReq(request);
+                MyApp.request = new PayReq();
+                MyApp.request.appId = bean.getAppid();
+                MyApp.request.partnerId = bean.getPartnerid();
+                MyApp.request.prepayId = bean.getPrepayid();
+                MyApp.request.packageValue = "Sign=WXPay";
+                MyApp.request.nonceStr = bean.getNoncestr();
+                MyApp.request.timeStamp = bean.getTimestamp();
+                MyApp.request.sign = bean.getSign();
+                MyApp.api.sendReq(MyApp.request);
 
                 break;
 

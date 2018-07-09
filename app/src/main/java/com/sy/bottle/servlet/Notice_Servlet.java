@@ -36,7 +36,8 @@ public class Notice_Servlet extends AsyncTask<String, Integer, Webtxt_Entity> {
     protected Webtxt_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "notices/" + strings[0], null);
-        LogUtil.e(TAG,res);
+
+        LogUtil.e(TAG, res);
         Webtxt_Entity entity;
 
         if (TextUtils.isEmpty(res)) {

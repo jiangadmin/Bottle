@@ -111,12 +111,34 @@ public class ChatPresenter implements Observer {
 
                         break;
 
+                    case 123003:
+                        Base_Dialog base_dialo2 = new Base_Dialog(MyApp.currentActivity());
+                        base_dialo2.setTitle("抱歉");
+                        base_dialo2.setMessage("为避免骚扰，请让对方添加您好友，才能发送喔");
+                        base_dialo2.setOk("确定", null);
+
+                        break;
+
+                    case 123004:
+                        Base_Dialog base_dialo3 = new Base_Dialog(MyApp.currentActivity());
+                        base_dialo3.setTitle("抱歉");
+                        base_dialo3.setMessage("您的账号存在异常情况，详情请联系客服");
+                        base_dialo3.setOk("确定", null);
+
+                        break;
+
+                    case 123010:
+                        Base_Dialog base_dialo4 = new Base_Dialog(MyApp.currentActivity());
+                        base_dialo4.setTitle("抱歉");
+                        base_dialo4.setMessage("您的聊天功能已被封禁");
+                        base_dialo4.setOk("确定", null);
+                        break;
+
                     default:
                         TabToast.makeText("错误码：" + code);
                         LogUtil.e(TAG, "错误码：" + code + desc);
                         break;
                 }
-
 
             }
 

@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingLeft="16dp">
 
@@ -22,21 +22,23 @@
 
             <TextView
                 android:id="@+id/message"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:autoLink="all"
+                android:text="支付宝站佛搜索不到，请检查支付宝搜索权限时候开启" />
 
         </LinearLayout>
 
         <TextView
-            android:textSize="10sp"
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="40dp"
-            android:gravity="center" />
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:text="2018-08-08 88:88:88"
+            android:textSize="10sp" />
 
         <ImageView
             android:id="@+id/type_bg"

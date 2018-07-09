@@ -18,6 +18,7 @@ import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
 import com.tencent.imsdk.TIMOfflinePushNotification;
 import com.tencent.imsdk.TIMSdkConfig;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
@@ -63,7 +64,7 @@ public class MyApp extends Application {
     /**
      * 正在聊天人的ID
      */
-    public static String ChatId= "";
+    public static String ChatId = "";
 
     /**
      * 好友列表
@@ -74,6 +75,8 @@ public class MyApp extends Application {
      * 我的数据
      */
     public static UserInfo_Entity.DataBean mybean = new UserInfo_Entity.DataBean();
+
+    public static PayReq request;
 
     @Override
     public void onCreate() {
@@ -106,7 +109,7 @@ public class MyApp extends Application {
         MobSDK.init(this);
 
         api = WXAPIFactory.createWXAPI(this, null);
-        api.registerApp("25e56ce23ee18");
+        api.registerApp("wx987316d1f1e0eac4");
 
         if (MsfSdkUtils.isMainProcess(this)) {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {

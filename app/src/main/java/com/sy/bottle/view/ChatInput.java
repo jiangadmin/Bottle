@@ -438,7 +438,12 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
                     GifImageView image = new GifImageView(getContext());
                     image.setImageBitmap(resizedBitmap);
-                    image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f);
+                    layoutParams.setMargins(0, 0, 0, 20);
+                    image.setLayoutParams(layoutParams);
+
+//                    image.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
                     linearLayout.addView(image);
                     image.setOnClickListener(new OnClickListener() {
                         @Override

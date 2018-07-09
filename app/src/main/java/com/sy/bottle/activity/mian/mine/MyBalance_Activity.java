@@ -147,6 +147,8 @@ public class MyBalance_Activity extends Base_Activity implements View.OnClickLis
 
         adapter_goods = new Adapter_Goods(this, this);
         goods.setAdapter(adapter_goods);
+
+        MyApp.api.unregisterApp();
     }
 
     @Override
