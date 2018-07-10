@@ -77,7 +77,6 @@ public class ChatPresenter implements Observer {
      * @param message 发送的消息
      */
     public void sendMessage(final TIMMessage message) {
-        LogUtil.e(TAG,message.toString());
         conversation.sendMessage(message, new TIMValueCallBack<TIMMessage>() {
             @Override
             public void onError(int code, String desc) {//发送消息失败

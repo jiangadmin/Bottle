@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/message_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/message_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/margin_la"
+            android:padding="10dp"
+            android:text="按住屏幕即可查看，松手立即销毁"
+            android:textColor="@color/gray_3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/message_s"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="@dimen/margin_la"
+            android:background="@drawable/ic_round_red"
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

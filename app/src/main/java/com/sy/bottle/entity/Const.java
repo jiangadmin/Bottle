@@ -23,12 +23,12 @@ public class Const {
 //    public static String Channel = "baidu";
     public static String Channel = "other";
 
+    public static String ReadDes = "<YHJF&&YHJF>";
 
     //sdk appid 由腾讯分配
     public static final int SDK_APPID = 1400109203;
 
     public static final String Wechat_AppID = "wx987316d1f1e0eac4";
-
 
     /** 支付宝支付业务：入参app_id */
     public static final String AliPay_APPID = "2018061560363471";

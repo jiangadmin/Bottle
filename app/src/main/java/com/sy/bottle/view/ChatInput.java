@@ -32,6 +32,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
 import com.sy.bottle.adapters.Gift_Adapter;
 import com.sy.bottle.dialog.Base_Dialog;
@@ -494,8 +495,12 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 }
                 break;
             case R.id.btn_readdes:
-                if (activity != null && requestStorage(activity)) {
-                    chatView.sendImage();
+                if (ChatActivity.IsReadDes) {
+                    ChatActivity.setIsReadDes(false);
+                    TabToast.makeText("关闭阅后即焚模式");
+                } else {
+                    ChatActivity.setIsReadDes(true);
+                    TabToast.makeText("开启阅后即焚模式");
                 }
                 break;
             case R.id.btn_voice:

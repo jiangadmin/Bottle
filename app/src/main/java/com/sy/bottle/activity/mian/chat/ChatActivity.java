@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -30,6 +31,7 @@ import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.model.CustomMessage;
@@ -68,6 +70,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * TODO：聊天界面
  */
@@ -100,16 +104,27 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     public Bundle bundle;
 
+   static GifImageView readdes_bg;
+
     /**
      * 阅后即焚
      */
-    public boolean IsReadDes = false;
+    public static boolean IsReadDes = false;
 
     public static void navToChat(Context context, String identify, TIMConversationType type) {
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra("identify", identify);
         intent.putExtra("type", type);
         context.startActivity(intent);
+    }
+
+    public static void setIsReadDes(boolean isReadDes) {
+        IsReadDes = isReadDes;
+        if (isReadDes){
+            readdes_bg.setVisibility(View.VISIBLE);
+        }else {
+            readdes_bg.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -125,6 +140,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         //记录当前正在聊天的人
         MyApp.ChatId = identify;
 
+        readdes_bg = findViewById(R.id.readdes_bg);
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //移除标记为id的通知 (只是针对当前Context下的所有Notification)
         notificationManager.cancel(Integer.parseInt(identify));
@@ -252,6 +268,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         super.onDestroy();
         MyApp.ChatId = "";
         presenter.stop();
+        setIsReadDes(false);
     }
 
     /**
@@ -442,7 +459,12 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     @Override
     public void sendText() {
         LogUtil.e(TAG, "发送文本消息");
-        Message message = new TextMessage(input.getText());
+        Editable text = input.getText();
+        //是否是阅后即焚
+        if (ChatActivity.IsReadDes) {
+            text.append(Const.ReadDes);
+        }
+        Message message = new TextMessage(text);
         presenter.sendMessage(message.getMessage());
         input.setText("");
     }
@@ -655,6 +677,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                         if (file.length() > 1024 * 1024 * 10) {
                             TabToast.makeText("文件过大,发送失败");
                         } else {
+
+//                            if (ChatActivity.IsReadDes) {
+//                                path = path + Const.ReadDes;
+//                            }
                             Message message = new ImageMessage(path, isOri);
                             presenter.sendMessage(message.getMessage());
                         }

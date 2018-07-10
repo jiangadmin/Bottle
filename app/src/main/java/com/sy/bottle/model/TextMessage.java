@@ -11,11 +11,15 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.dialog.ReadDes_Text_Dialog;
+import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.EmoticonUtil;
 import com.sy.bottle.utils.PicassoUtlis;
@@ -109,7 +113,7 @@ public class TextMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context) {
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 
@@ -137,10 +141,27 @@ public class TextMessage extends Message {
         if (!hasText) {
             stringBuilder.insert(0, " ");
         }
-        tv.setText(stringBuilder);
 
+        //包含阅后即焚关键字
+        if (stringBuilder.toString().contains(Const.ReadDes)) {
+            tv.setText("【阅后即焚·文字】");
+        } else {
+            tv.setText(stringBuilder);
+        }
+
+        final SpannableStringBuilder stringBuilder1 = stringBuilder;
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new ReadDes_Text_Dialog(context, stringBuilder1);
+                //删除此条记录
+                remove();
+            }
+        });
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
+
     }
 
     /**
@@ -167,7 +188,14 @@ public class TextMessage extends Message {
             }
 
         }
-        return result.toString();
+
+        //包含阅后即焚关键字
+        if (result.toString().contains(Const.ReadDes)) {
+            return "[阅后即焚·文字]";
+        } else {
+            return result.toString();
+        }
+
     }
 
     /**

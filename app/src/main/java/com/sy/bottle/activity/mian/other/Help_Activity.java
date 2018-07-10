@@ -88,7 +88,6 @@ public class Help_Activity extends Base_Activity implements AdapterView.OnItemCl
         webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.loadData(s, "text/html; charset=UTF-8", null);//这种写法可以正确解码
 
-
     }
 
     List<String> title;
