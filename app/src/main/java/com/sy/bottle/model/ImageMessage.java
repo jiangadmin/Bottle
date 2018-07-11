@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.ImageViewActivity;
@@ -67,14 +69,14 @@ public class ImageMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context, final int position) {
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
 
-        TIMImageElem e = (TIMImageElem) message.getElement(0);
+        final TIMImageElem e = (TIMImageElem) message.getElement(0);
 
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
         if (!TextUtils.isEmpty(friendfaceurl)) {
@@ -84,17 +86,36 @@ public class ImageMessage extends Message {
 
         switch (message.status()) {
             case Sending:
-                ImageView imageView = new ImageView(MyApp.getInstance());
-                imageView.setImageBitmap(getThumb(e.getPath()));
+
                 clearView(viewHolder);
-                getBubbleView(viewHolder).addView(imageView);
+                if (e.getLevel() == -1) {
+                    TextView tv = new TextView(MyApp.getInstance());
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                    tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+                    tv.setText("【阅后即焚·图片】");
+                    getBubbleView(viewHolder).addView(tv);
+                } else {
+                    ImageView imageView = new ImageView(MyApp.getInstance());
+                    imageView.setImageBitmap(getThumb(e.getPath()));
+                    getBubbleView(viewHolder).addView(imageView);
+
+                }
+
                 break;
             case SendSucc:
                 for (final TIMImage image : e.getImageList()) {
                     if (image.getType() == TIMImageType.Thumb) {
                         final String uuid = image.getUuid();
                         if (FileUtil.isCacheFileExist(uuid)) {
-                            showThumb(viewHolder, uuid);
+                            if (e.getLevel() == -1) {
+                                TextView tv = new TextView(MyApp.getInstance());
+                                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                                tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+                                tv.setText("【点开、长按查看、松手即毁】");
+                                getBubbleView(viewHolder).addView(tv);
+                            } else {
+                                showThumb(viewHolder, uuid);
+                            }
                         } else {
                             image.getImage(FileUtil.getCacheFilePath(uuid), new TIMCallBack() {
                                 @Override
@@ -106,23 +127,39 @@ public class ImageMessage extends Message {
 
                                 @Override
                                 public void onSuccess() {//成功，参数为图片数据
-                                    showThumb(viewHolder, uuid);
+                                    if (e.getLevel() == -1) {
+                                        TextView tv = new TextView(MyApp.getInstance());
+                                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                                        tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
+                                        tv.setText("【点开、长按查看、松手即毁】");
+                                        getBubbleView(viewHolder).addView(tv);
+                                    } else {
+                                        showThumb(viewHolder, uuid);
+                                    }
                                 }
                             });
                         }
                     }
                     if (image.getType() == TIMImageType.Original) {
                         final String uuid = image.getUuid();
-//                        setImageEvent(viewHolder, uuid,context);
+                        setImageEvent(viewHolder, uuid, context);
                         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 LogUtil.e(TAG, "图片地址 " + image.getUrl());
+                                LogUtil.e(TAG, "图片地址 " + e.getLevel());
                                 try {
                                     android.os.Message message = android.os.Message.obtain();
+                                    if (e.getLevel() == -1) {
+                                        message.what = e.getLevel();
+                                        remove();
+                                    }else {
+                                        message.what = 1;
+                                    }
                                     message.obj = image.getUrl();
-                                    LogUtil.e(TAG,image.getType().toString());
-                                    message.what = 1;
+                                    LogUtil.e(TAG, image.getType().toString());
+
+                                    message.arg1 = position;
                                     ChatActivity.mHandler.sendMessage(message);
 
                                 } catch (Exception e) {

@@ -38,7 +38,7 @@ public abstract class Message {
      * @param viewHolder 界面样式
      * @param context    显示消息的上下文
      */
-    public abstract void showMessage(ChatAdapter.ViewHolder viewHolder, Context context);
+    public abstract void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position);
 
     /**
      * 获取显示气泡

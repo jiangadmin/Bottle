@@ -18,7 +18,6 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
-import com.sy.bottle.dialog.ReadDes_Text_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.EmoticonUtil;
@@ -113,7 +112,7 @@ public class TextMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context, final int position) {
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 
@@ -144,7 +143,7 @@ public class TextMessage extends Message {
 
         //包含阅后即焚关键字
         if (stringBuilder.toString().contains(Const.ReadDes)) {
-            tv.setText("【阅后即焚·文字】");
+            tv.setText("【点开、长按查看、松手即毁】");
         } else {
             tv.setText(stringBuilder);
         }
@@ -154,7 +153,14 @@ public class TextMessage extends Message {
             @Override
             public void onClick(View view) {
 
-                new ReadDes_Text_Dialog(context, stringBuilder1);
+                if (stringBuilder1.toString().contains(Const.ReadDes)) {
+                    android.os.Message message = android.os.Message.obtain();
+                    message.obj = stringBuilder1;
+                    message.what = 2;
+                    message.arg1 = position;
+                    ChatActivity.mHandler.sendMessage(message);
+                }
+
                 //删除此条记录
                 remove();
             }

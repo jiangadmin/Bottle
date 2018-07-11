@@ -119,7 +119,7 @@ public class CustomMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
         //如果是礼物信息
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;

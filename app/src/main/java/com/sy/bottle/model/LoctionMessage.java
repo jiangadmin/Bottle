@@ -46,7 +46,7 @@ public class LoctionMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, final Context context,int position) {
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
 

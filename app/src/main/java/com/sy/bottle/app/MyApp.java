@@ -1,6 +1,7 @@
 package com.sy.bottle.app;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
@@ -18,6 +19,7 @@ import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
 import com.tencent.imsdk.TIMOfflinePushNotification;
 import com.tencent.imsdk.TIMSdkConfig;
+import com.tencent.imsdk.protocol.stat_set_pushsound;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -78,11 +80,13 @@ public class MyApp extends Application {
 
     public static PayReq request;
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-
+//        Config.DEBUG = true;
         Calendar calendar = Calendar.getInstance();
         //获取系统的日期
         //年
@@ -237,5 +241,43 @@ public class MyApp extends Application {
         } catch (Exception e) {
         }
     }
+
+
+
+    @Override
+    public void onLowMemory() {
+        // 低内存的时候执行
+        AppExit();
+        super.onLowMemory();
+    }
+
+
+    public boolean isBackground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(context.getPackageName())) {
+                /*
+                BACKGROUND=400 EMPTY=500 FOREGROUND=100
+                GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
+                 */
+                LogUtil.e(TAG, "此appimportace ="
+                        + appProcess.importance
+                        + ",context.getClass().getName()="
+                        + context.getClass().getName());
+//                if (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+////                    MyLogUtils.Loge(context.getPackageName(), "处于后台"
+////                           + appProcess.processName);
+//                    return true;
+//                } else {
+////                    MyLogUtils.Loge(context.getPackageName(), "处于前台"
+////                            + appProcess.processName);
+//                    return false;
+//                }
+            }
+        }
+        return false;
+    }
+
 
 }

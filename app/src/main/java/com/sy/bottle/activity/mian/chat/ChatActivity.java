@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -30,6 +31,8 @@ import com.sy.bottle.activity.ui.TCVideoRecordActivity;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
+import com.sy.bottle.dialog.ReadDes_Img_Dialog;
+import com.sy.bottle.dialog.ReadDes_Text_Dialog;
 import com.sy.bottle.dialog.ShowImage_Dialog;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
@@ -78,8 +81,8 @@ import pl.droidsonroids.gif.GifImageView;
 public class ChatActivity extends Base_Activity implements ChatView, View.OnClickListener {
     private static final String TAG = "ChatActivity";
 
-    private List<Message> messageList = new ArrayList<>();
-    private ChatAdapter adapter;
+    private static List<Message> messageList = new ArrayList<>();
+    private static ChatAdapter adapter;
     private ListView listView;
     private ChatPresenter presenter;
     private ChatInput input;
@@ -104,7 +107,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     public Bundle bundle;
 
-   static GifImageView readdes_bg;
+    static GifImageView readdes_bg;
 
     /**
      * 阅后即焚
@@ -120,9 +123,9 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     public static void setIsReadDes(boolean isReadDes) {
         IsReadDes = isReadDes;
-        if (isReadDes){
+        if (isReadDes) {
             readdes_bg.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             readdes_bg.setVisibility(View.GONE);
         }
     }
@@ -269,6 +272,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         MyApp.ChatId = "";
         presenter.stop();
         setIsReadDes(false);
+        messageList.clear();
+        adapter = null;
     }
 
     /**
@@ -422,9 +427,10 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     @Override
     public void sendImage() {
-        Intent intent_album = new Intent("android.intent.action.GET_CONTENT");
-        intent_album.setType("image/*");
-        startActivityForResult(intent_album, IMAGE_STORE);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+//        Intent intent_album = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_STORE);
     }
 
     /**
@@ -678,9 +684,11 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                             TabToast.makeText("文件过大,发送失败");
                         } else {
 
-//                            if (ChatActivity.IsReadDes) {
-//                                path = path + Const.ReadDes;
-//                            }
+
+                            if (ChatActivity.IsReadDes) {
+                                isOri = -1;
+                            }
+
                             Message message = new ImageMessage(path, isOri);
                             presenter.sendMessage(message.getMessage());
                         }
@@ -728,6 +736,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * @param path
      */
     private void sendFile(String path) {
+        LogUtil.e(TAG,"走了这里");
         if (path == null) return;
         File file = new File(path);
         if (file.exists()) {
@@ -785,7 +794,6 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         }
     }
 
-
     public static Handler mHandler = new Handler() {
         /**
          * handleMessage接收消息后进行相应的处理
@@ -794,18 +802,28 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-
             switch (msg.what) {
+
                 case 1:
                     LogUtil.e(TAG, "图片显示");
-                    new ShowImage_Dialog(activity, msg.obj).show();
+                    new ShowImage_Dialog(activity, (String) msg.obj).show();
+                    break;
+
+                case 2:
+                    new ReadDes_Text_Dialog(activity, (SpannableStringBuilder) msg.obj);
+                    messageList.remove(msg.arg1);
+                    adapter.notifyDataSetChanged();
                     break;
 
                 case -1:
-                    LogUtil.e(TAG, "阅后即焚");
+                    new ReadDes_Img_Dialog(activity, (String) msg.obj);
+                    messageList.remove(msg.arg1);
+                    adapter.notifyDataSetChanged();
+
                     break;
             }
 
         }
     };
+
 }

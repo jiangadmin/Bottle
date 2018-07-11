@@ -23,8 +23,9 @@
                 android:background="@drawable/xz_bg"
                 android:gravity="left|top"
                 android:hint="说点什么吧..."
+                android:textColorHint="@color/gray_9"
                 android:padding="10dp"
-                android:textColor="@color/gray_6" />
+                android:textColor="@color/gray_3" />
 
             <TextView
                 android:id="@+id/dialog_bottle_set_random"

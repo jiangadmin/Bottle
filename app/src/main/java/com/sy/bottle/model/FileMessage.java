@@ -43,7 +43,7 @@ public class FileMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
 

@@ -2,6 +2,7 @@ package com.sy.bottle.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.view.MotionEvent;
@@ -24,12 +25,15 @@ public class ReadDes_Text_Dialog extends MyDialog implements View.OnTouchListene
     private static final String TAG = "ReadDes_Text_Dialog";
 
     RelativeLayout view;
-    TextView message_text;
+    TextView message_text, message_s;
     static SpannableStringBuilder builder;
+
+    CountDownTimer countDownTimer;
 
     public ReadDes_Text_Dialog(@NonNull Context context, SpannableStringBuilder builder1) {
         super(context, R.style.myDialogTheme);
         builder = builder1;
+
         show();
     }
 
@@ -39,9 +43,22 @@ public class ReadDes_Text_Dialog extends MyDialog implements View.OnTouchListene
         setContentView(R.layout.dialog_readdes_text);
 
         view = findViewById(R.id.message_view);
+        message_s = findViewById(R.id.message_s);
         message_text = findViewById(R.id.message_text);
 
         view.setOnTouchListener(this);
+
+        countDownTimer = new CountDownTimer(7 * 1000, 1000 - 10) {
+            @Override
+            public void onTick(long l) {
+                message_s.setText(String.valueOf((l + 15) / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                dismiss();
+            }
+        };
 
         if (!builder.toString().contains(Const.ReadDes)) {
             message_text.setText("生命里有很多事情，注定得不到圆满，有人进来就会有人离去，一如青春的散场，带走的是欢笑，留下的却是叹息。");
@@ -56,12 +73,12 @@ public class ReadDes_Text_Dialog extends MyDialog implements View.OnTouchListene
             //按下
             case MotionEvent.ACTION_DOWN:
                 LogUtil.e(TAG, "按下");
-
+                countDownTimer.start();
                 //本次未被查看
                 if (builder.toString().contains(Const.ReadDes)) {
                     builder.delete(builder.length() - 12, builder.length());
                     message_text.setText(builder);
-                }else {
+                } else {
                     message_text.setText("真的，不骗您，您真的看过了");
                 }
 
@@ -69,10 +86,13 @@ public class ReadDes_Text_Dialog extends MyDialog implements View.OnTouchListene
             //抬起
             case MotionEvent.ACTION_UP:
                 this.dismiss();
+                countDownTimer.cancel();
                 LogUtil.e(TAG, "抬起");
                 break;
 
         }
         return true;
     }
+
+
 }

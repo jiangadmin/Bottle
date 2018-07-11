@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,8 +14,13 @@ import com.sy.bottle.activity.mian.bottle.Bottle_Fragment;
 import com.sy.bottle.activity.mian.chat.Chat_Fragment;
 import com.sy.bottle.activity.mian.friend.Friend_Fragment;
 import com.sy.bottle.activity.mian.mine.Mine_Fragment;
+import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Friends_Servlet;
+import com.sy.bottle.servlet.Login_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
+import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.SaveUtils;
+import com.tencent.imsdk.TIMManager;
 
 public class Main_Activity extends Base_Activity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -39,6 +45,11 @@ public class Main_Activity extends Base_Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
+
+        if (TextUtils.isEmpty(TIMManager.getInstance().getLoginUser())) {
+            LogUtil.e(TAG,"加载中");
+            new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
+        }
 
         initview();
 

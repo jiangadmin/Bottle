@@ -59,7 +59,7 @@ public class VoiceMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
         if (checkRevoke(viewHolder)) return;
         LinearLayout linearLayout = new LinearLayout(MyApp.getInstance());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);

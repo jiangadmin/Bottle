@@ -1,8 +1,10 @@
 package com.sy.bottle.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.sy.bottle.view.TabToast;
 
@@ -57,6 +59,7 @@ public class Util {
         });
         timer.start();
     }
+
 
     /**
      * @param view        按钮控件

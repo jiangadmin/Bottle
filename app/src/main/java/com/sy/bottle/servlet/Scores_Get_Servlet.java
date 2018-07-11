@@ -17,9 +17,6 @@ import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.utils.ToolUtils;
 import com.sy.bottle.view.TabToast;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author: jiangyao
  * @date: 2018/6/13
@@ -34,7 +31,7 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
     protected Base_Entity doInBackground(String... strings) {
 
         String res = HttpUtil.request(HttpUtil.PUT, Const.API + "scores/" + SaveUtils.getString(Save_Key.UID), null);
-        LogUtil.e(TAG,res);
+        LogUtil.e(TAG, res);
         Base_Entity entity;
 
         if (TextUtils.isEmpty(res)) {
@@ -62,15 +59,15 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
             case 200:
                 SaveUtils.setInt(Save_Key.S_捡星, SaveUtils.getInt(Save_Key.S_捡星) - 1);
                 TabToast.makeText(entity.getMessage());
-                if (MyApp.currentActivity() instanceof Main_Activity){
-                    Main_Activity.UpdateMyInfo();
-                }
+
+                Main_Activity.UpdateMyInfo();
+
                 SaveUtils.setInt(Save_Key.S_积分, SaveUtils.getInt(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
                 break;
             case 400:
-                if (entity.getMessage().equals("哎呀!今日次数已用完,明天再来吧")){
+                if (entity.getMessage().equals("哎呀!今日次数已用完,明天再来吧")) {
                     SaveUtils.setInt(Save_Key.S_捡星, 0);
-                    if (MyApp.currentActivity() instanceof Main_Activity){
+                    if (MyApp.currentActivity() instanceof Main_Activity) {
                         Main_Activity.UpdateMyInfo();
                     }
                 }

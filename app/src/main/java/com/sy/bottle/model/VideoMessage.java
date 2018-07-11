@@ -88,7 +88,7 @@ public class VideoMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context) {
+    public void showMessage(final ChatAdapter.ViewHolder viewHolder, final Context context,int position) {
 
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);

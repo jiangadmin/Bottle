@@ -28,7 +28,7 @@ public class GroupTipMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
         viewHolder.leftPanel.setVisibility(View.GONE);
         viewHolder.rightPanel.setVisibility(View.GONE);
         viewHolder.systemMessage.setVisibility(View.VISIBLE);

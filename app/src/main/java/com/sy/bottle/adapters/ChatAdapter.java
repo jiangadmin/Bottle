@@ -106,7 +106,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
                 }
             });
 //            PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar);
-            data.showMessage(viewHolder, getContext());
+            data.showMessage(viewHolder, getContext(),position);
         }
         return view;
     }

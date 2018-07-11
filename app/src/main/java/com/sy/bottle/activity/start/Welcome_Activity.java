@@ -27,16 +27,33 @@ public class Welcome_Activity extends Base_Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         PackageManager pm = getPackageManager();
+
         // 获取是否支持电话
         boolean telephony = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+
         // 是否支持GSM
         boolean gsm = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY_GSM);
+
+        //  是否支持WIFI
         boolean wifi = pm.hasSystemFeature(PackageManager.FEATURE_WIFI);
+
+        //是否支持相机
         boolean cam = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+
+        //是否支持陀螺仪
         boolean gyr = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
+
+        //是否支持光线传感器
         boolean light = pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_LIGHT);
 
-        if (telephony && gsm && wifi && cam && gyr && light) {
+        LogUtil.e(TAG,"是否支持电话："+telephony);
+        LogUtil.e(TAG,"是否支持GSM："+gsm);
+        LogUtil.e(TAG,"是否支持WIFI："+wifi);
+        LogUtil.e(TAG,"是否支持相机："+cam);
+        LogUtil.e(TAG,"是否支持陀螺仪："+gyr);
+        LogUtil.e(TAG,"是否支持光线传感器："+light);
+
+        if (telephony && gsm && wifi && cam && light) {
             //检测更新
             new Update_Servlet(this).execute();
         } else {
@@ -51,7 +68,6 @@ public class Welcome_Activity extends Base_Activity {
             });
         }
 
-
 //        if (SaveUtils.getBoolean(Save_Key.S_跳过引导)) {
 //            //判断是否登录过
 //
@@ -59,5 +75,6 @@ public class Welcome_Activity extends Base_Activity {
 //            Guide_Activity.start(this);
 //            MyApp.finishActivity();
 //        }
+
     }
 }
