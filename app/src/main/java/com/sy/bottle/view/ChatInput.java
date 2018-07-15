@@ -10,7 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -35,6 +37,7 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.mine.MyBalance_Activity;
 import com.sy.bottle.adapters.Gift_Adapter;
+import com.sy.bottle.app.MyApp;
 import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.entity.Save_Key;
@@ -249,8 +252,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
         }
     }
 
-
     private void updateVoiceView() {
+
         switch (isHoldVoiceBtn) {
             case -1:
                 TabToast.makeText("取消发送");
@@ -504,9 +507,11 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 }
                 break;
             case R.id.btn_voice:
+
                 if (activity != null && requestAudio(activity)) {
                     updateView(InputMode.VOICE);
                 }
+
                 break;
             case R.id.btn_keyboard:
                 updateView(InputMode.TEXT);

@@ -139,6 +139,11 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                     SaveUtils.setString(Save_Key.S_头像 + entity.getData().getId(), entity.getData().getAvatar());
                 }
 
+                if (myDialog != null) {
+                    myDialog.dismiss();
+                    UserInfo_Activity.start(MyApp.currentActivity(), entity.getData());
+                    return;
+                }
                 if (activity instanceof Main_Activity) {
                     MyApp.mybean = entity.getData();
                     ((Main_Activity) activity).CallBack_MyInfo();
@@ -163,10 +168,6 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
                 if (viewHolder != null) {
                     viewHolder.tvName.setText(TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNickname() : entity.getData().getContent());
                     PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);
-                }
-                if (myDialog != null) {
-                    myDialog.dismiss();
-                    UserInfo_Activity.start(MyApp.currentActivity(), entity.getData());
                 }
 
                 if (activity instanceof UserInfo_Activity) {

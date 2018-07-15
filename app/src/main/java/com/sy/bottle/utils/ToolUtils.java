@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,6 +71,28 @@ public class ToolUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 除法
+     *
+     * @param v1
+     * @param v2
+     * @param scale 精度，到小数点后几位
+     * @return
+     */
+
+    public static double div(String v1, String v2, int scale) {
+
+        if (scale < 0) {
+
+            throw new IllegalArgumentException("The scale must be a positive integer or ");
+
+        }
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        return b1.divide(b2, scale, BigDecimal.ROUND_DOWN).doubleValue();
+
     }
 
     /**

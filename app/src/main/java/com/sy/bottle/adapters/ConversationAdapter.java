@@ -60,8 +60,6 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
         viewHolder.tvName.setText(data.getName());
 
-        LogUtil.e(TAG, "头像" + data.getAvatar());
-
         //判断是c2c聊天
         if (!TextUtils.isEmpty(data.getIdentify())) {
             //判断有没有头像

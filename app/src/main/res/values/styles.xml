@@ -24,9 +24,7 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -78,6 +76,11 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:textCursorDrawable">@drawable/edittext_cd</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

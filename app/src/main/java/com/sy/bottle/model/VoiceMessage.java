@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,11 +58,12 @@ public class VoiceMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context, int position) {
         if (checkRevoke(viewHolder)) return;
         LinearLayout linearLayout = new LinearLayout(MyApp.getInstance());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setGravity(Gravity.CENTER);
+
         ImageView voiceIcon = new ImageView(MyApp.getInstance());
         voiceIcon.setBackgroundResource(message.isSelf() ? R.drawable.right_voice : R.drawable.left_voice);
         final AnimationDrawable frameAnimatio = (AnimationDrawable) voiceIcon.getBackground();
@@ -72,21 +72,27 @@ public class VoiceMessage extends Message {
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
         tv.setText(String.valueOf(((TIMSoundElem) message.getElement(0)).getDuration()) + "’");
+
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, context.getResources().getDisplayMetrics());
-        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, context.getResources().getDisplayMetrics());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int height2 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 22, context.getResources().getDisplayMetrics());
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, context.getResources().getDisplayMetrics());
+        int width2 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14 + 3 * ((TIMSoundElem) message.getElement(0)).getDuration(), context.getResources().getDisplayMetrics());
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width2, height2);
         LinearLayout.LayoutParams imageLp = new LinearLayout.LayoutParams(width, height);
+
         if (message.isSelf()) {
-            linearLayout.addView(tv);
             imageLp.setMargins(10, 0, 0, 0);
             voiceIcon.setLayoutParams(imageLp);
+            tv.setLayoutParams(lp);
+            linearLayout.addView(tv);
             linearLayout.addView(voiceIcon);
         } else {
             voiceIcon.setLayoutParams(imageLp);
-            linearLayout.addView(voiceIcon);
             lp.setMargins(10, 0, 0, 0);
             tv.setLayoutParams(lp);
             linearLayout.addView(tv);
+            linearLayout.addView(voiceIcon);
         }
 
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);

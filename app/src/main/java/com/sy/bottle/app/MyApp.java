@@ -19,7 +19,6 @@ import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
 import com.tencent.imsdk.TIMOfflinePushNotification;
 import com.tencent.imsdk.TIMSdkConfig;
-import com.tencent.imsdk.protocol.stat_set_pushsound;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -43,7 +42,8 @@ public class MyApp extends Application {
 
     private static Context context;
 
-    public static boolean LogShow = true;
+    public static boolean LogShow = false;
+    public static boolean Update_Need = false;
 
     public static Context getInstance() {
         return context;
@@ -58,10 +58,6 @@ public class MyApp extends Application {
      * 更新地址
      */
     public static String Update_URL;
-    /**
-     * 是否强制更新
-     */
-    public static boolean Update_Type;
 
     /**
      * 正在聊天人的ID
@@ -79,7 +75,6 @@ public class MyApp extends Application {
     public static UserInfo_Entity.DataBean mybean = new UserInfo_Entity.DataBean();
 
     public static PayReq request;
-
 
 
     @Override
@@ -241,7 +236,6 @@ public class MyApp extends Application {
         } catch (Exception e) {
         }
     }
-
 
 
     @Override

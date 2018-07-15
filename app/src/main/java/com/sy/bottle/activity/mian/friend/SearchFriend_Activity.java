@@ -41,12 +41,6 @@ public class SearchFriend_Activity extends Base_Activity implements FriendInfoVi
 
     Button search;
 
-    public static void start(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, SearchFriend_Activity.class);
-        context.startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

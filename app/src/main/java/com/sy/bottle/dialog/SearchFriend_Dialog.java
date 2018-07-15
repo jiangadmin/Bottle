@@ -12,10 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
+import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.SaveUtils;
-import com.sy.bottle.view.TabToast;
 
 /**
  * @author: jiangyao
@@ -63,17 +65,29 @@ public class SearchFriend_Dialog extends MyDialog implements View.OnClickListene
         String id = input.getText().toString();
         switch (view.getId()) {
             case R.id.dialog_ok:
+                //非空验证
                 if (TextUtils.isEmpty(id)) {
                     message.setVisibility(View.VISIBLE);
                     message.setText("请输入要查找的账号");
                     return;
                 }
 
-                if (SaveUtils.getString(Save_Key.UID).equals(id)){
+                //判断是否是自己
+                if (SaveUtils.getString(Save_Key.UID).equals(id)) {
                     message.setVisibility(View.VISIBLE);
                     message.setText("不能添加自己为好友");
                     input.setText("");
                     return;
+                }
+
+                //判断是否是好友
+                for (Friends_Entity.DataBean bean : MyApp.friendsbeans) {
+                    //判断是否是好友
+                    if (bean.getFriend_id().equals(id)) {
+                        FriendInfo_Activity.start(activity, id);
+                        dismiss();
+                        return;
+                    }
                 }
 
                 new UserInfo_Servlet(this).execute(id);

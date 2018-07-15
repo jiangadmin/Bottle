@@ -37,4 +37,10 @@ public class ExampleUnitTest {
         System.out.println(s.toString());
 
     }
+
+    @Test
+    public void String2int(){
+        String ver = "1.0.0";
+        System.out.println(Integer.valueOf(ver.replace(".","")));
+    }
 }

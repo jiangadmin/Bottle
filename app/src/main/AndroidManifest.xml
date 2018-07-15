@@ -204,10 +204,6 @@
             android:name=".activity.mian.other.Put_forward_Log_Activity"
             android:screenOrientation="portrait" />
 
-        <!--搜索好友-->
-        <activity
-            android:name=".activity.mian.friend.SearchFriend_Activity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.mian.friend.FriendInfo_Activity"

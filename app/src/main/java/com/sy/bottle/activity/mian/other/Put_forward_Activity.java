@@ -9,17 +9,23 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.Loading;
+import com.sy.bottle.entity.Ratio_List_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.Put_forward_Servlet;
-import com.sy.bottle.servlet.Ratio_Serlvet;
+import com.sy.bottle.servlet.Ratio_List_Serlvet;
 import com.sy.bottle.utils.SaveUtils;
+import com.sy.bottle.utils.ToolUtils;
+import com.sy.bottle.view.EditTextWithClearButton;
 import com.sy.bottle.view.TabToast;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author: jiangyao
@@ -37,11 +43,13 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         context.startActivity(intent);
     }
 
-    EditText alipay, alipay_name, balance;
+    EditTextWithClearButton alipay, alipay_name, balance;
 
     TextView money;
 
     Button submit;
+
+    List<Ratio_List_Entity.DataBean> bean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +60,9 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         setMenu("记录");
         setBack(true);
 
+        Loading.show(this, "请稍后");
+        new Ratio_List_Serlvet(this).execute();
+
         alipay = findViewById(R.id.out_alipay);
         alipay_name = findViewById(R.id.out_alipay_name);
         balance = findViewById(R.id.out_alipay_balance);
@@ -61,7 +72,6 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
         balance.addTextChangedListener(this);
         submit.setOnClickListener(this);
 
-
         if (!TextUtils.isEmpty(SaveUtils.getString(Save_Key.S_ALINAME))) {
             alipay_name.setText(SaveUtils.getString(Save_Key.S_ALINAME));
         }
@@ -70,6 +80,11 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
             alipay.setText(SaveUtils.getString(Save_Key.S_ALIPHONE));
         }
 
+        if (SaveUtils.getInt(Save_Key.S_能量) >= 1500) {
+            balance.setHint("可输入最大转出能量：" + SaveUtils.getInt(Save_Key.S_能量));
+        } else {
+            balance.setHint("能量不足，无法提取");
+        }
     }
 
     @Override
@@ -84,15 +99,45 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if (editable.toString() != null) {
-            new Ratio_Serlvet(this).execute(editable.toString());
+
+        if (!TextUtils.isEmpty(editable.toString())) {
+            for (Ratio_List_Entity.DataBean dataBean : bean) {
+                if (Integer.valueOf(editable.toString()) >= dataBean.getNum()) {
+                    if (dataBean.getRatio() != 0) {
+                        money.setText(String.valueOf(ToolUtils.div(editable.toString(), String.valueOf(dataBean.getRatio()), 1)));
+
+                    } else {
+                        money.setText("0");
+                    }
+                    return;
+                }
+            }
         } else {
-            money.setText("");
+            money.setText("0");
         }
     }
 
-    public void CallBack_Money(String s) {
-        money.setText(s);
+    public void CallBack_Money(List<Ratio_List_Entity.DataBean> dataBean) {
+        if (dataBean != null) {
+            Collections.sort(dataBean, new Comparator<Ratio_List_Entity.DataBean>() {
+
+                @Override
+                public int compare(Ratio_List_Entity.DataBean dataBean, Ratio_List_Entity.DataBean t1) {
+                    Ratio_List_Entity.DataBean stu1 = dataBean;
+                    Ratio_List_Entity.DataBean stu2 = t1;
+                    if (stu1.getNum() < stu2.getNum()) {
+                        return 1;
+                    } else if (stu1.getNum() == stu2.getNum()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
+
+        }
+        bean = dataBean;
+
     }
 
     @Override
@@ -110,6 +155,17 @@ public class Put_forward_Activity extends Base_Activity implements TextWatcher, 
                     TabToast.makeText("请完善支付宝信息");
                     return;
                 }
+
+                if (Integer.valueOf(balance.getText().toString()) > SaveUtils.getInt(Save_Key.S_能量)) {
+                    TabToast.makeText("提取能量不能大于您拥有的能量");
+                    return;
+                }
+
+                if (Integer.valueOf(balance.getText().toString()) < 1500) {
+                    TabToast.makeText("最小提取值为:1500");
+                    return;
+                }
+
                 Loading.show(this, "申请中");
 
                 SaveUtils.setString(Save_Key.S_ALINAME, alipay_name.getText().toString());

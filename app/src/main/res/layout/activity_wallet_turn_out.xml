@@ -15,31 +15,28 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
 
-        <EditText
-            android:textSize="14sp"
+        <com.sy.bottle.view.EditTextWithClearButton
+            android:id="@+id/out_alipay_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_heigt"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/yuanjiao_white_t1"
+            android:hint="请输入提取支付宝账户姓名"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
+
+        <com.sy.bottle.view.EditTextWithClearButton
             android:id="@+id/out_alipay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_heigt"
             android:layout_marginTop="10dp"
             android:background="@drawable/yuanjiao_white_t1"
             android:hint="请输入提取支付宝账户"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
 
-        <EditText
-            android:textSize="14sp"
-
-            android:inputType="text"
-            android:id="@+id/out_alipay_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_heigt"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/yuanjiao_white_t1"
-            android:hint="请输入提取支付宝账户姓名"
-            android:paddingLeft="10dp" />
-
-        <EditText
-            android:textSize="14sp"
-
+        <com.sy.bottle.view.EditTextWithClearButton
             android:id="@+id/out_alipay_balance"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_heigt"
@@ -48,64 +45,66 @@
             android:hint="请输入转出能量"
             android:inputType="number"
             android:maxLength="8"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textSize="14sp" />
 
         <RelativeLayout
-            android:gravity="center_vertical"
-            android:background="@drawable/yuanjiao_white_t1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_heigt"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:background="@drawable/yuanjiao_white_t1"
+            android:gravity="center_vertical">
 
             <TextView
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/gray_9"
-                android:textSize="14sp"
-                android:text="可到账金额"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="可到账金额"
+                android:textColor="@color/gray_9"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/out_alipay_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
+                android:text="0"
                 android:textColor="@color/gray_9"
-                android:textSize="14sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
         <Button
-            android:layout_marginTop="20dp"
-            android:textColor="@color/white"
             android:id="@+id/out_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_style"
             android:gravity="center"
             android:text="兑换奖励"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text=" ·提取现金说明"
-            android:textColor="#FE5B50" />
+            android:textColor="#FE5B50"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:lineSpacingExtra="5dp"
             android:text="输入金额为100元以上,并为100的整数倍；\n提现手续费按照提现金额的0.6%收取，最高收取1000元；\n钱包账户提现操作开放时间为工作日早上9:30~12:00，下午13:00~16:30；\n完成提现申请后将于当天1小时以内处理到账；\n周末及节假日将不开放提现申请，请牢记提现开放时间。"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

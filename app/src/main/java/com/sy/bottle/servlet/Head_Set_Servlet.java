@@ -69,6 +69,7 @@ public class Head_Set_Servlet extends AsyncTask<String, Integer, Avatars_Entity>
                 if (activity instanceof Edit_Mine_Info_Activity) {
                     ((Edit_Mine_Info_Activity) activity).initinfo();
                 }
+
                 TIMFriendshipManager.ModifyUserProfileParam userProfileParam = new TIMFriendshipManager.ModifyUserProfileParam();
                 userProfileParam.setFaceUrl(entity.getUrl());
 

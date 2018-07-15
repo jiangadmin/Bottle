@@ -1,8 +1,8 @@
 package com.sy.bottle.dialog;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -12,7 +12,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sy.bottle.R;
+import com.sy.bottle.activity.mian.Main_Activity;
+import com.sy.bottle.activity.start.Login_Activity;
+import com.sy.bottle.activity.start.Welcome_Activity;
 import com.sy.bottle.app.MyApp;
+import com.sy.bottle.entity.Save_Key;
+import com.sy.bottle.servlet.UserInfo_Servlet;
+import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.RateTextCircularProgressBar;
 
 import java.io.File;
@@ -28,7 +34,7 @@ import java.net.URL;
 public class UpdateManger {
     private static final String TAG = "UpdateManger";
     // 应用程序Context
-    private Context mContext;
+    private Activity mContext;
     // 提示消息
     private Dialog noticeDialog;// 提示有软件更新的对话框
     private Dialog downloadDialog;// 下载对话框
@@ -63,24 +69,20 @@ public class UpdateManger {
         }
     };
 
-    public UpdateManger(Context context, int version) {
+    public UpdateManger(Activity context, int version) {
         saveFileName = savePath + "sybottle" + version + ".apk";
         this.mContext = context;
-    }
-
-    // 显示更新程序对话框，供主程序调用
-    public void checkUpdateInfo() {
-        showNoticeDialog();
     }
 
     /**
      * 升级提示
      * 提示更新了什么
      */
-    private void showNoticeDialog() {
+    public void showNoticeDialog(String message) {
 
         Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
         base_dialog.setTitle("发现新版本");
+        base_dialog.setMessage(message);
         base_dialog.setOk("立即更新", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,22 +92,25 @@ public class UpdateManger {
         });
 
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);// Builder，可以通过此builder设置改变AleartDialog的默认的主题样式及属性相关信息
-//        builder.setTitle("发现新版本");
-//        builder.setMessage(MDApp.Update_Message);
-//        builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//
         //判断是否强制更新
-        if (!MyApp.Update_Type) {
-            base_dialog.setEsc("以后再说", null);
+        if (!MyApp.Update_Need) {
+            base_dialog.setEsc("以后再说", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mContext instanceof Welcome_Activity) {
+                        //查询个人资料
+                        new UserInfo_Servlet(MyApp.currentActivity()).execute();
+
+                        SaveUtils.setBoolean(Save_Key.S_登录, true);
+                        Main_Activity.start(MyApp.currentActivity());
+                        MyApp.finishActivity(Login_Activity.class);
+                        MyApp.finishActivity(Welcome_Activity.class);
+                    }
+                }
+            });
         }
 
-//        noticeDialog = builder.create();
+        noticeDialog = base_dialog;
         noticeDialog.setCanceledOnTouchOutside(false);
         noticeDialog.setCancelable(false);
         noticeDialog.show();
@@ -121,7 +126,7 @@ public class UpdateManger {
         progressBar = downloadDialog.findViewById(R.id.update_progressbar);
         dialogsuccess = downloadDialog.findViewById(R.id.update_success);
         dialogesc = downloadDialog.findViewById(R.id.update_esc);
-        if (MyApp.Update_Type) {
+        if (MyApp.Update_Need) {
             dialogesc.setVisibility(View.GONE);
         }
         dialogsuccess.setVisibility(View.GONE);
@@ -131,6 +136,17 @@ public class UpdateManger {
             public void onClick(View view) {
                 downloadDialog.dismiss();
                 interceptFlag = true;
+
+                if (mContext instanceof Welcome_Activity) {
+                    //查询个人资料
+                    new UserInfo_Servlet(MyApp.currentActivity()).execute();
+
+                    SaveUtils.setBoolean(Save_Key.S_登录, true);
+                    Main_Activity.start(MyApp.currentActivity());
+                    MyApp.finishActivity(Login_Activity.class);
+                    MyApp.finishActivity(Welcome_Activity.class);
+                }
+
             }
         });
         dialogsuccess.setOnClickListener(new View.OnClickListener() {
@@ -169,8 +185,7 @@ public class UpdateManger {
             return;
         }
         Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
-                "application/vnd.android.package-archive");// File.toString()会返回路径信息
+        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");// File.toString()会返回路径信息
         mContext.startActivity(i);
     }
 

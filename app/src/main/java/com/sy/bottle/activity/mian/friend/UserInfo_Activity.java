@@ -45,6 +45,7 @@ public class UserInfo_Activity extends Base_Activity implements View.OnClickList
 
     public static void start(Context context, UserInfo_Entity.DataBean userInfo_entity) {
         entity = userInfo_entity;
+        id = entity.getId();
         start(context);
     }
 

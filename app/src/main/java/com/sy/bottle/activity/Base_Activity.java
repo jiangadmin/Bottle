@@ -19,6 +19,7 @@ import com.sy.bottle.R;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.ToolUtils;
+import com.sy.bottle.view.SlidingLayout;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -41,20 +42,6 @@ public class Base_Activity extends FragmentActivity {
 
         MyApp.addActivity(this);
 
-        //把状态栏设置为透明
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-//                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-////                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            //透明状态栏
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//            //透明导航栏
-////            window.setNavigationBarColor(Color.TRANSPARENT);
-//        }
     }
 
     /**
@@ -221,6 +208,7 @@ public class Base_Activity extends FragmentActivity {
 //        if (RightOut && !SaveUtils.getBoolean(Save_Key.S_关闭手势)) {
 //            new SlidingLayout(this).bindActivity(this);
 //        }
+        new SlidingLayout(this).bindActivity(this);
 
         ImageButton backBtn = findViewById(R.id.back);
         if (isvisible) {

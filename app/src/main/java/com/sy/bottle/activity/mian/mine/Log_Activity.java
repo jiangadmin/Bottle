@@ -132,7 +132,6 @@ public class Log_Activity extends Base_Activity implements View.OnClickListener 
 
         switch (view.getId()) {
             case R.id.mybalance_put_forward:
-                Loading.show(this, "请稍后");
                 Put_forward_Activity.start(this);
                 break;
             case R.id.gift_agreement:

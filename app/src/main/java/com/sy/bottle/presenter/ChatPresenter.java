@@ -29,12 +29,12 @@ import java.util.Observer;
  * 聊天界面逻辑
  */
 public class ChatPresenter implements Observer {
+    private final static String TAG = "ChatPresenter";
 
     private ChatView view;
     private TIMConversation conversation;
     private boolean isGetingMessage = false;
     private final int LAST_MESSAGE_NUM = 20;
-    private final static String TAG = "ChatPresenter";
 
     public ChatPresenter(ChatView view, String identify, TIMConversationType type) {
         this.view = view;
@@ -84,56 +84,47 @@ public class ChatPresenter implements Observer {
                 //错误码code含义请参见错误码表
                 view.onSendMessageFail(code, desc, message);
 
+                Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
+                base_dialog.setTitle("抱歉");
+                base_dialog.setMessage(desc);
+
                 switch (code) {
                     //黑名单
                     case 123001:
-                        Base_Dialog base_dialog = new Base_Dialog(MyApp.currentActivity());
-                        base_dialog.setTitle("抱歉");
-                        base_dialog.setMessage("您已被对方加入黑名单");
+
                         base_dialog.setOk("确定", null);
 
                         break;
                     //能量不足
                     case 123002:
 
-                        Base_Dialog base_dialog1 = new Base_Dialog(MyApp.currentActivity());
-                        base_dialog1.setTitle("能量不足");
-                        base_dialog1.setMessage("请在设置页面领取今天赠送能量、当日赠送能量消耗完，请补充能量或明天聊");
-                        base_dialog1.setOk("去充值", new View.OnClickListener() {
+                        base_dialog.setOk("去充值", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 MyBalance_Activity.start(MyApp.currentActivity());
 
                             }
                         });
-                        base_dialog1.setEsc("再想想", null);
+                        base_dialog.setEsc("再想想", null);
 
                         break;
 
                     case 123003:
-                        Base_Dialog base_dialo2 = new Base_Dialog(MyApp.currentActivity());
-                        base_dialo2.setTitle("抱歉");
-                        base_dialo2.setMessage("为避免骚扰，请让对方添加您好友，才能发送喔");
-                        base_dialo2.setOk("确定", null);
+                        base_dialog.setOk("确定", null);
 
                         break;
 
                     case 123004:
-                        Base_Dialog base_dialo3 = new Base_Dialog(MyApp.currentActivity());
-                        base_dialo3.setTitle("抱歉");
-                        base_dialo3.setMessage("您的账号存在异常情况，详情请联系客服");
-                        base_dialo3.setOk("确定", null);
+                        base_dialog.setOk("确定", null);
 
                         break;
 
                     case 123010:
-                        Base_Dialog base_dialo4 = new Base_Dialog(MyApp.currentActivity());
-                        base_dialo4.setTitle("抱歉");
-                        base_dialo4.setMessage("您的聊天功能已被封禁");
-                        base_dialo4.setOk("确定", null);
+                        base_dialog.setOk("确定", null);
                         break;
 
                     default:
+                        base_dialog.setOk("确定", null);
                         TabToast.makeText("错误码：" + code);
                         LogUtil.e(TAG, "错误码：" + code + desc);
                         break;

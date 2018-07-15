@@ -83,7 +83,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     private static List<Message> messageList = new ArrayList<>();
     private static ChatAdapter adapter;
-    private ListView listView;
+    private static ListView listView;
     private ChatPresenter presenter;
     private ChatInput input;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -101,13 +101,12 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     private String titleStr;
     private Handler handler = new Handler();
 
+    private static TextView chat_readdes;
     TextView mesage;
 
     static Activity activity;
 
     public Bundle bundle;
-
-    static GifImageView readdes_bg;
 
     /**
      * 阅后即焚
@@ -124,9 +123,11 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
     public static void setIsReadDes(boolean isReadDes) {
         IsReadDes = isReadDes;
         if (isReadDes) {
-            readdes_bg.setVisibility(View.VISIBLE);
+            listView.setBackgroundResource(R.drawable.chat_readdes_bg);
+            chat_readdes.setVisibility(View.VISIBLE);
         } else {
-            readdes_bg.setVisibility(View.GONE);
+            listView.setBackgroundResource(R.color.background);
+            chat_readdes.setVisibility(View.GONE);
         }
     }
 
@@ -143,20 +144,24 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         //记录当前正在聊天的人
         MyApp.ChatId = identify;
 
-        readdes_bg = findViewById(R.id.readdes_bg);
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //移除标记为id的通知 (只是针对当前Context下的所有Notification)
         notificationManager.cancel(Integer.parseInt(identify));
 
         presenter = new ChatPresenter(this, identify, type);
         input = findViewById(R.id.input_panel);
+        chat_readdes = findViewById(R.id.chat_readdes);
+
+        //推送号屏蔽 输入框
+        if (identify.equals("100002")){
+            input.setVisibility(View.GONE);
+        }else {
+            input.setVisibility(View.VISIBLE);
+        }
         mesage = findViewById(R.id.mesage);
         input.setChatView(this);
         adapter = new ChatAdapter(this, R.layout.item_message, messageList);
         listView = findViewById(R.id.list);
-
-        //定时器
-        Util.startTimer(mesage, 30, 1);
 
         listView.setAdapter(adapter);
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
@@ -225,6 +230,9 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         voiceSendingView = findViewById(R.id.voice_sending);
         presenter.start();
 
+
+        LogUtil.e(TAG,messageList.size());
+
     }
 
     /**
@@ -234,6 +242,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      */
     public void Callback_UserInfo(UserInfo_Entity.DataBean bean) {
         if (bean != null) {
+            titleStr = TextUtils.isEmpty(bean.getContent()) ? bean.getNickname() : bean.getContent();
             setRTitle(TextUtils.isEmpty(bean.getContent()) ? bean.getNickname() : bean.getContent());
             adapter.setHead(bean.getAvatar());
             adapter.notifyDataSetChanged();
@@ -323,6 +332,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                 }
             }
         }
+
     }
 
     /**
@@ -362,6 +372,12 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         }
         adapter.notifyDataSetChanged();
         listView.setSelection(newMsgNum);
+
+        if (messageList.size()==0){
+            mesage.setVisibility(View.VISIBLE);
+            //定时器
+            Util.startTimer(mesage, 30, 1);
+        }
     }
 
     /**

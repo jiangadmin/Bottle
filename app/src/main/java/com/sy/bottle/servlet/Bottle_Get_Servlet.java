@@ -74,7 +74,11 @@ public class Bottle_Get_Servlet extends AsyncTask<String, Integer, Bottle_Get_En
                     Base_Dialog base_dialog = new Base_Dialog(activity);
                     base_dialog.setMessage("呀！瓶子捡完了！一会儿再来吧");
                     base_dialog.setOk("好的",null);
+                    return;
                 }
+
+                TabToast.makeText(entity.getMessage());
+
                 break;
             case 401:
                 new ReLogin_Dialog();

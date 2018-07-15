@@ -8,6 +8,7 @@ package com.sy.bottle.entity;
  * TODO: 存储键
  */
 public class Save_Key {
+    public static final String S_升级成功 = "UpdateSuccess";
     public static String S_跳过引导 = "JumpGuide";
 
     /**
@@ -92,11 +93,10 @@ public class Save_Key {
      */
     public static String S_ALIPHONE = "S_ALIPHONE";
 
-     /**
+    /**
      * 声音提现
      */
-    public static String S_铃声= "Ringtone";
-
+    public static String S_铃声 = "Ringtone";
 
 
 }

@@ -2,7 +2,6 @@ package com.sy.bottle.activity.mian.chat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +16,7 @@ import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.adapters.ConversationAdapter;
+import com.sy.bottle.dialog.Base_Dialog;
 import com.sy.bottle.model.Conversation;
 import com.sy.bottle.model.CustomMessage;
 import com.sy.bottle.model.FriendshipConversation;
@@ -26,7 +26,6 @@ import com.sy.bottle.model.NomalConversation;
 import com.sy.bottle.presenter.ConversationPresenter;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
 import com.sy.bottle.presenter.GroupManagerPresenter;
-import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.ConversationView;
 import com.sy.bottle.viewfeatures.FriendshipMessageView;
@@ -51,7 +50,7 @@ import java.util.List;
  * @Phone: 186 6120 1018
  * TODO: 消息
  */
-public class Chat_Fragment extends Base_Fragment implements  ConversationView, FriendshipMessageView, GroupManageMessageView {
+public class Chat_Fragment extends Base_Fragment implements ConversationView, FriendshipMessageView, GroupManageMessageView, View.OnClickListener {
     private static final String TAG = "Chat_Fragment";
 
     private List<Conversation> conversationList = new LinkedList<>();
@@ -68,6 +67,7 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
 
     View v;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +80,9 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
         super.onViewCreated(view, savedInstanceState);
         v = view;
         setTitle(view, "消息");
+
+        //增加一键清空
+        setMenu(view, R.drawable.ic_clean);
 
         listView = view.findViewById(R.id.chat_list);
         viewnull = view.findViewById(R.id.view_null);
@@ -192,6 +195,7 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
                 iterator.remove();
                 updateview();
                 return;
+
             }
         }
     }
@@ -222,7 +226,6 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
      */
     @Override
     public void refresh() {
-        LogUtil.e(TAG, "刷新");
         Collections.sort(conversationList);
         updateview();
         if (getActivity() instanceof Main_Activity)
@@ -301,7 +304,9 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Conversation conversation = conversationList.get(info.position);
+        LogUtil.e(TAG, item.getItemId());
         switch (item.getItemId()) {
+
             case 1:
                 if (conversation != null) {
                     if (conversation instanceof NomalConversation) {
@@ -312,6 +317,7 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
                     }
                 }
                 break;
+
             default:
                 break;
         }
@@ -338,6 +344,36 @@ public class Chat_Fragment extends Base_Fragment implements  ConversationView, F
         } else {
             viewnull.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.menu:
+                Base_Dialog base_dialog = new Base_Dialog(getActivity());
+                base_dialog.setTitle("警告");
+                base_dialog.setMessage("确认清楚所有聊天吗？");
+                base_dialog.setOk("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Iterator<Conversation> iterator = conversationList.iterator();
+                        while (iterator.hasNext()) {
+                            Conversation conversation = iterator.next();
+                            if (conversation.getIdentify() != null && conversation instanceof NomalConversation) {
+                                if (presenter.delConversation(((NomalConversation) conversation).getType(), conversation.getIdentify())) {
+                                    iterator.remove();
+
+                                }
+                            }
+                        }
+                        updateview();
+
+                    }
+                });
+                base_dialog.setEsc("取消", null);
+                break;
         }
     }
 }
