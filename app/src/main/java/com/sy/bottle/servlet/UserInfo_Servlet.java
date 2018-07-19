@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Main_Activity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.activity.mian.friend.AddFriend_Activity;
@@ -45,6 +49,8 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
     Fragment fragment;
 
+    View view;
+
     ConversationAdapter.ViewHolder viewHolder;
 
     SearchFriend_Dialog myDialog;
@@ -61,8 +67,9 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
         this.activity = activity;
     }
 
-    public UserInfo_Servlet(ConversationAdapter.ViewHolder viewHolder) {
+    public UserInfo_Servlet(View view, ConversationAdapter.ViewHolder viewHolder) {
         this.viewHolder = viewHolder;
+        this.view = view;
     }
 
     @Override
@@ -167,7 +174,7 @@ public class UserInfo_Servlet extends AsyncTask<String, Integer, UserInfo_Entity
 
                 if (viewHolder != null) {
                     viewHolder.tvName.setText(TextUtils.isEmpty(entity.getData().getContent()) ? entity.getData().getNickname() : entity.getData().getContent());
-                    PicassoUtlis.img(entity.getData().getAvatar(), viewHolder.avatar);
+                    Glide.with(MyApp.getInstance()).load(entity.getData().getAvatar()).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(viewHolder.avatar);
                 }
 
                 if (activity instanceof UserInfo_Activity) {

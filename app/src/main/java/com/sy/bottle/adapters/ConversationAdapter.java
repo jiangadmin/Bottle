@@ -9,11 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.model.Conversation;
 import com.sy.bottle.servlet.UserInfo_Servlet;
-import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.TimeUtil;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     private View view;
     private ViewHolder viewHolder;
 
+    Context context;
+
     /**
      * Constructor
      *
@@ -38,6 +41,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
      */
     public ConversationAdapter(Context context, int resource, List<Conversation> objects) {
         super(context, resource, objects);
+        this.context = context;
         resourceId = resource;
     }
 
@@ -50,6 +54,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             view = LayoutInflater.from(getContext()).inflate(resourceId, null);
             viewHolder = new ViewHolder();
             viewHolder.tvName = view.findViewById(R.id.name);
+            viewHolder.guan = view.findViewById(R.id.guan);
             viewHolder.avatar = view.findViewById(R.id.avatar);
             viewHolder.lastMessage = view.findViewById(R.id.last_message);
             viewHolder.time = view.findViewById(R.id.message_time);
@@ -62,11 +67,18 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
 
         //判断是c2c聊天
         if (!TextUtils.isEmpty(data.getIdentify())) {
+            //判断是否是官方账号
+            if (data.getIdentify().contains("1000")) {
+                viewHolder.guan.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.guan.setVisibility(View.GONE);
+            }
+
             //判断有没有头像
             if (data.getAvatar() != null) {
-                PicassoUtlis.img(data.getAvatar(), viewHolder.avatar);
+                Glide.with(context).load(data.getAvatar()).into(viewHolder.avatar);
             } else {
-                new UserInfo_Servlet(viewHolder).execute(data.getIdentify());
+                new UserInfo_Servlet(convertView,viewHolder).execute(data.getIdentify());
             }
         } else {
             viewHolder.avatar.setImageResource(data.getAvatarID());
@@ -93,6 +105,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     }
 
     public class ViewHolder {
+        public ImageView guan;
         public TextView tvName;
         public ImageView avatar;
         public TextView lastMessage;

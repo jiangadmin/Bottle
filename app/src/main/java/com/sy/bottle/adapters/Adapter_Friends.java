@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.utils.PicassoUtlis;
@@ -65,7 +66,7 @@ public class Adapter_Friends extends android.widget.BaseAdapter {
         }
 
         Friends_Entity.DataBean bean = listData.get(position);
-        PicassoUtlis.img(bean.getAvatar(), viewHolder.avatar);
+        Glide.with(context).load(bean.getAvatar()).into(viewHolder.avatar);
         viewHolder.name.setText(bean.getContent() == null ? bean.getNickname() : bean.getContent());
         if (TextUtils.isEmpty(bean.getSign())) {
             viewHolder.description.setVisibility(View.GONE);

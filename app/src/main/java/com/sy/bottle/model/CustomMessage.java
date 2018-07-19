@@ -5,17 +5,17 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMMessage;
@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Map;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * 自定义消息
@@ -119,7 +121,7 @@ public class CustomMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context, int position) {
         //如果是礼物信息
         clearView(viewHolder);
         if (checkRevoke(viewHolder)) return;
@@ -128,10 +130,12 @@ public class CustomMessage extends Message {
         viewHolder.rightMessage.setBackground(null);
 
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
+
         if (!TextUtils.isEmpty(friendfaceurl)) {
-            PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+            Glide.with(context).load(friendfaceurl).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(viewHolder.leftAvatar);
         }
-        PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+
+        Glide.with(context).load(SaveUtils.getString(Save_Key.S_头像)).apply(new RequestOptions().placeholder(R.drawable.head_me)).into(viewHolder.rightAvatar);
 
         TIMCustomElem elem = (TIMCustomElem) message.getElement(0);
 
@@ -154,8 +158,8 @@ public class CustomMessage extends Message {
             linearLayout.setGravity(Gravity.CENTER);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-            ImageView imageView = new ImageView(context);
-            PicassoUtlis.img(gifturl, imageView);
+            GifImageView imageView = new GifImageView(context);
+            Glide.with(context).load(gifturl).into(imageView);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(400, 400);//两个400分别为添加图片的大小
             imageView.setLayoutParams(params);
 
@@ -164,7 +168,6 @@ public class CustomMessage extends Message {
             tv.setTextColor(MyApp.getInstance().getResources().getColor(R.color.style_color));
 //            tv.setTextColor(MyApp.getInstance().getResources().getColor(isSelf() ? R.color.white : R.color.black));
             tv.setText("【礼物】" + gift.getString("Name"));
-
 
             clearView(viewHolder);
 
@@ -221,6 +224,5 @@ public class CustomMessage extends Message {
         INVALID,
         GIFT,
     }
-
 
 }

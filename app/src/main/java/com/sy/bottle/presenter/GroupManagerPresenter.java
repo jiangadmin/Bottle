@@ -1,7 +1,6 @@
 package com.sy.bottle.presenter;
 
 
-import com.sy.bottle.activity.mian.chat.Chat_Fragment;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.viewfeatures.GroupInfoView;
 import com.sy.bottle.viewfeatures.GroupManageMessageView;

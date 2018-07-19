@@ -53,6 +53,7 @@ public class Welcome_Activity extends Base_Activity {
         LogUtil.e(TAG,"是否支持陀螺仪："+gyr);
         LogUtil.e(TAG,"是否支持光线传感器："+light);
 
+//        new Update_Servlet(this).execute();
         if (telephony && gsm && wifi && cam && light) {
             //检测更新
             new Update_Servlet(this).execute();

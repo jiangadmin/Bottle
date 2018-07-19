@@ -27,7 +27,6 @@
     </ListView>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/chat_readdes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +35,8 @@
         android:ems="1"
         android:text="阅后即焚模式启动中"
         android:textColor="@color/background"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/mesage"
@@ -62,6 +62,13 @@
         android:id="@+id/voice_sending"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/chat_gift_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 

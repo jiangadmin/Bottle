@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 import com.mob.MobSDK;
 import com.sy.bottle.R;
@@ -11,6 +12,7 @@ import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
+import com.sy.bottle.servlet.Timeing_Servlet;
 import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
@@ -42,7 +44,7 @@ public class MyApp extends Application {
 
     private static Context context;
 
-    public static boolean LogShow = false;
+    public static boolean LogShow = true;
     public static boolean Update_Need = false;
 
     public static Context getInstance() {
@@ -52,7 +54,6 @@ public class MyApp extends Application {
     public static IWXAPI api;
 
     TIMSdkConfig TIMSdkConfig;
-
 
     /**
      * 更新地址
@@ -100,6 +101,10 @@ public class MyApp extends Application {
         }
 
         Foreground.init(this);
+
+
+        //模拟心跳
+        new Timeing_Servlet().onBind(new Intent());
 
         TIMSdkConfig = new TIMSdkConfig(Const.SDK_APPID);
         TIMManager.getInstance().init(this, TIMSdkConfig);

@@ -9,10 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.tencent.imsdk.TIMUserProfile;
 
 import java.util.List;
@@ -148,7 +147,7 @@ public class ExpandGroupListAdapter extends BaseExpandableListAdapter {
         itemHolder.tag.setVisibility(selectable ? View.VISIBLE : View.GONE);
         LogUtil.e(TAG, "头像：" + data.getFaceUrl());
         if (!TextUtils.isEmpty(data.getFaceUrl())) {
-            PicassoUtlis.img(data.getFaceUrl(), itemHolder.avatar);
+            Glide.with(mContext).load(data.getFaceUrl()).into(itemHolder.avatar);
         }
 //        itemHolder.tag.setImageResource(data.isSelected() ? R.drawable.selected : R.drawable.unselected);
         return convertView;

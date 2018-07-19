@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,15 +61,22 @@ import com.sy.bottle.view.ChatInput;
 import com.sy.bottle.view.TabToast;
 import com.sy.bottle.view.VoiceSendingView;
 import com.sy.bottle.viewfeatures.ChatView;
+import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMConversationType;
+import com.tencent.imsdk.TIMCustomElem;
 import com.tencent.imsdk.TIMElemType;
 import com.tencent.imsdk.TIMMessage;
 import com.tencent.imsdk.TIMMessageStatus;
+import com.tencent.imsdk.TIMSoundElem;
 import com.tencent.imsdk.ext.message.TIMMessageDraft;
 import com.tencent.imsdk.ext.message.TIMMessageExt;
 import com.tencent.imsdk.ext.message.TIMMessageLocator;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +116,8 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
 
     public Bundle bundle;
 
+    private static GifImageView gifImageView;
+
     /**
      * 阅后即焚
      */
@@ -131,6 +141,14 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         }
     }
 
+
+    public static void ShowGift(int id) {
+        gifImageView.setImageResource(id);
+        gifImageView.setVisibility(View.VISIBLE);
+        Util.startTimer(gifImageView, 2, 1);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,11 +169,12 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         presenter = new ChatPresenter(this, identify, type);
         input = findViewById(R.id.input_panel);
         chat_readdes = findViewById(R.id.chat_readdes);
+        gifImageView = findViewById(R.id.chat_gift_show);
 
         //推送号屏蔽 输入框
-        if (identify.equals("100002")){
+        if (identify.equals("100002")) {
             input.setVisibility(View.GONE);
-        }else {
+        } else {
             input.setVisibility(View.VISIBLE);
         }
         mesage = findViewById(R.id.mesage);
@@ -231,7 +250,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         presenter.start();
 
 
-        LogUtil.e(TAG,messageList.size());
+        LogUtil.e(TAG, messageList.size());
 
     }
 
@@ -317,6 +336,49 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
                             messageList.add(mMessage);
                             adapter.notifyDataSetChanged();
                             listView.setSelection(adapter.getCount() - 1);
+
+                            TIMCustomElem elem = (TIMCustomElem) message.getElement(0);
+
+                            try {
+                                JSONObject jsonObj = new JSONObject(new String(elem.getData()));
+                                String actionParam = jsonObj.getString("actionParam");
+
+                                actionParam = actionParam.replace("{", "{\"");
+                                actionParam = actionParam.replace("=", "\":\"");
+                                actionParam = actionParam.replace(",", "\",\"");
+                                actionParam = actionParam.replace("}", "\"}");
+
+                                actionParam = actionParam.replaceAll(" ", "");
+
+                                JSONObject gift = new JSONObject(actionParam);
+
+                                switch (gift.getString("Name")) {
+                                    case "棒棒糖":
+                                        ShowGift(R.drawable.bbt_gift);
+                                        break;
+                                    case "香蕉":
+                                        break;
+                                    case "干一杯":
+                                        break;
+                                    case "捡肥皂":
+                                        break;
+                                    case "钻戒":
+                                        break;
+                                    case "水晶皇冠":
+                                        break;
+                                    case "520玫瑰花":
+                                        break;
+                                    case "跑车":
+                                        break;
+                                    case "幸福游轮":
+                                        break;
+
+                                }
+
+                            } catch (Exception e) {
+                                LogUtil.e(TAG, e.getMessage());
+                            }
+
                             break;
                     }
 
@@ -373,7 +435,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         adapter.notifyDataSetChanged();
         listView.setSelection(newMsgNum);
 
-        if (messageList.size()==0){
+        if (messageList.size() == 0) {
             mesage.setVisibility(View.VISIBLE);
             //定时器
             Util.startTimer(mesage, 30, 1);
@@ -752,7 +814,7 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
      * @param path
      */
     private void sendFile(String path) {
-        LogUtil.e(TAG,"走了这里");
+        LogUtil.e(TAG, "走了这里");
         if (path == null) return;
         File file = new File(path);
         if (file.exists()) {
@@ -819,27 +881,24 @@ public class ChatActivity extends Base_Activity implements ChatView, View.OnClic
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-
+                //阅后即焚·图片
+                case -1:
+                    new ReadDes_Img_Dialog(activity, (String) msg.obj);
+                    messageList.remove(msg.arg1);
+                    adapter.notifyDataSetChanged();
+                    break;
+                //图片显示
                 case 1:
                     LogUtil.e(TAG, "图片显示");
                     new ShowImage_Dialog(activity, (String) msg.obj).show();
                     break;
-
+                //阅后即焚·文字
                 case 2:
                     new ReadDes_Text_Dialog(activity, (SpannableStringBuilder) msg.obj);
                     messageList.remove(msg.arg1);
                     adapter.notifyDataSetChanged();
                     break;
-
-                case -1:
-                    new ReadDes_Img_Dialog(activity, (String) msg.obj);
-                    messageList.remove(msg.arg1);
-                    adapter.notifyDataSetChanged();
-
-                    break;
             }
-
         }
     };
-
 }

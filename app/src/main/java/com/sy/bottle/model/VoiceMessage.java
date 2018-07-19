@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
 import com.sy.bottle.app.MyApp;
@@ -101,8 +103,10 @@ public class VoiceMessage extends Message {
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
         if (!TextUtils.isEmpty(friendfaceurl)) {
             PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+            Glide.with(context).load(friendfaceurl).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(viewHolder.leftAvatar);
         }
         PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+
 
         clearView(viewHolder);
         getBubbleView(viewHolder).addView(linearLayout);
@@ -135,6 +139,15 @@ public class VoiceMessage extends Message {
     }
 
     private void playAudio(final AnimationDrawable frameAnimatio) {
+
+        if (MediaUtil.getInstance().IsPlay()) {
+            MediaUtil.getInstance().stop();
+            frameAnimatio.stop();
+            frameAnimatio.selectDrawable(0);
+
+            return;
+        }
+
         TIMSoundElem elem = (TIMSoundElem) message.getElement(0);
         final File tempAudio = FileUtil.getTempFile(FileUtil.FileType.AUDIO);
         elem.getSoundToFile(tempAudio.getAbsolutePath(), new TIMCallBack() {

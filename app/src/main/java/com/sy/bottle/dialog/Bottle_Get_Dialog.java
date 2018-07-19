@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.entity.Bottle_Get_Entity;
@@ -68,7 +69,7 @@ public class Bottle_Get_Dialog extends MyDialog implements View.OnClickListener 
 
     public void init(Bottle_Get_Entity.DataBean bean) {
         this.bean = bean;
-        PicassoUtlis.img(bean.getAvatar(), avatar);
+        Glide.with(context).load(bean.getAvatar()).into(avatar);
         name.setText(bean.getNickname());
         address.setText("来自 " + bean.getCity());
         message.setText(bean.getContent());

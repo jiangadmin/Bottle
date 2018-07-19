@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.request.Request;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Banner_Entity;
 
@@ -289,12 +290,14 @@ public class ImageCycleView extends LinearLayout {
             ClickableImageView imageView;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new ClickableImageView(mContext);
+
                 imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 imageView.setScaleType(ScaleType.CENTER_CROP);
 
             } else {
                 imageView = mImageViewCacheList.remove(0);
             }
+
             // 设置图片点击监听
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -302,7 +305,6 @@ public class ImageCycleView extends LinearLayout {
                     listener.onImageClick(beans.get(position % beans.size()), v);
                 }
             });
-            imageView.setTag(imageUrl);
 
             container.addView(imageView);
 

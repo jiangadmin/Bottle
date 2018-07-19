@@ -14,6 +14,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.adapters.ChatAdapter;
@@ -21,7 +23,6 @@ import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.EmoticonUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.tencent.imsdk.TIMElem;
 import com.tencent.imsdk.TIMElemType;
@@ -121,9 +122,9 @@ public class TextMessage extends Message {
 
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
         if (!TextUtils.isEmpty(friendfaceurl)) {
-            PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+            Glide.with(context).load(friendfaceurl).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(viewHolder.leftAvatar);
         }
-        PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+        Glide.with(context).load(SaveUtils.getString(Save_Key.S_头像)).apply(new RequestOptions().placeholder(R.drawable.head_me)).into(viewHolder.rightAvatar);
 
         boolean hasText = false;
         TextView tv = new TextView(MyApp.getInstance());

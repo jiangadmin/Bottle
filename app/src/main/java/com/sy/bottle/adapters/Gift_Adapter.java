@@ -1,6 +1,7 @@
 package com.sy.bottle.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,12 +9,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.utils.PicassoUtlis;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * @author: jiangyao
@@ -69,7 +73,8 @@ public class Gift_Adapter extends BaseAdapter {
 
         Gift_Entity.DataBean bean = dataBeans.get(position);
 
-        PicassoUtlis.img(bean.getPic_url(), holder.img);
+        holder.img.setImageURI(Uri.parse(bean.getPic_url()));
+        Glide.with(context).load(bean.getPic_url()).into(holder.img);
         holder.name.setText(bean.getName());
         holder.price.setText(String.valueOf(bean.getPrice()));
 
@@ -77,7 +82,7 @@ public class Gift_Adapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        ImageView img;
+        GifImageView img;
         TextView name;
         TextView price;
     }

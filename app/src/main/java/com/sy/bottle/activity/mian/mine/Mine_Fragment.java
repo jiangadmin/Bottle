@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.mian.Base_Fragment;
 import com.sy.bottle.activity.mian.other.Help_Activity;
@@ -125,7 +127,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
 
         name.setText(bean.getNickname());
 
-        PicassoUtlis.img(bean.getAvatar(), head, R.drawable.head_me);
+        Glide.with(this).load(bean.getAvatar()).apply(new RequestOptions().placeholder(R.drawable.head_me)).into(head);
 
         id.setText(SaveUtils.getString(Save_Key.UID));
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
@@ -146,6 +148,7 @@ public class Mine_Fragment extends Base_Fragment implements View.OnClickListener
                     new Scores_Get_Servlet().execute();
                 } else {
                     TabToast.makeText("今日次数已用完,明天再领吧！");
+                    receive_num.setVisibility(View.GONE);
                     return;
                 }
 

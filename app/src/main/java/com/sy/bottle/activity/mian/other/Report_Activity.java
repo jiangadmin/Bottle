@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.Loading;
@@ -21,7 +22,6 @@ import com.sy.bottle.servlet.Report_Photo_Servlet;
 import com.sy.bottle.servlet.Report_Servlet;
 import com.sy.bottle.utils.ImageUtils;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.TabToast;
 
 /**
@@ -53,7 +53,7 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
      */
     private static final int REQUEST_PICK = 201;
 
-    String[] string = {"请选择举报理由", "扔瓶子内容（违规）", "色情低俗（文字/图片/语音）", "广告/垃圾信息", "欺诈信息","发送政治/违法/恐怖内容","其他违规行为"};
+    String[] string = {"请选择举报理由", "扔瓶子内容（违规）", "色情低俗（文字/图片/语音）", "广告/垃圾信息", "欺诈信息", "发送政治/违法/恐怖内容", "其他违规行为"};
 
     private ArrayAdapter<String> adapter;
 
@@ -146,7 +146,7 @@ public class Report_Activity extends Base_Activity implements View.OnClickListen
     public void CallBcak(String url) {
         LogUtil.e(TAG, "图片地址 " + url);
         imageurl = url;
-        PicassoUtlis.img(url, photos);
+        Glide.with(this).load(url).into(photos);
         photos_clean.setVisibility(View.VISIBLE);
     }
 

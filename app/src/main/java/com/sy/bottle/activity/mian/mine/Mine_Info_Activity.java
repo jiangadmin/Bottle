@@ -2,7 +2,6 @@ package com.sy.bottle.activity.mian.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.dialog.ShowImage_Dialog;
@@ -20,7 +20,6 @@ import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.entity.UserInfo_Entity;
 import com.sy.bottle.servlet.Photos_Get_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
 import com.sy.bottle.view.ImageCycleView;
@@ -93,9 +92,8 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
      */
     public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
         nickname.setText(dataBean.getNickname());
-        head.setImageURI(Uri.parse(dataBean.getAvatar()));
 
-        PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
+        Glide.with(this).load(dataBean.getAvatar()).into(head);
 
         sign.setText(dataBean.getSign());
         id.setContent(SaveUtils.getString(Save_Key.UID));
@@ -121,7 +119,7 @@ public class Mine_Info_Activity extends Base_Activity implements View.OnClickLis
         photos.setBeans(dBeans, new ImageCycleView.Listener() {
             @Override
             public void displayImage(String imageURL, ImageView imageView) {
-                Picasso.with(Mine_Info_Activity.this).load(imageURL).into(imageView);
+                Glide.with(Mine_Info_Activity.this).load(imageURL).apply(new RequestOptions().placeholder(R.drawable.loading)).into(imageView);
             }
 
             @Override

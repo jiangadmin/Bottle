@@ -214,6 +214,11 @@
             android:name=".activity.mian.friend.AddFriend_Activity"
             android:screenOrientation="portrait" />
 
+        <!--排行榜-->
+        <activity
+            android:name=".activity.mian.bottle.Ranking_Activity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.Edit_Activity"
             android:screenOrientation="portrait" />

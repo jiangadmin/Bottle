@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.ClipImageActivity;
@@ -33,7 +35,6 @@ import com.sy.bottle.servlet.Update_MineInfo_Servlet;
 import com.sy.bottle.servlet.UserInfo_Servlet;
 import com.sy.bottle.utils.ImageUtils;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.CircleImageView;
 import com.sy.bottle.view.TabToast;
@@ -170,8 +171,7 @@ public class Edit_Mine_Info_Activity extends Base_Activity implements View.OnCli
     public void CallBack_Info(UserInfo_Entity.DataBean dataBean) {
         this.dataBean = dataBean;
 
-
-        PicassoUtlis.img(dataBean.getAvatar(), head, R.drawable.head_me);
+        Glide.with(this).load(dataBean.getAvatar()).apply(new RequestOptions().placeholder(R.drawable.head_me)).into(head);
 
         nickname.setText(dataBean.getNickname());
         sign.setText(dataBean.getSign());

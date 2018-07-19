@@ -56,7 +56,6 @@ import java.util.Map;
 public class MyBalance_Activity extends Base_Activity implements View.OnClickListener, Adapter_Goods.Listenner {
     private static final String TAG = "MyBalance_Activity";
 
-
     TextView num, put_forward, agreement;
 
     ListViewForScrollView goods;

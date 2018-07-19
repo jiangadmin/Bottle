@@ -44,6 +44,14 @@ public class MediaUtil {
         this.eventListener = eventListener;
     }
 
+    public boolean IsPlay() {
+        if (player != null && player.isPlaying()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void play(FileInputStream inputStream) {
         try {
             if (eventListener != null) {

@@ -43,6 +43,7 @@ import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.servlet.GiftList_Servlet;
 import com.sy.bottle.utils.LogUtil;
+import com.sy.bottle.utils.MediaUtil;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.viewfeatures.ChatView;
 
@@ -135,6 +136,14 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 switch (event.getAction()) {
                     //按下
                     case MotionEvent.ACTION_DOWN:
+
+                        MediaUtil.getInstance().stop();
+
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
                         y1 = event.getY();
 

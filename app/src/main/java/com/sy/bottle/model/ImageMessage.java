@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.ImageViewActivity;
 import com.sy.bottle.activity.mian.chat.ChatActivity;
@@ -20,7 +22,6 @@ import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Save_Key;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.utils.SaveUtils;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
@@ -80,9 +81,9 @@ public class ImageMessage extends Message {
 
         String friendfaceurl = SaveUtils.getString(Save_Key.S_头像 + message.getSender());
         if (!TextUtils.isEmpty(friendfaceurl)) {
-            PicassoUtlis.img(friendfaceurl, viewHolder.leftAvatar, R.drawable.head_other);
+            Glide.with(context).load(friendfaceurl).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(viewHolder.leftAvatar);
         }
-        PicassoUtlis.img(SaveUtils.getString(Save_Key.S_头像), viewHolder.rightAvatar, R.drawable.head_me);
+        Glide.with(context).load(SaveUtils.getString(Save_Key.S_头像)).apply(new RequestOptions().placeholder(R.drawable.head_me)).into(viewHolder.rightAvatar);
 
         switch (message.status()) {
             case Sending:
@@ -153,7 +154,7 @@ public class ImageMessage extends Message {
                                     if (e.getLevel() == -1) {
                                         message.what = e.getLevel();
                                         remove();
-                                    }else {
+                                    } else {
                                         message.what = 1;
                                     }
                                     message.obj = image.getUrl();

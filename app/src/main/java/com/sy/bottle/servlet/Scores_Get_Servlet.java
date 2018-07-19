@@ -65,7 +65,8 @@ public class Scores_Get_Servlet extends AsyncTask<String, Integer, Base_Entity> 
                 SaveUtils.setInt(Save_Key.S_积分, SaveUtils.getInt(Save_Key.S_积分) + ToolUtils.StringInInt(entity.getMessage()));
                 break;
             case 400:
-                if (entity.getMessage().equals("哎呀!今日次数已用完,明天再来吧")) {
+                if (entity.getMessage().equals("哎呀!今日次数已用完,明天再来吧") ||
+                        entity.getMessage().equals("今日领取经已达上限")) {
                     SaveUtils.setInt(Save_Key.S_捡星, 0);
                     if (MyApp.currentActivity() instanceof Main_Activity) {
                         Main_Activity.UpdateMyInfo();

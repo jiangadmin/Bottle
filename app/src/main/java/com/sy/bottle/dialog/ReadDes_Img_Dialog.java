@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.PicassoUtlis;
@@ -52,7 +53,6 @@ public class ReadDes_Img_Dialog extends MyDialog implements View.OnTouchListener
 
         view.setOnTouchListener(this);
 
-
         countDownTimer = new CountDownTimer(7 * 1000, 1000 - 10) {
             @Override
             public void onTick(long l) {
@@ -76,7 +76,7 @@ public class ReadDes_Img_Dialog extends MyDialog implements View.OnTouchListener
                 LogUtil.e(TAG, "按下");
 
                 //本次未被查看
-                PicassoUtlis.img(url, imageView);
+                Glide.with(view).load(url).into(imageView);
 
                 countDownTimer.start();
 

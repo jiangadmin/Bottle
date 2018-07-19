@@ -44,7 +44,6 @@ public class NewWebActivity extends Base_Activity {
     Uri uri;
     static WebView mywebview;
 
-
     public static void start(Context context, String url) {
         Intent intent = new Intent();
         intent.setClass(context, NewWebActivity.class);

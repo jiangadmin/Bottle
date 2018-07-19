@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.model.FriendFuture;
 import com.sy.bottle.presenter.FriendshipManagerPresenter;
@@ -65,7 +66,7 @@ public class FriendManageMessageAdapter extends ArrayAdapter<FriendFuture> {
         final FriendFuture data = getItem(position);
         LogUtil.e(TAG,data.getFaceUrl());
         if (!TextUtils.isEmpty(data.getFaceUrl())) {
-            PicassoUtlis.img(data.getFaceUrl(), viewHolder.avatar);
+            Glide.with(convertView).load(data.getFaceUrl()).into(viewHolder.avatar);
         } else {
             viewHolder.avatar.setImageResource(R.drawable.head_other);
         }

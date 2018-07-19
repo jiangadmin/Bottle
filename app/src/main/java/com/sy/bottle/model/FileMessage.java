@@ -6,6 +6,7 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sy.bottle.R;
 import com.sy.bottle.adapters.ChatAdapter;
@@ -13,7 +14,6 @@ import com.sy.bottle.app.MyApp;
 import com.sy.bottle.entity.Gift_Entity;
 import com.sy.bottle.utils.FileUtil;
 import com.sy.bottle.utils.LogUtil;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.TabToast;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMFileElem;
@@ -43,7 +43,7 @@ public class FileMessage extends Message {
      * @param context    显示消息的上下文
      */
     @Override
-    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context,int position) {
+    public void showMessage(ChatAdapter.ViewHolder viewHolder, Context context, int position) {
         viewHolder.rightMessage.setBackgroundResource(R.drawable.bg_bubble_blue);
         viewHolder.leftMessage.setBackgroundResource(R.drawable.bg_bubble_gray);
 
@@ -58,7 +58,7 @@ public class FileMessage extends Message {
         ImageView imageView = new ImageView(MyApp.getInstance());
         Gift_Entity.DataBean bean = new Gson().fromJson(e.getPath(), Gift_Entity.DataBean.class);
         if (bean.getPic_url() != null) {
-            PicassoUtlis.Cornersimg(bean.getPic_url(), imageView);
+            Glide.with(context).load(bean.getPic_url()).into(imageView);
         }
         getBubbleView(viewHolder).addView(imageView);
         showStatus(viewHolder);

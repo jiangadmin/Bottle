@@ -18,7 +18,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/edit_heigt"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="1dp"
+        android:elevation="3dp">
 
         <TextView
             android:id="@+id/log_gifts_get"
@@ -68,17 +69,25 @@
     </LinearLayout>
 
     <ListView
+        android:padding="5dp"
         android:id="@+id/gift_log_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/yuanjiao_white_t1"
+        android:scrollbars="none">
 
     </ListView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:elevation="3dp">
 
         <TextView
             android:id="@+id/ml"

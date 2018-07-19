@@ -9,15 +9,12 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.squareup.picasso.Transformation;
-import com.sy.bottle.activity.mian.chat.ChatActivity;
 import com.sy.bottle.app.MyApp;
 
 /**

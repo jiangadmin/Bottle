@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sy.bottle.R;
 import com.sy.bottle.utils.PicassoUtlis;
 import com.tencent.rtmp.ITXLivePlayListener;
@@ -76,8 +77,7 @@ public class TCVideoPreviewActivity extends Activity implements View.OnClickList
         mCoverImagePath = getIntent().getStringExtra(VIDEO_RECORD_COVERPATH);
 
         mImageViewBg = findViewById(R.id.cover);
-        PicassoUtlis.img(Uri.fromFile(new File(mCoverImagePath)), mImageViewBg);
-//        Glide.with(this).load(Uri.fromFile(new File(mCoverImagePath))).into(mImageViewBg);
+        Glide.with(this).load(Uri.fromFile(new File(mCoverImagePath))).into(mImageViewBg);
 
         mTXLivePlayer = new TXLivePlayer(this);
         mTXPlayConfig = new TXLivePlayConfig();

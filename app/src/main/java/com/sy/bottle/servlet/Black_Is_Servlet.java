@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.sy.bottle.activity.mian.friend.FriendInfo_Activity;
+import com.sy.bottle.activity.mian.friend.UserInfo_Activity;
 import com.sy.bottle.dialog.Loading;
 import com.sy.bottle.entity.Const;
 import com.sy.bottle.entity.Friends_Entity;
@@ -35,7 +36,7 @@ public class Black_Is_Servlet extends AsyncTask<String, Integer, Boolean> {
 
         String res = HttpUtil.request(HttpUtil.GET, Const.API + "blacklists/" + SaveUtils.getString(Save_Key.UID), null);
 
-        LogUtil.e(TAG,res);
+        LogUtil.e(TAG, res);
 
         Friends_Entity entity;
         if (TextUtils.isEmpty(res)) {
@@ -74,6 +75,10 @@ public class Black_Is_Servlet extends AsyncTask<String, Integer, Boolean> {
 
         if (activity instanceof FriendInfo_Activity) {
             ((FriendInfo_Activity) activity).CallBack_IsBlack(aBoolean);
+        }
+
+        if (activity instanceof UserInfo_Activity) {
+            ((UserInfo_Activity) activity).CallBack_IsBlack(aBoolean);
         }
     }
 }

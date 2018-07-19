@@ -7,8 +7,9 @@ import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.Window;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
-import com.sy.bottle.utils.PicassoUtlis;
 import com.sy.bottle.view.TouchImageView;
 
 /**
@@ -25,9 +26,12 @@ public class ShowImage_Dialog extends MyDialog {
 
     Object img;
 
+    Activity activity;
+
     public ShowImage_Dialog(@NonNull Activity activity, Object img) {
         super(activity, R.style.myDialogTheme);
         this.img = img;
+        this.activity = activity;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class ShowImage_Dialog extends MyDialog {
         }
 
         if (img instanceof String) {
-            PicassoUtlis.img(String.valueOf(img), imageView, R.drawable.loading);
+            Glide.with(activity).load(String.valueOf(img)).apply(new RequestOptions().placeholder(R.drawable.loading)).into(imageView);
         }
 
         setCanceledOnTouchOutside(true);

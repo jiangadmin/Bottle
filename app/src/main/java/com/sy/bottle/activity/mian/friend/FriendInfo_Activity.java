@@ -9,6 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.sy.bottle.R;
 import com.sy.bottle.activity.Base_Activity;
 import com.sy.bottle.activity.mian.Main_Activity;
@@ -115,7 +117,7 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
      */
     public void CallBack(UserInfo_Entity.DataBean bean) {
 
-        PicassoUtlis.img(bean.getAvatar(), head);
+        Glide.with(this).load(bean.getAvatar()).apply(new RequestOptions().placeholder(R.drawable.head_other)).into(head);
         name.setText(bean.getNickname());
         sex.setImageResource(bean.getSex().equals("1") ? R.drawable.ic_boy : R.drawable.ic_girl);
         remark.setContent(bean.getContent());
@@ -153,7 +155,8 @@ public class FriendInfo_Activity extends Base_Activity implements View.OnClickLi
         photos.setBeans(dBeans, new ImageCycleView.Listener() {
             @Override
             public void displayImage(String imageURL, ImageView imageView) {
-                PicassoUtlis.img(imageURL, imageView);
+                Glide.with(FriendInfo_Activity.this).load(imageURL).into(imageView);
+//                PicassoUtlis.img(imageURL, imageView);
             }
 
             @Override
