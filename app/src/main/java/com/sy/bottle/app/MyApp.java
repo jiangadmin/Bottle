@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 
 import com.mob.MobSDK;
 import com.sy.bottle.R;
@@ -16,7 +17,9 @@ import com.sy.bottle.servlet.Timeing_Servlet;
 import com.sy.bottle.utils.Foreground;
 import com.sy.bottle.utils.LogUtil;
 import com.sy.bottle.utils.SaveUtils;
+import com.tencent.bugly.imsdk.crashreport.CrashReport;
 import com.tencent.imsdk.TIMGroupReceiveMessageOpt;
+import com.tencent.imsdk.TIMLogLevel;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushListener;
 import com.tencent.imsdk.TIMOfflinePushNotification;
@@ -53,8 +56,6 @@ public class MyApp extends Application {
 
     public static IWXAPI api;
 
-    TIMSdkConfig TIMSdkConfig;
-
     /**
      * 更新地址
      */
@@ -77,12 +78,14 @@ public class MyApp extends Application {
 
     public static PayReq request;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-//        Config.DEBUG = true;
+
+        //崩溃记录
+        CrashReport.initCrashReport(getApplicationContext(), Const.BUGLY_APPID, LogShow);
+
         Calendar calendar = Calendar.getInstance();
         //获取系统的日期
         //年
@@ -102,18 +105,24 @@ public class MyApp extends Application {
 
         Foreground.init(this);
 
-
         //模拟心跳
         new Timeing_Servlet().onBind(new Intent());
 
-        TIMSdkConfig = new TIMSdkConfig(Const.SDK_APPID);
-        TIMManager.getInstance().init(this, TIMSdkConfig);
+
+        //初始化 SDK 基本配置
+        TIMSdkConfig config = new TIMSdkConfig(Const.SDK_APPID)
+                .enableCrashReport(false)
+                .enableLogPrint(true)
+                .setLogLevel(TIMLogLevel.DEBUG)
+                .setLogPath(Environment.getExternalStorageDirectory().getPath() + "/bottle/");
+//        TIMSdkConfig = new TIMSdkConfig(Const.SDK_APPID);
+        TIMManager.getInstance().init(this, config);
 
         //初始化Mob
         MobSDK.init(this);
 
         api = WXAPIFactory.createWXAPI(this, null);
-        api.registerApp("wx987316d1f1e0eac4");
+        api.registerApp(Const.Wechat_AppID);
 
         if (MsfSdkUtils.isMainProcess(this)) {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
@@ -187,7 +196,6 @@ public class MyApp extends Application {
         }
     }
 
-
     /**
      * 结束指定类名的Activity
      */
@@ -250,7 +258,6 @@ public class MyApp extends Application {
         super.onLowMemory();
     }
 
-
     public boolean isBackground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
@@ -277,6 +284,5 @@ public class MyApp extends Application {
         }
         return false;
     }
-
 
 }

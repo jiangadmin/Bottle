@@ -74,7 +74,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
                 viewHolder.guan.setVisibility(View.GONE);
             }
 
-            //判断有没有头像
+//            //判断有没有头像
             if (data.getAvatar() != null) {
                 Glide.with(context).load(data.getAvatar()).into(viewHolder.avatar);
             } else {

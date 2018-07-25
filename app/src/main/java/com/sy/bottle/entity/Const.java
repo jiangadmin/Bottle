@@ -28,6 +28,11 @@ public class Const {
     //sdk appid 由腾讯分配
     public static final int SDK_APPID = 1400109203;
 
+
+    public static final String BUGLY_APPID = "b8fc6db127";
+
+    public static final String BUGLY_APPKEY = "31c31362-3bc9-4c0f-ad47-08acfa1b9ed6";
+
     public static final String Wechat_AppID = "wx987316d1f1e0eac4";
 
     /** 支付宝支付业务：入参app_id */

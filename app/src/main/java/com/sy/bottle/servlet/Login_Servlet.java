@@ -71,7 +71,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
 
         switch (entity.getStatus()) {
             case 200:
-
+                LogUtil.e(TAG, "启动6" );
                 SaveUtils.setString(Save_Key.UID, entity.getData().getUid());
                 SaveUtils.setString(Save_Key.S_校验, entity.getData().getAccess_token());
                 SaveUtils.setString(Save_Key.S_密码, entity.getData().getUsersig());
@@ -81,6 +81,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                     public void onError(int i, String s) {
 
                         if (MyApp.currentActivity() instanceof Welcome_Activity){
+
                             Login_Activity.start(MyApp.currentActivity());
                             MyApp.finishActivity(Welcome_Activity.class);
 
@@ -93,7 +94,7 @@ public class Login_Servlet extends AsyncTask<String, Integer, Login_Entity> {
                     @Override
                     public void onSuccess() {
                         TabToast.makeText("登录成功");
-
+                        LogUtil.e(TAG, "启动7" );
 
                         //查询个人资料
                         new UserInfo_Servlet(MyApp.currentActivity()).execute();

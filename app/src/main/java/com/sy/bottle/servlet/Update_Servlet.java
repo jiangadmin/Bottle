@@ -72,7 +72,7 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
 
         switch (entity.getStatus()) {
             case 200:
-
+                LogUtil.e(TAG, "启动3" );
                 MyApp.Update_URL = entity.getData().getUrl();     //更新包地址
                 versionControl(entity);
 
@@ -114,6 +114,7 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
             if (activity instanceof Welcome_Activity) {
                 //判断腾讯云有无登录
                 if (!TextUtils.isEmpty(TIMManager.getInstance().getLoginUser())) {
+                    LogUtil.e(TAG, "启动5" );
                     //查询个人资料
                     new UserInfo_Servlet(MyApp.currentActivity()).execute();
 
@@ -130,6 +131,7 @@ public class Update_Servlet extends AsyncTask<String, ProgressDialog, Update_Ent
 
                     LogUtil.e(TAG, "快捷登录");
 
+                    LogUtil.e(TAG, "启动4" );
                     new Login_Servlet().execute(SaveUtils.getString(Save_Key.S_登录类型), SaveUtils.getString(Save_Key.OPENID));
 
                 } else {
